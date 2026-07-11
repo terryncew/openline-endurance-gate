@@ -1,0 +1,117 @@
+{
+  "by_mode": {
+    "fresh_ground_truth": {
+      "crack_initiation_rate": 0.3375,
+      "mean_crack_burden": 1.025,
+      "median_empirical_repair_half_life": 1.0,
+      "median_initiation_cycle": 9.0,
+      "median_max_crack_load": 0.0,
+      "run_count": 80
+    },
+    "persistent_history": {
+      "crack_initiation_rate": 1.0,
+      "mean_crack_burden": 73.9875,
+      "median_empirical_repair_half_life": 3.0,
+      "median_initiation_cycle": 4.0,
+      "median_max_crack_load": 8.0,
+      "run_count": 80
+    },
+    "prose_summary": {
+      "crack_initiation_rate": 1.0,
+      "mean_crack_burden": 69.2125,
+      "median_empirical_repair_half_life": 2.0,
+      "median_initiation_cycle": 2.0,
+      "median_max_crack_load": 7.0,
+      "run_count": 80
+    },
+    "receipt_ancestry": {
+      "crack_initiation_rate": 1.0,
+      "mean_crack_burden": 48.525,
+      "median_empirical_repair_half_life": 2.0,
+      "median_initiation_cycle": 1.0,
+      "median_max_crack_load": 6.0,
+      "run_count": 80
+    }
+  },
+  "definition": "A crack is an observed connected burden of unresolved dependencies, invariant failures, new contradictions, or unsafe attempts. It is a diagnostic proxy, not a physical fracture.",
+  "dominant_crack_cluster": {
+    "node_count": 21,
+    "nodes": [
+      "dependency:handoff_depth",
+      "dependency:history_overflow",
+      "dependency:latency_floor",
+      "dependency:max_handoffs",
+      "dependency:max_retries",
+      "dependency:memory_horizon",
+      "dependency:memory_ttl",
+      "dependency:retry_backoff_ms",
+      "dependency:retry_demand",
+      "dependency:risk_limit",
+      "dependency:risk_tolerance",
+      "dependency:token_budget",
+      "dependency:token_capacity",
+      "invariant:checkpoint_within_handoff_window",
+      "invariant:evidence_fits_token_budget",
+      "invariant:receipt_covers_checkpoint_span",
+      "invariant:receipt_outlives_memory",
+      "invariant:timeout_covers_retry_window",
+      "invariant:token_budget_covers_handoffs",
+      "signal:new_contradiction",
+      "signal:unsafe_attempt"
+    ],
+    "weighted_occurrence_count": 19228
+  },
+  "heldout_run_count": 320,
+  "run_count": 416,
+  "schema": "openline.endurance.fractography.v1",
+  "top_crack_nodes": [
+    {
+      "node": "signal:unsafe_attempt",
+      "occurrences": 3563
+    },
+    {
+      "node": "signal:new_contradiction",
+      "occurrences": 2532
+    },
+    {
+      "node": "dependency:handoff_depth",
+      "occurrences": 1943
+    },
+    {
+      "node": "dependency:retry_demand",
+      "occurrences": 1653
+    },
+    {
+      "node": "dependency:history_overflow",
+      "occurrences": 1632
+    },
+    {
+      "node": "dependency:latency_floor",
+      "occurrences": 1625
+    },
+    {
+      "node": "dependency:token_capacity",
+      "occurrences": 1567
+    },
+    {
+      "node": "dependency:memory_horizon",
+      "occurrences": 1507
+    },
+    {
+      "node": "dependency:risk_tolerance",
+      "occurrences": 1483
+    },
+    {
+      "node": "dependency:max_handoffs",
+      "occurrences": 351
+    },
+    {
+      "node": "invariant:receipt_outlives_memory",
+      "occurrences": 313
+    },
+    {
+      "node": "dependency:max_retries",
+      "occurrences": 176
+    }
+  ]
+}

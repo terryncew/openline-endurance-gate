@@ -1,0 +1,99 @@
+{
+  "attacks": {
+    "resealed_raw_cycle_forgery": {
+      "attack": "mutate fitted damage_D in a raw primary-cycle row, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "runner_returncode": 0,
+      "verifier": {
+        "artifact_binding_valid": true,
+        "chain": {
+          "chain_digest": "e6c30fde14bf7df189a26216acfe3b434d4379687659b21e51b0fe699bd79ecb",
+          "completeness_verified": true,
+          "count": 734,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "b251cf83c38e176951e8e6305d390e7a6e40f9439afcc84a6a1691615fafed06",
+          "valid": true
+        },
+        "errors": [
+          "damage_series_recompute_mismatch",
+          "public_witness_recompute_mismatch",
+          "evidence_public_witness_digest_mismatch"
+        ],
+        "semantic_recomputation_valid": false,
+        "valid": false
+      }
+    },
+    "resealed_summary_forgery": {
+      "attack": "flip one gate, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "runner_returncode": 0,
+      "verifier": {
+        "artifact_binding_valid": true,
+        "chain": {
+          "chain_digest": "29d9b6e62c72b44799e84acf30a93b0619d2e30b74f4566ee313503f47e68897",
+          "completeness_verified": true,
+          "count": 734,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "22e07ab84d12928e1ce3d93c8e7e6b8afebbcbb909b7c6584bda26870a1c8535",
+          "valid": true
+        },
+        "errors": [
+          "summary_semantic_recompute_mismatch",
+          "public_witness_recompute_mismatch",
+          "evidence_public_witness_digest_mismatch"
+        ],
+        "semantic_recomputation_valid": false,
+        "valid": false
+      }
+    },
+    "tail_truncation": {
+      "detected": true,
+      "runner_returncode": 0,
+      "verifier": {
+        "chain_digest": "82519b424068f5670ffc9d4fb1f46330071340831432e9f8d72c3f0a64cf485a",
+        "completeness_verified": false,
+        "count": 733,
+        "errors": [
+          "completeness_count_mismatch",
+          "completeness_tail_mismatch",
+          "completeness_digest_mismatch"
+        ],
+        "integrity_valid": false,
+        "tail_hash": "df12e19b5de0f1917f10498ee93b9dc2640341c88ec25451e06a5a16a363acd2",
+        "valid": false
+      }
+    },
+    "unpatched_source_drift": {
+      "detected": true,
+      "runner_returncode": 0,
+      "verifier": {
+        "artifact_binding_valid": false,
+        "chain": {
+          "chain_digest": "b84e352fea1994299bb22041fc5f6f2bd60a9358b6d7ee0eeada7114a7edea3e",
+          "completeness_verified": true,
+          "count": 734,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "56bafe670b1d1e3b24879ec1e7ecf53c2719f6d5c76ca2251572e2aef6aba75c",
+          "valid": true
+        },
+        "errors": [
+          "manifest_hash_mismatch:src/openline_endurance_gate/tip_capture.py",
+          "preregistration_mechanism_hash_mismatch:src/openline_endurance_gate/tip_capture.py"
+        ],
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    }
+  },
+  "execution_boundary": "Each hostile attack was executed as an isolated top-level process so verifier memory was released between witnesses.",
+  "passed": true,
+  "release_version": "0.3.1",
+  "schema": "openline.endurance.tamper-report.v2",
+  "trust_boundary": {
+    "reason": "A full-write attacker can replace source, artifacts, keypair, anchor, and local witness. Publish results/public_witness.json or its digest outside the repository.",
+    "whole_repository_replacement": "OUT_OF_SCOPE_WITHOUT_EXTERNAL_WITNESS"
+  }
+}

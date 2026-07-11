@@ -1,0 +1,12 @@
+{
+  "floor": 0.95,
+  "kappa_star_0": 0.75,
+  "one_shot_pass_rates": {
+    "high": 0.9625,
+    "low": 0.9916666666666667,
+    "medium": 0.975
+  },
+  "passed": true,
+  "phi_base": 0.99811343,
+  "trials_per_amplitude": 240
+}

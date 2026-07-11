@@ -1,0 +1,17 @@
+{
+  "matched_amplitude_packet": {
+    "common_event_ids_targets_and_signs": true,
+    "cycles": 20,
+    "levels": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "seed": 707
+  },
+  "minimum_primary_order_pairs": 80,
+  "primary_order_pair_count": 80,
+  "randomness_coupling": "EVENT_BOUND_COMMON_RANDOM_NUMBERS",
+  "schedule_label_invariance_for_identical_one_cycle_state": true,
+  "schema": "openline.endurance.design-witness.v1"
+}

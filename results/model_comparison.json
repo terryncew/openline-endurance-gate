@@ -1,0 +1,141 @@
+{
+  "cd_current": {
+    "auc": 0.9263452104,
+    "brier": 0.0551334604,
+    "features": [
+      "kappa",
+      "phi_star",
+      "vkd",
+      "epsilon",
+      "delta_hol"
+    ],
+    "fit_iterations": 7,
+    "log_loss": 0.2033585821,
+    "solver": "ridge_newton_irls"
+  },
+  "cd_plus_cycle": {
+    "auc": 0.9219526385,
+    "brier": 0.0549494996,
+    "features": [
+      "kappa",
+      "phi_star",
+      "vkd",
+      "epsilon",
+      "delta_hol",
+      "cycle"
+    ],
+    "fit_iterations": 7,
+    "log_loss": 0.2043386696,
+    "solver": "ridge_newton_irls"
+  },
+  "cd_plus_damage": {
+    "auc": 0.9209950311,
+    "brier": 0.0544213902,
+    "features": [
+      "kappa",
+      "phi_star",
+      "vkd",
+      "epsilon",
+      "delta_hol",
+      "damage_D"
+    ],
+    "fit_iterations": 8,
+    "log_loss": 0.1981865792,
+    "solver": "ridge_newton_irls"
+  },
+  "cycle_only": {
+    "auc": 0.5679987735,
+    "brier": 0.0862805693,
+    "features": [
+      "cycle"
+    ],
+    "fit_iterations": 5,
+    "log_loss": 0.3118614145,
+    "solver": "ridge_newton_irls"
+  },
+  "damage_vs_cd_logloss_gain": 0.0051720029,
+  "damage_vs_operational_logloss_gain": 0.0,
+  "damage_vs_strong_baseline_logloss_gain": 0.0,
+  "heldout_failure_count": 260,
+  "heldout_row_count": 2706,
+  "operational_plus_cycle": {
+    "auc": 0.5,
+    "brier": 0.096082779,
+    "features": [
+      "kappa",
+      "phi_star",
+      "vkd",
+      "epsilon",
+      "delta_hol",
+      "context_pressure",
+      "retry_count",
+      "unresolved_dependency_count",
+      "handoff_loss",
+      "representation_tokens",
+      "cycle"
+    ],
+    "fit_iterations": 40,
+    "log_loss": 2.6548652957,
+    "solver": "ridge_newton_irls"
+  },
+  "operational_plus_damage": {
+    "auc": 0.5,
+    "brier": 0.096082779,
+    "features": [
+      "kappa",
+      "phi_star",
+      "vkd",
+      "epsilon",
+      "delta_hol",
+      "context_pressure",
+      "retry_count",
+      "unresolved_dependency_count",
+      "handoff_loss",
+      "representation_tokens",
+      "damage_D"
+    ],
+    "fit_iterations": 40,
+    "log_loss": 2.6548652957,
+    "solver": "ridge_newton_irls"
+  },
+  "simple_operational": {
+    "auc": 0.5,
+    "brier": 0.096082779,
+    "features": [
+      "kappa",
+      "phi_star",
+      "vkd",
+      "epsilon",
+      "delta_hol",
+      "context_pressure",
+      "retry_count",
+      "unresolved_dependency_count",
+      "handoff_loss",
+      "representation_tokens"
+    ],
+    "fit_iterations": 40,
+    "log_loss": 2.6548652957,
+    "solver": "ridge_newton_irls"
+  },
+  "strong_plus_damage": {
+    "auc": 0.5,
+    "brier": 0.096082779,
+    "features": [
+      "kappa",
+      "phi_star",
+      "vkd",
+      "epsilon",
+      "delta_hol",
+      "context_pressure",
+      "retry_count",
+      "unresolved_dependency_count",
+      "handoff_loss",
+      "representation_tokens",
+      "cycle",
+      "damage_D"
+    ],
+    "fit_iterations": 40,
+    "log_loss": 2.6548652957,
+    "solver": "ridge_newton_irls"
+  }
+}

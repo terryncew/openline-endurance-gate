@@ -1,0 +1,36 @@
+{
+  "attempts": [
+    {
+      "artifacts_emitted": false,
+      "attempt": 1,
+      "failure": "high amplitude missed floor by 0.0041666666666667",
+      "one_shot_pass_rates": {
+        "high": 0.9458333333333333,
+        "low": 0.9916666666666667,
+        "medium": 0.9708333333333333
+      },
+      "preregistration_sha256": "c03eda4127466beaaa2de94fa0a73660b3480251c884db4d113c9cc9cf504143",
+      "required_floor": 0.95,
+      "result": "STOPPED_BEFORE_ENDURANCE_RUN",
+      "stage": "fresh_subcritical_calibration"
+    },
+    {
+      "artifacts_emitted": false,
+      "attempt": 2,
+      "change": "fresh_ground_truth application difficulty multiplier 0.17 -> 0.15",
+      "one_shot_pass_rates": {
+        "high": 0.9625,
+        "low": 0.9916666666666667,
+        "medium": 0.975
+      },
+      "reason": "establish individually subcritical perturbations without lowering the preregistered 95 percent gate",
+      "required_floor": 0.95,
+      "result": "PASSED_REVISED_PILOT_BEFORE_ENDURANCE_RUN",
+      "scope": "fresh control only; handoff-mode mechanics and theory thresholds unchanged",
+      "stage": "fresh_subcritical_calibration_only"
+    }
+  ],
+  "boundary": "This pilot was used to calibrate the synthetic one-shot control before any endurance result was generated. It cannot be counted as held-out evidence.",
+  "release_version": "0.2.0",
+  "schema": "openline.endurance.pilot-log.v1"
+}

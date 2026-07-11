@@ -1,0 +1,13 @@
+{
+  "amplitude_cycle_count": 6240,
+  "amplitude_cycle_merkle_root": "3851dddae70b5e8f61e12005d3cdf2a045216b32b6454c26f72fc3666d3baa8b",
+  "primary_cycle_count": 8320,
+  "primary_cycle_merkle_root": "c065a9206cd1c24f2a0eb1d7ad3e76d73464f141d552a4efcfdfefe77ebcb96f",
+  "schema": "openline.endurance.cycle-roots.v1",
+  "tip_capture_candidate_count": 52683,
+  "tip_capture_candidate_merkle_root": "c6fd547ff9b513fdee63a86a3a4b2fefc2ee7e51b727ebe0835597d9bedbb11b",
+  "tip_capture_cycle_count": 69120,
+  "tip_capture_cycle_merkle_root": "af25388fbf45f345d7d3a61eba18e3dda726f7ffbd227e093d289d35c732d8ec",
+  "tip_capture_probe_count": 8640,
+  "tip_capture_probe_merkle_root": "be9078bc7917d02354ef21e5099a1d643b4d9b1fddbf73a925f934a8df944268"
+}

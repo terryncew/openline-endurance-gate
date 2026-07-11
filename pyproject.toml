@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openline-endurance-gate"
+version = "0.3.1"
+description = "A falsifiable synthetic harness for cumulative coherence damage, load-order effects, and receipt-based handoffs."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Terrynce White"}]
+dependencies = ["cryptography>=42"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+openline-endurance = "openline_endurance_gate.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["openline_endurance_gate*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not integration'"
+markers = ["integration: heavyweight full semantic and tamper verification"]

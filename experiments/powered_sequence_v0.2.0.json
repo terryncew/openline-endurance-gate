@@ -1,0 +1,153 @@
+{
+  "amplitude_multiset": {
+    "high": 7,
+    "low": 7,
+    "medium": 6
+  },
+  "amplitude_sweep_design": "COMMON_PACKET_AMPLITUDE_TRANSFORM",
+  "analysis_plan": {
+    "bootstrap_resamples": 5000,
+    "censoring_horizon_cycles": 20,
+    "confidence_level": 0.95,
+    "exploratory_pairwise_adjustment": "HOLM",
+    "minimum_primary_order_pairs": 80,
+    "primary_effect_statistic": "paired_median_cycles_to_first_failure",
+    "primary_sequence_contrast": [
+      "low_to_high",
+      "high_to_low"
+    ],
+    "target_power": 0.8
+  },
+  "calibration_trials_per_amplitude": 240,
+  "checkpoint_every": 5,
+  "claim_label": "POWERED_SYNTHETIC_UNFIT_THEN_SIM_CALIBRATED",
+  "damage_identifiability_logloss_tolerance": 0.0005,
+  "damage_parameter_grid": {
+    "beta": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "lambda": [
+      0.0,
+      0.2,
+      0.5
+    ],
+    "m": [
+      1.0,
+      1.5,
+      2.0,
+      3.0
+    ],
+    "mu": [
+      0.0,
+      0.2,
+      0.5
+    ],
+    "tau_r": [
+      1.0,
+      2.0,
+      4.0,
+      8.0
+    ]
+  },
+  "damage_parameter_status": "UNFIT_BEFORE_RUN_SELECTED_ON_TRAIN_VALIDATION_ONLY",
+  "failure_accuracy_floor": 0.9166666666666666,
+  "falsifiers": [
+    "Prior cycles add no held-out predictive value once current observables, operational state, and cycle index are controlled.",
+    "Reordering the same perturbation multiset under common random numbers does not materially change cycles-to-first-failure.",
+    "The fitted damage model fails to outperform current Coherence Dynamics observables or simple operational counts.",
+    "Receipt ancestry fails to extend fatigue life over an equal-token prose summary without lowering checkpoint accuracy.",
+    "Fresh one-shot perturbations fail the 95 percent subcritical calibration floor.",
+    "The matched amplitude sweep fails to produce shorter endurance as amplitude rises."
+  ],
+  "fresh_one_shot_floor": 0.95,
+  "heldout_seeds": [
+    707,
+    808,
+    909,
+    1010,
+    1111,
+    1212,
+    1313,
+    1414,
+    1515,
+    1616,
+    1717,
+    1818,
+    1919,
+    2020,
+    2121,
+    2222,
+    2323,
+    2424,
+    2525,
+    2626
+  ],
+  "input_budget_tokens": 256,
+  "modes": [
+    "fresh_ground_truth",
+    "persistent_history",
+    "prose_summary",
+    "receipt_ancestry"
+  ],
+  "persistent_confusion_scale": 0.16,
+  "phi_min": 0.7,
+  "primary_cycles": 20,
+  "profile": "POWERED_SEQUENCE_TEST",
+  "randomness_coupling": "EVENT_BOUND_COMMON_RANDOM_NUMBERS",
+  "receipt_reference_error": 0.035,
+  "release_version": "0.2.0",
+  "schedules": [
+    "low_to_high",
+    "high_to_low",
+    "alternating",
+    "randomized"
+  ],
+  "schema": "openline.endurance.experiment.v2",
+  "seeds": [
+    101,
+    202,
+    303,
+    404,
+    505,
+    606,
+    707,
+    808,
+    909,
+    1010,
+    1111,
+    1212,
+    1313,
+    1414,
+    1515,
+    1616,
+    1717,
+    1818,
+    1919,
+    2020,
+    2121,
+    2222,
+    2323,
+    2424,
+    2525,
+    2626
+  ],
+  "summary_compression_error": 0.045,
+  "theory_thresholds": {
+    "heldout_logloss_improvement": 0.0,
+    "material_nf_cycles": 2.0,
+    "max_checkpoint_accuracy_loss": 0.02,
+    "sequence_p_max": 0.1
+  },
+  "training_seeds": [
+    101,
+    202,
+    303,
+    404
+  ],
+  "validation_seeds": [
+    505,
+    606
+  ]
+}

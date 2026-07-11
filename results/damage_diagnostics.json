@@ -1,0 +1,16 @@
+{
+  "identifiability_warning": true,
+  "median_first_saturation_cycle": 4,
+  "near_best_candidate_count": 1,
+  "row_count": 8320,
+  "run_count": 416,
+  "runs_reaching_saturation": 316,
+  "saturated_row_fraction": 0.6072115384615384,
+  "selected_parameter_on_grid_boundary": {
+    "beta": true,
+    "lambda": true,
+    "m": false,
+    "mu": true,
+    "tau_r": true
+  }
+}
