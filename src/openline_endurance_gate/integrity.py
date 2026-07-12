@@ -42,7 +42,7 @@ def verify_preregistration(root: Path) -> list[str]:
     if not path.exists():
         return ["preregistration_missing"]
     prereg = json.loads(path.read_text(encoding="utf-8"))
-    if prereg.get("schema") != "openline.endurance.preregistration.v1":
+    if prereg.get("schema") not in {"openline.endurance.preregistration.v1", "openline.endurance.preregistration.v2"}:
         errors.append("preregistration_schema_invalid")
     experiment_path = root / "experiment.json"
     if not experiment_path.exists() or sha256_file(experiment_path) != prereg.get("experiment_sha256"):

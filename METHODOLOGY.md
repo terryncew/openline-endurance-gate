@@ -104,11 +104,13 @@ The local anchor cannot defend against an attacker replacing the entire reposito
 
 ## Execution tip-capture extension
 
-The graph extension reuses the endurance dependency substrate. Each disturbance creates or attaches to an unresolved dependency node. The attachment conditions are `uniform_null`, `even_spread`, and `diffusive_tip_capture`. The diffusive treatment chooses an active tip and may penetrate inward stochastically; the exposure score reported for analysis is computed separately and is never used by the selector. `even_spread` chooses the least directly captured node inside the smallest branch. Because low-capture nodes in this graph are frequently leaves, that rule has an unintended tip-selection bias and its large frontier lift is treated as a disclosed design artifact rather than a supporting gate.
+The graph extension reuses the endurance dependency substrate. Each disturbance creates or attaches to an unresolved dependency node embedded on an integer lattice. The attachment conditions are `uniform_null`, `least_capture_balancer`, and `diffusive_first_contact`. The first-contact treatment launches a cardinal random walker outside the active bounding box and attaches at its first Moore-neighborhood contact. Its path never reads the reported exposure ranking or capture history. Walker starts, steps, restarts, fallbacks, contact coordinates, and node coordinates are exported as raw evidence.
+
+The reported exposure ranking is a separate spatial heuristic: graph-tip status first, followed by open neighboring cells, radius from the active centroid, lower local density, and graph depth. Geometry Lift uses those spatial fields against the same count-and-age baseline. `least_capture_balancer` retains the v0.3.1 least-captured-node behavior under a descriptive name; its leaf bias remains visible and it is not used as a neutral control or supporting gate.
 
 Every attachment condition and policy receives packet-bound common random numbers. The five policies are no intervention, logging only, random repair, oldest-first repair, and tip-targeted repair. Random and tip-targeted policies receive identical repair opportunities and budgets. Logging records ancestry without changing the graph.
 
-The release design uses 96 fresh seeds: 8 train, 8 validation, and 80 held out. A prior 96-seed pilot is retained in `TIP_CAPTURE_PILOT_LOG.json` and excluded because a proposed burial-depth recovery-cost gate was partly definitional: successful pointer traversal mechanically scales with path depth. The gate was removed before the fresh release seeds ran; mechanisms and remaining thresholds stayed frozen.
+The v0.4.0 design uses 96 fresh seeds, 5101–5196: 8 train, 8 validation, and 80 held out. The 16 implementation-pilot seeds 4901–4916 are retained in `TIP_CAPTURE_V040_PILOT_LOG.json` and permanently excluded. No parameter or threshold changed after that pilot. The older v0.3.1 seed block and result remain historical evidence rather than being overwritten.
 
 The primary graph witnesses are frontier capture concentration, held-out Geometry Lift beyond count/age baselines, null specificity, equal-budget repair yield, and receipt-ancestry root recovery. Burial depth, shielding, branch concentration, and oldest-first behavior remain descriptive unless named in a gate.
 
@@ -121,3 +123,7 @@ The full verifier regenerates graph cycles, candidate rows, recovery probes, hel
 ## v0.3.1 reporting correction
 
 The scientific run is unchanged. Paired repair-yield effects are reported in violations prevented per successful repair, violation contrasts in violation counts, and ancestry recovery effects in recovery-rate points. Reports now separate the majority direction from consistency in the preregistered positive direction. Tied pairs remain explicit and are excluded from both nonzero-direction consistency denominators.
+
+## v0.4.0 mechanism revision
+
+The v0.3.1 selector chose uniformly among active tips and then sometimes walked inward; it was a weak proxy for diffusion-limited first contact and failed its concentration gate. v0.4.0 replaces it with an explicit random-walk contact process. Recent captures remain diagnostic evidence and never enter the selector. This is a new preregistered experiment, not a repair of the old outcome.

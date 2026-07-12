@@ -43,6 +43,7 @@ BASE_SEMANTIC_ARTIFACTS = [
     "experiment.json",
     "PREREGISTRATION.json",
     "TIP_CAPTURE_PILOT_LOG.json",
+    "TIP_CAPTURE_V040_PILOT_LOG.json",
     "results/cycles.csv",
     "results/runs.csv",
     "results/amplitude_cycles.csv",
@@ -76,7 +77,7 @@ RUN_FIELDS = [
 
 def load_experiment(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("schema") not in {"openline.endurance.experiment.v1", "openline.endurance.experiment.v2", "openline.endurance.experiment.v3"}:
+    if data.get("schema") not in {"openline.endurance.experiment.v1", "openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4"}:
         raise ValueError("unsupported experiment schema")
     declared = set(map(int, data["training_seeds"] + data["validation_seeds"] + data["heldout_seeds"]))
     if declared != set(map(int, data["seeds"])):
@@ -85,7 +86,7 @@ def load_experiment(path: Path) -> dict[str, Any]:
         raise ValueError("training and validation seeds overlap")
     if len(data["modes"]) != 4 or len(data["schedules"]) != 4:
         raise ValueError("default discriminating test requires four modes and four schedules")
-    if data.get("schema") in {"openline.endurance.experiment.v2", "openline.endurance.experiment.v3"}:
+    if data.get("schema") in {"openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4"}:
         required_pairs = int(data["analysis_plan"]["minimum_primary_order_pairs"])
         available_pairs = len(data["heldout_seeds"]) * len(data["modes"])
         if available_pairs < required_pairs:
@@ -94,21 +95,27 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("v2 requires event-bound common random numbers")
         if data.get("amplitude_sweep_design") != "COMMON_PACKET_AMPLITUDE_TRANSFORM":
             raise ValueError("v2 requires matched amplitude packets")
-    if data.get("schema") == "openline.endurance.experiment.v3":
+    if data.get("schema") in {"openline.endurance.experiment.v3", "openline.endurance.experiment.v4"}:
         tip = data.get("tip_capture")
-        if not isinstance(tip, dict) or tip.get("schema") != "openline.tip-capture.experiment.v1":
-            raise ValueError("v3 requires a tip-capture experiment")
+        expected_tip_schema = "openline.tip-capture.experiment.v2" if data.get("schema") == "openline.endurance.experiment.v4" else "openline.tip-capture.experiment.v1"
+        if not isinstance(tip, dict) or tip.get("schema") != expected_tip_schema:
+            raise ValueError(f"{data.get('schema')} requires {expected_tip_schema}")
         tip_declared = set(map(int, tip["training_seeds"] + tip["validation_seeds"] + tip["heldout_seeds"]))
         if tip_declared != set(map(int, tip["seeds"])):
             raise ValueError("tip-capture train/validation/heldout seeds must partition seeds")
         if len(tip["heldout_seeds"]) < int(tip["analysis_plan"]["minimum_repair_pairs"]):
             raise ValueError("tip-capture heldout seed count is below the preregistered pair floor")
-        if "uniform_null" not in tip["attachment_conditions"] or "diffusive_tip_capture" not in tip["attachment_conditions"]:
-            raise ValueError("tip-capture requires both a genuine null and diffusive treatment")
+        required_conditions = {"uniform_null", "diffusive_first_contact"} if data.get("schema") == "openline.endurance.experiment.v4" else {"uniform_null", "diffusive_tip_capture"}
+        if required_conditions - set(tip["attachment_conditions"]):
+            raise ValueError("tip-capture requires both a genuine null and declared diffusive treatment")
         if {"random_repair", "tip_targeted"} - set(tip["repair_policies"]):
             raise ValueError("tip-capture requires matched random and tip-targeted repair policies")
         if tip.get("randomness_coupling") != "PACKET_BOUND_COMMON_RANDOM_NUMBERS":
             raise ValueError("tip-capture requires packet-bound common random numbers")
+        if data.get("schema") == "openline.endurance.experiment.v4":
+            required_walker = {"dla_launch_margin", "dla_kill_margin", "dla_max_steps", "dla_max_restarts", "root_spacing"}
+            if required_walker - set(tip):
+                raise ValueError("v4 first-contact walker configuration is incomplete")
     return data
 
 
@@ -165,8 +172,8 @@ def _summary_markdown(summary: dict[str, Any]) -> str:
 
 
 def _tip_summary_markdown(summary: dict[str, Any]) -> str:
-    capture = summary["capture_by_condition"]["diffusive_tip_capture"]
-    geometry = summary["geometry_lift"]["diffusive_tip_capture"]
+    capture = summary["capture_by_condition"]["diffusive_first_contact"]
+    geometry = summary["geometry_lift"]["diffusive_first_contact"]
     repair = summary["repair_effect"]
     recovery = summary["receipt_recovery_effect"]
     lines = [
@@ -180,7 +187,8 @@ def _tip_summary_markdown(summary: dict[str, Any]) -> str:
         "",
         "## Main witnesses",
         "",
-        f"- Diffusive frontier capture lift over candidate-count null: {capture['frontier_capture_lift']:.6f}",
+        f"- First-contact frontier capture lift over candidate-count null: {capture['frontier_capture_lift']:.6f}",
+        f"- Random-walk fallback rate: {capture['walker_fallback_rate']:.6f}",
         f"- Geometry held-out log-loss gain: {geometry['heldout_logloss_gain']:.8f}",
         f"- Geometry held-out AUC gain: {geometry['heldout_auc_gain']:.8f}",
         f"- Tip-minus-random repair yield median: {repair['median_difference']:.6f} violations prevented per successful repair",
@@ -189,7 +197,7 @@ def _tip_summary_markdown(summary: dict[str, Any]) -> str:
         f"- Pair counts — tip favored: {repair['positive_count']}; random favored: {repair['negative_count']}; tied: {repair['zero_count']}",
         f"- Receipt ancestry root-recovery median gain: {recovery['median_difference']:.6f} recovery-rate points",
         f"- Burial depth / successful recovery-cost Spearman: {summary['burial_cost_spearman']}",
-        "- Even-spread disclosure: selecting the least-captured node in the smallest branch creates an unintended leaf/tip bias; this condition is descriptive and no gate was retuned.",
+        "- v0.3.1 lineage: `even_spread` is retired and retained only as the accurately named descriptive `least_capture_balancer` condition.",
         "",
         "## Gate results",
         "",
@@ -221,7 +229,7 @@ def combine_summaries(summary: dict[str, Any], tip_summary: dict[str, Any]) -> d
         combined["theory_status"] = "MIXED_SYNTHETIC_RESULT"
     combined["claim_boundary"] = (
         "The endurance world and the execution-graph world are seeded mechanism tests. "
-        "The diffusive attachment treatment deliberately contains stochastic tip capture, while uniform attachment is the null. "
+        "The first-contact treatment uses a lattice random walk independent of the reported exposure heuristic, while uniform attachment is the null. "
         "Passing shows the instruments recover declared mechanisms and reject nulls where preregistered; it does not show deployed agents obey material fatigue or DLA."
     )
     return combined

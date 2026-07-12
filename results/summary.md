@@ -2,7 +2,7 @@
 
 **Claim label:** `POWERED_SYNTHETIC_ENDURANCE_AND_TIP_CAPTURE`
 **Theory status:** `MIXED_SYNTHETIC_RESULT`
-**Pre-registered gates:** 7/10 passed
+**Pre-registered gates:** 8/10 passed
 **Primary observations:** 8320
 **Held-out seeds:** 20
 
@@ -28,7 +28,7 @@
 - `endurance/load_order_noncommutativity`: **FAIL**
 - `endurance/damage_adds_heldout_prediction`: **PASS**
 - `endurance/receipt_handoff_advantage`: **PASS**
-- `tip_capture/frontier_capture_concentration`: **FAIL**
+- `tip_capture/first_contact_frontier_concentration`: **PASS**
 - `tip_capture/geometry_adds_heldout_prediction`: **PASS**
 - `tip_capture/null_geometry_specificity`: **PASS**
 - `tip_capture/tip_targeted_repair_yield`: **FAIL**
@@ -36,6 +36,6 @@
 
 ## Boundary
 
-The endurance world and the execution-graph world are seeded mechanism tests. The diffusive attachment treatment deliberately contains stochastic tip capture, while uniform attachment is the null. Passing shows the instruments recover declared mechanisms and reject nulls where preregistered; it does not show deployed agents obey material fatigue or DLA.
+The endurance world and the execution-graph world are seeded mechanism tests. The first-contact treatment uses a lattice random walk independent of the reported exposure heuristic, while uniform attachment is the null. Passing shows the instruments recover declared mechanisms and reject nulls where preregistered; it does not show deployed agents obey material fatigue or DLA.
 
 A passing simulation earns a real-agent experiment. It does not validate the physical analogy.

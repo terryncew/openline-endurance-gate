@@ -23,8 +23,10 @@ EVENT_TYPES = (
 TIP_CYCLE_FIELDS = [
     "condition", "policy", "seed", "cycle", "event_id", "event_type", "severity", "target",
     "attached_to_existing", "selected_parent_id", "selected_parent_depth", "selected_parent_is_tip",
-    "selected_parent_capture_window", "selected_parent_branch_share", "top_decile_capture",
-    "top_decile_expected_share", "new_node_id", "root_id", "new_node_depth", "violation",
+    "selected_parent_capture_window", "selected_parent_branch_share", "selected_parent_open_neighbors",
+    "selected_parent_radial_distance", "selected_parent_local_density", "top_decile_capture",
+    "top_decile_expected_share", "new_node_id", "root_id", "new_node_depth", "new_node_x", "new_node_y",
+    "walker_used", "walker_start_x", "walker_start_y", "walker_steps", "walker_restarts", "walker_fallback", "violation",
     "system_failure", "first_failure_this_cycle", "active_unresolved", "active_tips", "branch_count",
     "largest_branch_share", "branch_hhi", "mean_burial_depth", "max_burial_depth", "interior_count",
     "mean_interior_shielded_cycles", "retry_count", "context_length", "repair_attempted",
@@ -36,6 +38,7 @@ TIP_RUN_FIELDS = [
     "condition", "policy", "seed", "cycles", "violations", "first_failure_cycle", "n_f",
     "final_active_unresolved", "final_active_tips", "max_active_unresolved", "max_burial_depth",
     "mean_top_decile_capture", "mean_top_decile_expected_share", "frontier_capture_lift",
+    "walker_attachment_count", "walker_fallback_count", "walker_fallback_rate", "mean_walker_steps",
     "largest_branch_share", "branch_hhi", "repair_attempts", "repair_successes", "repair_budget_used",
     "recovery_probes", "recovery_successes", "recovery_rate", "mean_recovery_cost",
     "mean_recovery_depth", "mean_interior_shielded_cycles", "receipt_enabled",
@@ -43,8 +46,9 @@ TIP_RUN_FIELDS = [
 
 TIP_CANDIDATE_FIELDS = [
     "condition", "seed", "cycle", "event_id", "node_id", "label", "event_count", "context_length",
-    "unresolved_count", "retry_count", "node_age", "branch_age", "is_tip", "depth",
-    "capture_count_window", "branch_capture_share", "child_count", "shielded_cycles", "branch_size",
+    "unresolved_count", "retry_count", "node_age", "branch_age", "is_tip", "depth", "node_x", "node_y",
+    "open_neighbor_count", "radial_distance", "local_density", "capture_count_window",
+    "branch_capture_share", "child_count", "shielded_cycles", "branch_size",
 ]
 
 TIP_PROBE_FIELDS = [
@@ -56,9 +60,17 @@ BASELINE_FEATURES = [
     "event_count", "context_length", "unresolved_count", "retry_count", "node_age", "branch_age",
 ]
 GEOMETRY_FEATURES = BASELINE_FEATURES + [
-    "is_tip", "depth", "capture_count_window", "branch_capture_share", "child_count",
-    "shielded_cycles", "branch_size",
+    "is_tip", "depth", "node_x", "node_y", "open_neighbor_count", "radial_distance",
+    "local_density", "child_count", "branch_size",
 ]
+
+WALK_STEPS = ((1, 0), (-1, 0), (0, 1), (0, -1))
+CONTACT_OFFSETS = tuple(
+    (dx, dy)
+    for dx in (-1, 0, 1)
+    for dy in (-1, 0, 1)
+    if dx or dy
+)
 
 
 @dataclass(frozen=True)
@@ -85,11 +97,26 @@ class IssueNode:
     last_touched_cycle: int
     depth: int
     defect_strength: float
+    x: int
+    y: int
     active: bool = True
     repaired_cycle: int | None = None
     direct_captures: int = 0
     capture_cycles: list[int] = field(default_factory=list)
     children: set[str] = field(default_factory=set)
+
+
+@dataclass(frozen=True)
+class AttachmentChoice:
+    parent: IssueNode | None
+    x: int
+    y: int
+    walker_used: bool = False
+    walker_start_x: int | None = None
+    walker_start_y: int | None = None
+    walker_steps: int = 0
+    walker_restarts: int = 0
+    walker_fallback: bool = False
 
 
 @dataclass
@@ -148,6 +175,39 @@ def _capture_count(node: IssueNode, cycle: int, window: int) -> int:
     return sum(capture > floor for capture in node.capture_cycles)
 
 
+def _occupied(state: TipState) -> dict[tuple[int, int], IssueNode]:
+    return {
+        (state.nodes[node_id].x, state.nodes[node_id].y): state.nodes[node_id]
+        for node_id in state.active
+    }
+
+
+def _open_neighbor_count(state: TipState, node: IssueNode) -> int:
+    occupied = _occupied(state)
+    return sum((node.x + dx, node.y + dy) not in occupied for dx, dy in CONTACT_OFFSETS)
+
+
+def _cluster_centroid(state: TipState) -> tuple[float, float]:
+    active = [state.nodes[node_id] for node_id in state.active]
+    if not active:
+        return 0.0, 0.0
+    return mean(float(node.x) for node in active), mean(float(node.y) for node in active)
+
+
+def _radial_distance(state: TipState, node: IssueNode) -> float:
+    center_x, center_y = _cluster_centroid(state)
+    return math.hypot(node.x - center_x, node.y - center_y)
+
+
+def _local_density(state: TipState, node: IssueNode, radius: int = 2) -> int:
+    return sum(
+        1
+        for node_id in state.active
+        if node_id != node.node_id
+        and max(abs(state.nodes[node_id].x - node.x), abs(state.nodes[node_id].y - node.y)) <= radius
+    )
+
+
 def _branch_capture_share(state: TipState, node: IssueNode, cycle: int, window: int) -> float:
     branch_counts: dict[str, int] = defaultdict(int)
     total = 0
@@ -160,13 +220,15 @@ def _branch_capture_share(state: TipState, node: IssueNode, cycle: int, window: 
 
 
 def _exposure_rank(state: TipState, cycle: int, window: int) -> list[IssueNode]:
-    # Observable, lexicographic heuristic. It is deliberately not the diffusive attachment algorithm.
+    # Observable, lexicographic spatial heuristic. The random-walk attachment
+    # algorithm never calls this function or reads these derived scores.
     return sorted(
         (state.nodes[node_id] for node_id in state.active),
         key=lambda node: (
             int(_is_tip(state, node)),
-            _capture_count(node, cycle, window),
-            node.last_touched_cycle,
+            _open_neighbor_count(state, node),
+            _radial_distance(state, node),
+            -_local_density(state, node),
             node.depth,
             node.node_id,
         ),
@@ -178,16 +240,141 @@ def _choose_uniform(nodes: list[IssueNode], draw: float) -> IssueNode:
     return nodes[min(len(nodes) - 1, int(draw * len(nodes)))]
 
 
-def _choose_parent(state: TipState, packet: TipPacket, condition: str, seed: int, cycle: int, config: dict[str, Any]) -> IssueNode | None:
-    if not state.active:
-        return None
-    if stable_uniform("tip-root-injection", seed, packet.event_id) < float(config["root_injection_probability"]):
-        return None
+def _root_position(state: TipState, seed: int, event_id: str, config: dict[str, Any]) -> tuple[int, int]:
+    occupied = set(_occupied(state))
+    if not occupied:
+        return 0, 0
+    center_x = round(mean(float(x) for x, _ in occupied))
+    center_y = round(mean(float(y) for _, y in occupied))
+    spacing = int(config["root_spacing"])
+    directions = ((1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1))
+    for attempt in range(256):
+        radius = spacing + attempt // len(directions)
+        offset = int(stable_uniform("tip-root-position", seed, event_id, attempt) * len(directions))
+        dx, dy = directions[(attempt + offset) % len(directions)]
+        candidate = (center_x + radius * dx, center_y + radius * dy)
+        if all(max(abs(candidate[0] - x), abs(candidate[1] - y)) >= spacing for x, y in occupied):
+            return candidate
+    return max(x for x, _ in occupied) + spacing, center_y
+
+
+def _adjacent_position(state: TipState, parent: IssueNode, seed: int, event_id: str) -> tuple[int, int]:
+    occupied = set(_occupied(state))
+    offset = int(stable_uniform("tip-lattice-position", seed, event_id) * len(CONTACT_OFFSETS))
+    ordered = CONTACT_OFFSETS[offset:] + CONTACT_OFFSETS[:offset]
+    for dx, dy in ordered:
+        candidate = (parent.x + dx, parent.y + dy)
+        if candidate not in occupied:
+            return candidate
+    for radius in range(2, 32):
+        shell = [
+            (parent.x + dx, parent.y + dy)
+            for dx in range(-radius, radius + 1)
+            for dy in range(-radius, radius + 1)
+            if max(abs(dx), abs(dy)) == radius
+        ]
+        shell.sort(key=lambda point: stable_uniform("tip-lattice-shell", seed, event_id, point[0], point[1]))
+        for candidate in shell:
+            if candidate not in occupied:
+                return candidate
+    raise RuntimeError("no free lattice position found")
+
+
+def _walker_start(
+    occupied: dict[tuple[int, int], IssueNode],
+    seed: int,
+    event_id: str,
+    restart: int,
+    margin: int,
+) -> tuple[int, int, tuple[int, int, int, int]]:
+    xs = [point[0] for point in occupied]
+    ys = [point[1] for point in occupied]
+    bounds = (min(xs) - margin, max(xs) + margin, min(ys) - margin, max(ys) + margin)
+    min_x, max_x, min_y, max_y = bounds
+    side = int(stable_uniform("dla-launch-side", seed, event_id, restart) * 4) % 4
+    fraction = stable_uniform("dla-launch-offset", seed, event_id, restart)
+    if side == 0:
+        return min_x + int(fraction * (max_x - min_x + 1)), min_y, bounds
+    if side == 1:
+        return max_x, min_y + int(fraction * (max_y - min_y + 1)), bounds
+    if side == 2:
+        return min_x + int(fraction * (max_x - min_x + 1)), max_y, bounds
+    return min_x, min_y + int(fraction * (max_y - min_y + 1)), bounds
+
+
+def _first_contact_attachment(
+    state: TipState,
+    seed: int,
+    event_id: str,
+    config: dict[str, Any],
+) -> AttachmentChoice:
+    occupied = _occupied(state)
+    max_steps = int(config["dla_max_steps"])
+    max_restarts = int(config["dla_max_restarts"])
+    launch_margin = int(config["dla_launch_margin"])
+    kill_margin = int(config["dla_kill_margin"])
+    total_steps = 0
+    last_start = (0, 0)
+    for restart in range(max_restarts):
+        x, y, bounds = _walker_start(occupied, seed, event_id, restart, launch_margin)
+        last_start = (x, y)
+        min_x, max_x, min_y, max_y = bounds
+        for step in range(max_steps):
+            contacts = sorted(
+                {
+                    occupied[(x + dx, y + dy)].node_id: occupied[(x + dx, y + dy)]
+                    for dx, dy in CONTACT_OFFSETS
+                    if (x + dx, y + dy) in occupied
+                }.values(),
+                key=lambda node: node.node_id,
+            )
+            if contacts and (x, y) not in occupied:
+                draw = stable_uniform("dla-contact-tie", seed, event_id, restart, step)
+                parent = _choose_uniform(contacts, draw)
+                return AttachmentChoice(
+                    parent=parent,
+                    x=x,
+                    y=y,
+                    walker_used=True,
+                    walker_start_x=last_start[0],
+                    walker_start_y=last_start[1],
+                    walker_steps=total_steps,
+                    walker_restarts=restart,
+                )
+            direction = int(stable_uniform("dla-walk-step", seed, event_id, restart, step) * len(WALK_STEPS))
+            dx, dy = WALK_STEPS[min(len(WALK_STEPS) - 1, direction)]
+            x += dx
+            y += dy
+            total_steps += 1
+            if x < min_x - kill_margin or x > max_x + kill_margin or y < min_y - kill_margin or y > max_y + kill_margin:
+                break
+    active = [state.nodes[node_id] for node_id in sorted(state.active)]
+    parent = _choose_uniform(active, stable_uniform("dla-fallback-parent", seed, event_id))
+    x, y = _adjacent_position(state, parent, seed, event_id)
+    return AttachmentChoice(
+        parent=parent,
+        x=x,
+        y=y,
+        walker_used=True,
+        walker_start_x=last_start[0],
+        walker_start_y=last_start[1],
+        walker_steps=total_steps,
+        walker_restarts=max_restarts,
+        walker_fallback=True,
+    )
+
+
+def _choose_attachment(state: TipState, packet: TipPacket, condition: str, seed: int, cycle: int, config: dict[str, Any]) -> AttachmentChoice:
+    if not state.active or stable_uniform("tip-root-injection", seed, packet.event_id) < float(config["root_injection_probability"]):
+        x, y = _root_position(state, seed, packet.event_id, config)
+        return AttachmentChoice(None, x, y)
     active = [state.nodes[node_id] for node_id in sorted(state.active)]
     draw = stable_uniform("tip-attachment", seed, packet.event_id)
     if condition == "uniform_null":
-        return _choose_uniform(active, draw)
-    if condition == "even_spread":
+        parent = _choose_uniform(active, draw)
+        x, y = _adjacent_position(state, parent, seed, packet.event_id)
+        return AttachmentChoice(parent, x, y)
+    if condition == "least_capture_balancer":
         branches = _branch_nodes(state)
         min_size = min(len(nodes) for nodes in branches.values())
         roots = sorted(root for root, nodes in branches.items() if len(nodes) == min_size)
@@ -196,18 +383,11 @@ def _choose_parent(state: TipState, packet: TipPacket, condition: str, seed: int
             branches[root],
             key=lambda node: (node.direct_captures, node.last_touched_cycle, node.depth, node.node_id),
         )
-        return candidates[0]
-    if condition == "diffusive_tip_capture":
-        tips = _active_tips(state)
-        selected = _choose_uniform(tips, draw)
-        step = 0
-        penetration = float(config["penetration_probability"])
-        while selected.parent_id in state.active:
-            if stable_uniform("tip-penetration", seed, packet.event_id, step) >= penetration:
-                break
-            selected = state.nodes[str(selected.parent_id)]
-            step += 1
-        return selected
+        parent = candidates[0]
+        x, y = _adjacent_position(state, parent, seed, packet.event_id)
+        return AttachmentChoice(parent, x, y)
+    if condition == "diffusive_first_contact":
+        return _first_contact_attachment(state, seed, packet.event_id, config)
     raise ValueError(f"unknown attachment condition: {condition}")
 
 
@@ -229,6 +409,11 @@ def _candidate_row(state: TipState, node: IssueNode, condition: str, seed: int, 
         "branch_age": cycle - root.created_cycle,
         "is_tip": int(_is_tip(state, node)),
         "depth": node.depth,
+        "node_x": node.x,
+        "node_y": node.y,
+        "open_neighbor_count": _open_neighbor_count(state, node),
+        "radial_distance": round(_radial_distance(state, node), 10),
+        "local_density": _local_density(state, node),
         "capture_count_window": _capture_count(node, cycle, window),
         "branch_capture_share": round(_branch_capture_share(state, node, cycle, window), 10),
         "child_count": len(_active_children(state, node)),
@@ -371,6 +556,8 @@ def run_tip_capture_one(condition: str, policy: str, seed: int, packets: list[Ti
     probes: list[dict[str, Any]] = []
     top_hits: list[int] = []
     top_expected: list[float] = []
+    walker_steps_observed: list[int] = []
+    walker_fallbacks: list[int] = []
     max_active = 0
     max_depth = 0
     receipt_enabled = policy != "no_intervention"
@@ -378,7 +565,8 @@ def run_tip_capture_one(condition: str, policy: str, seed: int, packets: list[Ti
     dependency_edges = sorted(DEPENDENCY_EDGES)
 
     for cycle, packet in enumerate(packets, start=1):
-        parent = _choose_parent(state, packet, condition, seed, cycle, config)
+        attachment = _choose_attachment(state, packet, condition, seed, cycle, config)
+        parent = attachment.parent
         attached = parent is not None
         top_hit = 0
         expected_share = 0.0
@@ -386,6 +574,12 @@ def run_tip_capture_one(condition: str, policy: str, seed: int, packets: list[Ti
         parent_is_tip = 0
         parent_window = 0
         parent_branch_share = 0.0
+        parent_open_neighbors = 0
+        parent_radial_distance = 0.0
+        parent_local_density = 0
+        if attachment.walker_used:
+            walker_steps_observed.append(attachment.walker_steps)
+            walker_fallbacks.append(int(attachment.walker_fallback))
         if parent is not None:
             ranked = _exposure_rank(state, cycle, window)
             top_n = max(1, math.ceil(0.10 * len(ranked)))
@@ -400,6 +594,9 @@ def run_tip_capture_one(condition: str, policy: str, seed: int, packets: list[Ti
             parent_is_tip = int(_is_tip(state, parent))
             parent_window = _capture_count(parent, cycle, window)
             parent_branch_share = _branch_capture_share(state, parent, cycle, window)
+            parent_open_neighbors = _open_neighbor_count(state, parent)
+            parent_radial_distance = _radial_distance(state, parent)
+            parent_local_density = _local_density(state, parent)
             parent.direct_captures += 1
             parent.capture_cycles.append(cycle)
             parent.last_touched_cycle = cycle
@@ -428,6 +625,8 @@ def run_tip_capture_one(condition: str, policy: str, seed: int, packets: list[Ti
             last_touched_cycle=cycle,
             depth=depth,
             defect_strength=defect,
+            x=attachment.x,
+            y=attachment.y,
         )
         state.nodes[node_id] = node
         state.active.add(node_id)
@@ -493,11 +692,22 @@ def run_tip_capture_one(condition: str, policy: str, seed: int, packets: list[Ti
             "selected_parent_is_tip": parent_is_tip,
             "selected_parent_capture_window": parent_window,
             "selected_parent_branch_share": round(parent_branch_share, 10),
+            "selected_parent_open_neighbors": parent_open_neighbors,
+            "selected_parent_radial_distance": round(parent_radial_distance, 10),
+            "selected_parent_local_density": parent_local_density,
             "top_decile_capture": top_hit,
             "top_decile_expected_share": round(expected_share, 10),
             "new_node_id": node_id,
             "root_id": root_id,
             "new_node_depth": depth,
+            "new_node_x": attachment.x,
+            "new_node_y": attachment.y,
+            "walker_used": int(attachment.walker_used),
+            "walker_start_x": attachment.walker_start_x,
+            "walker_start_y": attachment.walker_start_y,
+            "walker_steps": attachment.walker_steps,
+            "walker_restarts": attachment.walker_restarts,
+            "walker_fallback": int(attachment.walker_fallback),
             "violation": int(violation),
             "system_failure": int(failure),
             "first_failure_this_cycle": int(first_failure_now),
@@ -539,6 +749,10 @@ def run_tip_capture_one(condition: str, policy: str, seed: int, packets: list[Ti
         "mean_top_decile_capture": mean(top_hits) if top_hits else None,
         "mean_top_decile_expected_share": mean(top_expected) if top_expected else None,
         "frontier_capture_lift": mean(top_hits) - mean(top_expected) if top_hits else None,
+        "walker_attachment_count": len(walker_steps_observed),
+        "walker_fallback_count": sum(walker_fallbacks),
+        "walker_fallback_rate": mean(float(value) for value in walker_fallbacks) if walker_fallbacks else None,
+        "mean_walker_steps": mean(float(value) for value in walker_steps_observed) if walker_steps_observed else None,
         "largest_branch_share": final_metrics["largest_branch_share"],
         "branch_hhi": final_metrics["branch_hhi"],
         "repair_attempts": state.repair_attempts,
@@ -818,6 +1032,7 @@ def analyze_tip_capture(cycles: list[dict[str, Any]], runs: list[dict[str, Any]]
             mean(float(row["selected_parent_is_tip"]) for row in attachment_rows)
             if attachment_rows else None
         )
+        walker_rows = [row for row in attachment_rows if int(row["walker_used"])]
         capture_by_condition[condition] = {
             "run_count": len(rows),
             "observed_top_decile_capture": observed,
@@ -825,6 +1040,15 @@ def analyze_tip_capture(cycles: list[dict[str, Any]], runs: list[dict[str, Any]]
             "frontier_capture_lift": observed - expected,
             "selected_parent_observation_count": len(attachment_rows),
             "selected_parent_tip_rate": selected_tip_rate,
+            "walker_attachment_count": len(walker_rows),
+            "walker_fallback_rate": (
+                mean(float(row["walker_fallback"]) for row in walker_rows)
+                if walker_rows else None
+            ),
+            "mean_walker_steps": (
+                mean(float(row["walker_steps"]) for row in walker_rows)
+                if walker_rows else None
+            ),
             "mean_largest_branch_share": mean(float(row["largest_branch_share"]) for row in rows),
             "mean_branch_hhi": mean(float(row["branch_hhi"]) for row in rows),
             "median_max_burial_depth": median(float(row["max_burial_depth"]) for row in rows),
@@ -833,7 +1057,7 @@ def analyze_tip_capture(cycles: list[dict[str, Any]], runs: list[dict[str, Any]]
 
     geometry = geometry_lift(candidates, experiment)
 
-    diffusive = "diffusive_tip_capture"
+    diffusive = "diffusive_first_contact"
     tip_random_yields: list[float] = []
     tip_random_violation_diffs: list[float] = []
     mapping = _runs_by_key(runs)
@@ -916,15 +1140,18 @@ def analyze_tip_capture(cycles: list[dict[str, Any]], runs: list[dict[str, Any]]
     null_geometry = geometry["uniform_null"]
     geometry_ci = diff_geometry["seed_gain_confidence_interval"]
     gates = {
-        "frontier_capture_concentration": {
+        "first_contact_frontier_concentration": {
             "passed": bool(
                 diff_capture["frontier_capture_lift"] >= float(thresholds["frontier_capture_lift_min"])
                 and diff_capture["frontier_capture_lift"] - null_capture["frontier_capture_lift"] >= float(thresholds["frontier_capture_lift_over_null_min"])
+                and diff_capture["walker_fallback_rate"] is not None
+                and diff_capture["walker_fallback_rate"] <= float(thresholds["max_walker_fallback_rate"])
             ),
             "observed": {"diffusive": diff_capture, "uniform_null": null_capture},
             "thresholds": {
                 "frontier_capture_lift_min": thresholds["frontier_capture_lift_min"],
                 "lift_over_null_min": thresholds["frontier_capture_lift_over_null_min"],
+                "max_walker_fallback_rate": thresholds["max_walker_fallback_rate"],
             },
         },
         "geometry_adds_heldout_prediction": {
@@ -976,8 +1203,8 @@ def analyze_tip_capture(cycles: list[dict[str, Any]], runs: list[dict[str, Any]]
     passed = sum(int(gate["passed"]) for gate in gates.values())
     status = "SURVIVES_ALL_PRE_REGISTERED_TIP_CAPTURE_GATES" if passed == len(gates) else "FAILS_ALL_PRE_REGISTERED_TIP_CAPTURE_GATES" if passed == 0 else "MIXED_TIP_CAPTURE_RESULT"
     return {
-        "schema": "openline.tip-capture.summary.v2",
-        "claim_label": "POWERED_SYNTHETIC_EXECUTION_TIP_CAPTURE",
+        "schema": "openline.tip-capture.summary.v3",
+        "claim_label": "POWERED_SYNTHETIC_FIRST_CONTACT_TIP_CAPTURE",
         "status": status,
         "passed_gate_count": passed,
         "gate_count": len(gates),
@@ -997,20 +1224,21 @@ def analyze_tip_capture(cycles: list[dict[str, Any]], runs: list[dict[str, Any]]
             "boundary": "Descriptive only. Successful parent-pointer traversal mechanically scales with path depth, so this is excluded from gate counting."
         },
         "reporting_disclosures": {
-            "even_spread_leaf_bias": {
+            "v031_even_spread_retired": {
                 "present": True,
-                "mechanism": "even_spread selects the least directly captured node inside the smallest active branch; in this graph, low-capture candidates are frequently leaves, so the condition has an unintended tip-selection bias",
-                "observed_selected_parent_tip_rate": capture_by_condition["even_spread"]["selected_parent_tip_rate"],
-                "comparison_tip_rates": {
-                    condition: values["selected_parent_tip_rate"]
-                    for condition, values in capture_by_condition.items()
-                },
-                "gate_status": "descriptive_design_artifact; no gate, seed, threshold, mechanism, or result was changed in v0.3.1",
+                "replacement": "least_capture_balancer",
+                "reason": "The old even_spread name implied a neutral anti-concentration control, but its least-captured-node rule preferentially selected fresh leaves. v0.4.0 retains the behavior under an accurate descriptive name and does not use it as a gate control.",
+            },
+            "first_contact_independence": {
+                "selector": "cardinal lattice random walk attaches at the first Moore-neighborhood contact",
+                "exposure_observable": "graph-tip status, open-neighbor count, centroid radius, local density, and depth",
+                "selector_reads_exposure_observable": False,
+                "selector_reads_capture_history": False,
             },
             "direction_reporting": "majority_direction and positive_direction_consistency are reported separately; ties remain in zero_count and are excluded from consistency denominators",
         },
         "gates": gates,
-        "claim_boundary": "This is a seeded mechanism-recovery test. The diffusive condition deliberately contains a stochastic tip-capture process; success shows the instrumentation can detect and exploit that process while the null condition checks specificity. It does not establish that deployed agents follow DLA or any physical fracture law.",
+        "claim_boundary": "This is a seeded mechanism-recovery test. The first-contact condition uses an explicit lattice random walk whose contact rule is independent of the reported spatial exposure heuristic; uniform attachment is the null. Success shows recovery of that declared synthetic mechanism, not that deployed agents follow DLA or any physical fracture law.",
     }
 
 
@@ -1022,6 +1250,7 @@ def tip_design_witness(experiment: dict[str, Any]) -> dict[str, Any]:
     log_cycles, log_run, _, _ = run_tip_capture_one("uniform_null", "logging_only", seed, packets, config, False)
     dynamic_fields = [
         "cycle", "event_id", "selected_parent_id", "new_node_id", "root_id", "new_node_depth", "violation",
+        "new_node_x", "new_node_y", "selected_parent_open_neighbors", "selected_parent_radial_distance",
         "system_failure", "active_unresolved", "active_tips", "branch_count", "largest_branch_share", "branch_hhi",
         "mean_burial_depth", "max_burial_depth", "retry_count", "context_length",
     ]
@@ -1030,14 +1259,17 @@ def tip_design_witness(experiment: dict[str, Any]) -> dict[str, Any]:
         for left, right in zip(no_cycles, log_cycles)
     )
     return {
-        "schema": "openline.tip-capture.design-witness.v1",
+        "schema": "openline.tip-capture.design-witness.v2",
         "seed_count_declared_before_run": len(config["seeds"]),
         "heldout_seed_count": len(config["heldout_seeds"]),
         "minimum_repair_pairs": config["analysis_plan"]["minimum_repair_pairs"],
         "matched_packets_across_conditions_and_policies": True,
         "logging_only_dynamics_match_no_intervention": dynamics_match and no_run["violations"] == log_run["violations"],
         "null_attachment_condition": "uniform_null",
-        "diffusive_attachment_is_stochastic": 0.0 < float(config["penetration_probability"]) < 1.0,
+        "first_contact_attachment_is_stochastic": int(config["dla_max_steps"]) > 0 and int(config["dla_max_restarts"]) > 0,
+        "first_contact_rule": "cardinal_random_walk_until_first_Moore_neighbor_contact",
+        "first_contact_selector_reads_exposure_rank": False,
+        "first_contact_selector_reads_capture_history": False,
         "exposure_rank_is_not_attachment_function": True,
         "repair_budget_interval_cycles": config["repair_every_cycles"],
         "candidate_model_policy": "logging_only_only_to_avoid_intervention_confound",

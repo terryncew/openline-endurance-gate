@@ -183,6 +183,44 @@ def _raw_cycle_reseal(temp: Path) -> dict[str, Any]:
     }
 
 
+def _walker_cycle_reseal(temp: Path) -> dict[str, Any]:
+    repo = _clone(temp)
+    path = repo / "results/tip_capture_cycles.csv"
+    rewritten = path.with_suffix(".tampered.csv")
+    changed = False
+    with path.open("r", newline="", encoding="utf-8") as source, rewritten.open("w", newline="", encoding="utf-8") as destination:
+        reader = csv.DictReader(source)
+        fields = list(reader.fieldnames or [])
+        required = {"walker_used", "walker_fallback", "walker_steps", "new_node_x"}
+        if required - set(fields):
+            raise RuntimeError("tip_capture_cycles.csv is missing first-contact evidence fields")
+        writer = csv.DictWriter(destination, fieldnames=fields)
+        writer.writeheader()
+        for row in reader:
+            if not changed and row.get("walker_used") == "1" and row.get("walker_fallback") == "0":
+                row["new_node_x"] = str(int(row["new_node_x"]) + 1)
+                changed = True
+            writer.writerow(row)
+    if not changed:
+        raise RuntimeError("no successful first-contact row available to tamper")
+    rewritten.replace(path)
+    _patch_manifest(repo, "results/tip_capture_cycles.csv")
+    _resign_with_patched_hashes(repo, ["results/tip_capture_cycles.csv"])
+    result = _verify_subprocess(repo, full_semantic=True)
+    detected = (
+        not result["valid"]
+        and result["chain"]["valid"]
+        and result["artifact_binding_valid"]
+        and not result["semantic_recomputation_valid"]
+        and "tip_capture_cycles_recompute_mismatch" in result["errors"]
+    )
+    return {
+        "detected": detected,
+        "verifier": result,
+        "attack": "mutate one first-contact lattice coordinate, patch hashes, replace keypair, resign chain",
+    }
+
+
 def _source_drift(temp: Path) -> dict[str, Any]:
     repo = _clone(temp)
     path = repo / "src/openline_endurance_gate/tip_capture.py"
@@ -199,6 +237,7 @@ def _source_drift(temp: Path) -> dict[str, Any]:
 def _attack_map():
     return {
         "resealed_raw_cycle_forgery": _raw_cycle_reseal,
+        "resealed_first_contact_forgery": _walker_cycle_reseal,
         "resealed_summary_forgery": _summary_reseal,
         "tail_truncation": _tail_truncation,
         "unpatched_source_drift": _source_drift,
@@ -222,7 +261,7 @@ def main() -> int:
 
     report: dict[str, Any] = {
         "schema": "openline.endurance.tamper-report.v2",
-        "release_version": "0.3.1",
+        "release_version": "0.4.0",
         "attacks": {},
         "execution_boundary": "Each hostile semantic attack runs in a fresh subprocess so verifier memory is released between witnesses.",
         "trust_boundary": {

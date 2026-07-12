@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_preregistration_locks_experiment_and_mechanisms():
     assert verify_preregistration(ROOT) == []
     prereg = json.loads((ROOT / "PREREGISTRATION.json").read_text())
+    assert prereg["schema"] == "openline.endurance.preregistration.v2"
     assert prereg["experiment_sha256"] == sha256_file(ROOT / "experiment.json")
     assert prereg["locked_design"]["randomness_coupling"] == "EVENT_BOUND_COMMON_RANDOM_NUMBERS"
     assert prereg["locked_design"]["tip_capture"]["analysis_plan"]["heldout_seed_count"] == 80

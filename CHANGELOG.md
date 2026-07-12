@@ -1,6 +1,24 @@
 # Changelog
 
+## 0.4.0 — Independent First-Contact Mechanism
+
+- Preserves v0.3.1 as the honest 7/10 failed baseline rather than rewriting its result.
+- Retires the misleading `even_spread` name and retains its behavior as descriptive `least_capture_balancer` lineage.
+- Replaces uniform-among-tips plus inward penetration with a cardinal lattice random walker that attaches at first contact.
+- Keeps the selector independent of the reported exposure ranking and capture history.
+- Exports lattice coordinates, walker starts, steps, restarts, fallbacks, spatial exposure fields, and exact Merkle commitments.
+- Adds a frozen walker-fallback ceiling to the frontier-concentration gate.
+- Retires 16 implementation-pilot seeds and freezes a disjoint 96-seed analysis block: 8 train, 8 validation, and 80 held out.
+- Preserves all five tip-capture gates and their material thresholds; repair remains free to lose.
+- Powered result: 8/10 gates passed. Independent first-contact concentration, spatial Geometry Lift, null specificity, and receipt ancestry passed; equal-budget tip-targeted repair and endurance load-order noncommutativity failed.
+
 ## 0.3.1 — Reporting Correction
+
+### Test and release-runner maintenance
+
+- Propagates the source-layout import path to Python subprocesses launched by the test suite, so a clean checkout does not require an undeclared editable install.
+- Makes `scripts/release_check.sh` delegate once to the Python release driver. The driver already owns the fresh-process semantic-finalization boundary; the old wrapper attempted to consume the same preflight twice.
+- Adds a regression test for single-owner release orchestration. No experiment mechanism, gate, threshold, seed, or scientific result changed.
 
 - Preserves every simulator mechanism, seed, threshold, gate, and scientific outcome from v0.3.0.
 - Replaces ambiguous `directional_consistency` in tip-capture effects with explicit `majority_direction`, `majority_direction_consistency`, and `positive_direction_consistency`.

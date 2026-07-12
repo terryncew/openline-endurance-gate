@@ -7,7 +7,8 @@
 - Damage parameters were absent from the failure generator and selected only through the declared train/validation split.
 - The powered tip-capture experiment used 96 fresh declared graph seeds: 8 train, 8 validation, and 80 held out.
 - The graph conditions receive matched packet streams; random and tip-targeted policies receive the same repair opportunities and budget.
-- `uniform_null` is a real uniform-attachment control, and the diffusive selector does not call the reported exposure heuristic.
+- `uniform_null` is a real uniform-attachment control, and the first-contact selector reads neither the reported exposure heuristic nor capture history.
+- Every successful first-contact attachment is bound to walker start, step count, restart count, contact coordinate, and parent coordinate; fallback rate is a frozen gate precondition.
 - Logging-only leaves graph dynamics unchanged relative to no intervention.
 - Geometry Lift is evaluated against event count, context length, unresolved count, retry count, node age, and branch age.
 - The retired graph pilot and its reason for retirement remain evidence-bound.
@@ -22,8 +23,8 @@
 - Selected damage or graph constants transfer across models, tools, workspaces, or agent assemblies.
 - A failed load-order gate proves history is commutative.
 - A frontier-concentration failure proves graph shape is irrelevant.
-- Geometry prediction alone proves that tip-targeted repair is useful; in this release, equal-budget tip-targeted repair failed its gate. Across 80 held-out pairs, 30 favored random repair, 14 favored tip-targeted repair, and 36 tied.
-- The high `even_spread` frontier lift validates diffusive tip capture. Its least-captured-node rule has an unintended leaf/tip bias and is disclosed as a design artifact.
+- Geometry prediction alone proves that tip-targeted repair is useful. The repair gate remained failed even after first-contact concentration was recovered: 20 held-out pairs favored random repair, 15 favored tip-targeted repair, and 45 tied.
+- The high `least_capture_balancer` frontier lift validates first-contact capture. It preserves the old leaf-biased behavior only as a descriptive lineage condition.
 - Receipts automatically stabilize or repair a system.
 - A signed receipt is truthful merely because its signature verifies.
 - Receipt ancestry will outperform prose summaries or other recovery methods in production.

@@ -6,9 +6,9 @@ This repository now runs two synthetic mechanism tests on the same dependency su
 
 The endurance test asks whether individually subcritical changes can consume residual coherence capacity across handoffs, and whether reordering the same event multiset changes cycles-to-first-failure. The proposed damage variable `D` is an observer. It never generates failure. Its parameters begin unfit, are selected on declared training and validation seeds, and are judged on untouched held-out seeds.
 
-The execution tip-capture test asks whether the shape of an unresolved dependency frontier predicts where later disturbances attach, whether that geometry adds information beyond ordinary counts and age, and whether equal-budget tip-targeted repair beats random repair. The diffusive attachment treatment deliberately contains stochastic tip capture; `uniform_null` is a genuine no-geometry specificity control.
+The execution tip-capture test asks whether the shape of an unresolved dependency frontier predicts where later disturbances attach, whether that geometry adds information beyond ordinary counts and age, and whether equal-budget tip-targeted repair beats random repair. The v0.4.0 treatment launches an explicit lattice random walker and attaches at first contact. The selector never reads the reported exposure score or capture history; `uniform_null` remains the genuine no-geometry specificity control.
 
-## v0.3.1: Reporting-Corrected Powered Endurance + Execution Tip Capture
+## v0.4.0: Independent First-Contact Tip Capture
 
 The endurance design retains the powered v0.2.0 experiment:
 
@@ -31,7 +31,7 @@ Primary order contrast
 = 80 paired differences
 ```
 
-The graph extension is frozen before its release run:
+The revised graph extension is frozen before its release run:
 
 ```text
 3 attachment conditions
@@ -42,17 +42,17 @@ The graph extension is frozen before its release run:
 = 69,120 graph-cycle observations
 ```
 
-The first 96-seed graph run is retained in `TIP_CAPTURE_PILOT_LOG.json` and excluded from the release analysis because it exposed a partly tautological burial-depth gate. That gate was retired before the fresh seed set ran. Simulator constants, attachment mechanics, repair mechanics, model features, thresholds, and the remaining gates stayed frozen.
+The v0.3.1 run remains the failed baseline: its uniform-among-tips selector missed the frontier-concentration gate, while the condition named `even_spread` produced a misleadingly large lift through a leaf-selection artifact. v0.4.0 renames that descriptive condition `least_capture_balancer` and replaces the diffusive selector with first-contact lattice walks. A separate 16-seed implementation pilot is retained in `TIP_CAPTURE_V040_PILOT_LOG.json`; all pilot seeds are excluded from the frozen 5101–5196 analysis block.
 
 ## Current bound result
 
-The release result is **mixed: 7 of 10 pre-registered gates passed**.
+The v0.4.0 powered result is **mixed: 8 of 10 pre-registered gates passed**.
 
 The endurance test passed fresh subcritical calibration, the matched amplitude gradient, held-out prediction from fitted `D`, and receipt-handoff advantage. Load-order noncommutativity did not pass.
 
-The tip-capture test passed geometry lift over count/age baselines, null specificity, and receipt-ancestry root recovery. Frontier concentration missed its material threshold, and tip-targeted repair did not beat equal-budget random repair. Across the 80 held-out repair pairs, 30 favored random repair, 14 favored tip-targeted repair, and 36 tied. v0.3.1 reports the majority direction explicitly and labels repair-yield and recovery-rate effects in their actual units.
+The first-contact treatment passed its previously failed concentration gate: frontier lift was 0.2537 versus −0.0042 for the uniform null, with a 0.00096 walker-fallback rate under the frozen 0.02 ceiling. Spatial Geometry Lift, null specificity, and receipt-ancestry root recovery also passed.
 
-That is the intended behavior of the instrument. A failed gate remains a failed gate.
+Tip-targeted repair still did not beat equal-budget random repair. Across 80 held-out pairs, 20 favored random repair, 15 favored tip-targeted repair, and 45 tied. The endurance load-order gate also remains failed. The prior 7/10 result stays in the v0.3.1 release; v0.4.0 advances to 8/10 without rewriting either loss.
 
 ## Four handoff mechanisms
 
@@ -70,8 +70,10 @@ Receipt ancestry can lose. A valid signature can preserve a wrong action perfect
 The attachment selector and the reported exposure metric are separate code paths.
 
 - `uniform_null` selects uniformly among active unresolved nodes.
-- `even_spread` chooses the least directly captured node inside the smallest active branch. In this synthetic graph, that creates an unintended leaf/tip bias; its unusually high frontier lift is a design artifact, not evidence for the diffusive hypothesis.
-- `diffusive_tip_capture` selects an active tip and may stochastically penetrate inward.
+- `least_capture_balancer` retains the old least-captured-node behavior under an accurate descriptive name. It is not a gate control.
+- `diffusive_first_contact` launches a cardinal lattice random walk and attaches at its first neighboring contact with an active node.
+
+The exposure observable ranks graph tips using open lattice neighbors, radius from the active centroid, local density, and depth. The first-contact selector does not call that ranking or read recent captures. Walker restarts and fallbacks are recorded in every raw cycle row, and the concentration gate fails if fallback exceeds its frozen ceiling.
 
 Every policy receives the same packet stream and repair opportunities. `random_repair` and `tip_targeted` spend the same repair budget. Logging-only is mechanically checked to leave graph dynamics unchanged.
 
@@ -89,7 +91,7 @@ Endurance:
 
 Execution tip capture:
 
-1. Diffusive attachment materially concentrates capture at exposed frontier nodes beyond the null.
+1. Independent first-contact attachment materially concentrates capture at exposed frontier nodes beyond the null while staying below the walker-fallback ceiling.
 2. Geometry adds held-out prediction over event count, context length, unresolved count, retries, node age, and branch age.
 3. The uniform null shows no material geometry lift.
 4. Equal-budget tip-targeted repair beats random repair.
@@ -117,7 +119,7 @@ bootstrap and sign-flip summaries
 fractography and tip-capture recomputation
 canonical cycle/candidate/probe Merkle roots
 public witness digest
-retired pilot disclosure binding
+retired pilot and v0.4.0 implementation-pilot disclosure binding
 ```
 
 Large graph CSVs are streamed into canonical Merkle roots before regeneration, keeping verifier memory bounded without replacing semantic recomputation with trust in stored summaries.
@@ -145,6 +147,7 @@ openline-endurance tip-capture --root .
 ```text
 PREREGISTRATION.json
 TIP_CAPTURE_PILOT_LOG.json
+TIP_CAPTURE_V040_PILOT_LOG.json
 experiment.json
 results/cycles.csv
 results/amplitude_cycles.csv

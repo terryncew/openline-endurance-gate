@@ -77,17 +77,16 @@ def test_fast_custody_verifier_passes_default_artifacts():
     assert result["valid"], result["errors"]
 
 
-def test_v031_tip_reporting_names_direction_units_and_even_spread_bias():
+def test_v040_tip_reporting_names_units_and_first_contact_boundary():
     tip = json.loads((ROOT / "results/tip_capture_summary.json").read_text())
     repair = tip["repair_effect"]
     assert repair["effect_unit"] == "violations_prevented_per_successful_repair"
-    assert repair["majority_direction"] == "random_repair_higher_yield_than_tip_targeted"
     assert repair["positive_direction"] == "tip_targeted_higher_yield_than_random_repair"
-    assert repair["positive_count"] == 14
-    assert repair["negative_count"] == 30
-    assert repair["zero_count"] == 36
-    assert repair["positive_direction_consistency"] == 14 / 44
+    assert repair["positive_count"] + repair["negative_count"] + repair["zero_count"] == 80
     assert "median_difference_cycles" not in repair
-    disclosure = tip["reporting_disclosures"]["even_spread_leaf_bias"]
+    disclosure = tip["reporting_disclosures"]["v031_even_spread_retired"]
     assert disclosure["present"] is True
-    assert disclosure["observed_selected_parent_tip_rate"] == tip["capture_by_condition"]["even_spread"]["selected_parent_tip_rate"]
+    assert disclosure["replacement"] == "least_capture_balancer"
+    independence = tip["reporting_disclosures"]["first_contact_independence"]
+    assert independence["selector_reads_exposure_observable"] is False
+    assert independence["selector_reads_capture_history"] is False

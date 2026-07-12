@@ -1,0 +1,53 @@
+{
+  "schema": "openline.tip-capture.pilot-log.v2",
+  "release_target": "0.4.0",
+  "purpose": "Implementation-only pilot for the independent lattice first-contact mechanism before freezing final analysis seeds.",
+  "pilot_seeds": [
+    4901,
+    4902,
+    4903,
+    4904,
+    4905,
+    4906,
+    4907,
+    4908,
+    4909,
+    4910,
+    4911,
+    4912,
+    4913,
+    4914,
+    4915,
+    4916
+  ],
+  "final_analysis_seeds": {
+    "training": "5101-5108",
+    "validation": "5109-5116",
+    "heldout": "5117-5196"
+  },
+  "pilot_seed_exclusion": "All pilot seeds are permanently excluded from the v0.4.0 powered analysis.",
+  "mechanism": {
+    "condition": "diffusive_first_contact",
+    "rule": "A cardinal lattice random walker attaches at its first Moore-neighborhood contact with an active node.",
+    "selector_reads_reported_exposure": false,
+    "selector_reads_capture_history": false,
+    "least_capture_lineage": "The v0.3.1 even_spread behavior is retained under the accurate descriptive name least_capture_balancer and is not a gate control."
+  },
+  "pilot_observation": {
+    "first_contact_frontier_capture_lift": 0.24661355245760275,
+    "uniform_null_frontier_capture_lift": 0.001582140156453582,
+    "first_contact_walker_fallback_rate": 0.0,
+    "first_contact_geometry_logloss_gain": 0.03999548320618651,
+    "first_contact_geometry_auc_gain": 0.07651664048815388,
+    "tip_targeted_repair_median_gain": 0.0,
+    "passed_gate_count_preview": 4,
+    "gate_count": 5
+  },
+  "decision": {
+    "action": "FREEZE_MECHANISM_AND_RUN_FRESH_SEEDS",
+    "parameter_changes_after_pilot": [],
+    "threshold_changes_after_pilot": [],
+    "reason": "The pilot showed first-contact concentration without fallback or capture-history leakage. The repair gate remained free to fail."
+  },
+  "claim_boundary": "This pilot checks implementation behavior and cannot support the final scientific claim. Only the preregistered 5101-5196 run may decide the v0.4.0 gates."
+}

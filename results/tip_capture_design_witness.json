@@ -1,13 +1,16 @@
 {
   "candidate_model_policy": "logging_only_only_to_avoid_intervention_confound",
-  "diffusive_attachment_is_stochastic": true,
   "exposure_rank_is_not_attachment_function": true,
+  "first_contact_attachment_is_stochastic": true,
+  "first_contact_rule": "cardinal_random_walk_until_first_Moore_neighbor_contact",
+  "first_contact_selector_reads_capture_history": false,
+  "first_contact_selector_reads_exposure_rank": false,
   "heldout_seed_count": 80,
   "logging_only_dynamics_match_no_intervention": true,
   "matched_packets_across_conditions_and_policies": true,
   "minimum_repair_pairs": 80,
   "null_attachment_condition": "uniform_null",
   "repair_budget_interval_cycles": 4,
-  "schema": "openline.tip-capture.design-witness.v1",
+  "schema": "openline.tip-capture.design-witness.v2",
   "seed_count_declared_before_run": 96
 }
