@@ -1,3 +1,5 @@
+import csv
+import gzip
 import json
 import os
 import subprocess
@@ -25,6 +27,18 @@ def test_default_run_has_expected_powered_artifacts_and_heldout_split():
     spacing = experiment["collision_spacing"]
     assert len(read_csv(ROOT / "results/collision_spacing_runs.csv")) == len(spacing["seeds"]) * len(spacing["schedules"])
     assert len(read_csv(ROOT / "results/collision_spacing_events.csv")) == len(spacing["seeds"]) * len(spacing["schedules"]) * spacing["events_per_run"]
+    generational = experiment["generational_endurance"]
+    assert len(read_csv(ROOT / "results/generational_runs.csv")) == len(generational["seeds"]) * 6
+    assert len(read_csv(ROOT / "results/generational_cycles.csv")) == len(generational["seeds"]) * 6 * generational["max_horizon_cycles"]
+    restoration = experiment["state_restoration"]
+    assert len(read_csv(ROOT / "results/state_restoration_runs.csv")) == len(restoration["seeds"]) * 9
+    cycle_count = 0
+    shards = sorted((ROOT / "results").glob("state_restoration_cycles.part-*.csv.gz"))
+    assert len(shards) == 8
+    for shard in shards:
+        with gzip.open(shard, "rt", newline="", encoding="utf-8") as handle:
+            cycle_count += sum(1 for _ in csv.DictReader(handle))
+    assert cycle_count == len(restoration["seeds"]) * 9 * restoration["max_horizon_cycles"]
 
 
 def test_summary_exposes_every_gate_and_power_boundary():
@@ -57,6 +71,17 @@ def test_design_and_fractography_witnesses_are_present():
     assert spacing_design["ulam_random_a_same_gap_multiset"]
     assert spacing_design["common_random_draw_key_excludes_schedule"]
     assert spacing_summary["heldout_seed_count"] == 80
+    generational_design = json.loads((ROOT / "results/generational_design_witness.json").read_text())
+    generational_summary = json.loads((ROOT / "results/generational_summary.json").read_text())
+    assert generational_design["heldout_seed_count"] == 80
+    assert generational_design["capsule_budget_tokens"] == generational_design["summary_budget_tokens"]
+    assert generational_summary["maximum_verified_horizon_cycles"] == 80
+    restoration_design = json.loads((ROOT / "results/state_restoration_design_witness.json").read_text())
+    restoration_summary = json.loads((ROOT / "results/state_restoration_summary.json").read_text())
+    assert restoration_design["heldout_seed_count"] == 80
+    assert restoration_design["fixed_retirement_interval_cycles"] == 85
+    assert restoration_design["telemetry_status"] == "SYNTHETIC_PROXY_NOT_PHYSICAL_IDENTIFICATION"
+    assert restoration_summary["gate_count"] == 9
 
 
 def test_fast_custody_verifier_passes_default_artifacts():
@@ -83,6 +108,7 @@ def test_fast_custody_verifier_passes_default_artifacts():
     result = json.loads(completed.stdout)
     assert completed.returncode == 0, completed.stderr
     assert result["valid"], result["errors"]
+    assert result["release_attestation_valid"] is True
 
 
 def test_v040_tip_reporting_names_units_and_first_contact_boundary():

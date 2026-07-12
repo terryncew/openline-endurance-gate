@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
+import io
 import json
 import os
 import shutil
@@ -24,7 +26,13 @@ from openline_endurance_gate.receipts import (
     write_anchor,
     write_chain,
 )
+from openline_endurance_gate.release_attestation import write_release_attestation
 from openline_endurance_gate.util import sha256_file
+from openline_endurance_gate.experiment import load_experiment
+from openline_endurance_gate.semantic_phases import verify_state_restoration_shard
+from openline_endurance_gate.state_restoration import analyze_state_restoration
+from openline_endurance_gate.verification import _close, _coerce, _v7_expected_summary
+from openline_endurance_gate.util import read_csv
 
 
 def _verify_subprocess(repo: Path, full_semantic: bool = True) -> dict[str, Any]:
@@ -118,6 +126,23 @@ def _tail_truncation(temp: Path) -> dict[str, Any]:
     return {"detected": detected, "verifier": result}
 
 
+def _light_summary_verification(repo: Path) -> dict[str, Any]:
+    result = _verify_subprocess(repo, full_semantic=False)
+    experiment = load_experiment(repo / "experiment.json")
+    runs = _coerce(read_csv(repo / "results/state_restoration_runs.csv"))
+    restoration = analyze_state_restoration(runs, experiment)
+    expected = _v7_expected_summary(repo, restoration)
+    stored = json.loads((repo / "results/summary.json").read_text(encoding="utf-8"))
+    summary_match = _close(expected, stored, 1e-7)
+    errors = list(result.get("errors", []))
+    if not summary_match:
+        errors.append("summary_semantic_recompute_mismatch")
+    result["errors"] = errors
+    result["semantic_recomputation_valid"] = summary_match
+    result["valid"] = bool(result.get("valid") and summary_match)
+    return result
+
+
 def _summary_reseal(temp: Path) -> dict[str, Any]:
     repo = _clone(temp)
     path = repo / "results/summary.json"
@@ -128,12 +153,11 @@ def _summary_reseal(temp: Path) -> dict[str, Any]:
     path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     _patch_manifest(repo, "results/summary.json")
     _resign_with_patched_hashes(repo, ["results/summary.json"])
-    result = _verify_subprocess(repo, full_semantic=True)
+    result = _light_summary_verification(repo)
     detected = (
-        not result["valid"]
+        not result["semantic_recomputation_valid"]
         and result["chain"]["valid"]
         and result["artifact_binding_valid"]
-        and not result["semantic_recomputation_valid"]
         and "summary_semantic_recompute_mismatch" in result["errors"]
     )
     return {"detected": detected, "verifier": result, "attack": "flip one gate, patch hashes, replace keypair, resign chain"}
@@ -161,8 +185,8 @@ def _raw_cycle_reseal(temp: Path) -> dict[str, Any]:
     rewritten.replace(path)
     _patch_manifest(repo, "results/cycles.csv")
     _resign_with_patched_hashes(repo, ["results/cycles.csv"])
-    result = _verify_subprocess(repo, full_semantic=True)
-    expected = "v040_lineage_hash_mismatch:results/cycles.csv"
+    result = _verify_subprocess(repo, full_semantic=False)
+    expected = "v060_lineage_hash_mismatch:results/cycles.csv"
     detected = (
         not result["valid"]
         and result["chain"]["valid"]
@@ -199,19 +223,54 @@ def _collision_cycle_reseal(temp: Path) -> dict[str, Any]:
     rewritten.replace(path)
     _patch_manifest(repo, "results/collision_spacing_events.csv")
     _resign_with_patched_hashes(repo, ["results/collision_spacing_events.csv"])
-    result = _verify_subprocess(repo, full_semantic=True)
+    result = _verify_subprocess(repo, full_semantic=False)
     detected = (
         not result["valid"]
         and result["chain"]["valid"]
-        and result["artifact_binding_valid"]
-        and not result["semantic_recomputation_valid"]
-        and "collision_spacing_events_recompute_mismatch" in result["errors"]
+        and not result.get("lineage_binding_valid", True)
+        and "v060_lineage_hash_mismatch:results/collision_spacing_events.csv" in result["errors"]
     )
     return {
         "detected": detected,
         "verifier": result,
         "attack": "mutate one collision-spacing damage row, patch hashes, replace keypair, resign chain",
     }
+
+def _generational_cycle_reseal(temp: Path) -> dict[str, Any]:
+    repo = _clone(temp)
+    path = repo / "results/generational_cycles.csv"
+    rewritten = path.with_suffix(".tampered.csv")
+    changed = False
+    with path.open("r", newline="", encoding="utf-8") as source, rewritten.open("w", newline="", encoding="utf-8") as destination:
+        reader = csv.DictReader(source)
+        fields = list(reader.fieldnames or [])
+        if "active_context_tokens" not in fields:
+            raise RuntimeError("generational_cycles.csv is missing active_context_tokens")
+        writer = csv.DictWriter(destination, fieldnames=fields)
+        writer.writeheader()
+        for row in reader:
+            if not changed and row.get("active_context_tokens") not in {None, ""}:
+                row["active_context_tokens"] = str(int(float(row["active_context_tokens"])) + 1)
+                changed = True
+            writer.writerow(row)
+    if not changed:
+        raise RuntimeError("no generational context value available to tamper")
+    rewritten.replace(path)
+    _patch_manifest(repo, "results/generational_cycles.csv")
+    _resign_with_patched_hashes(repo, ["results/generational_cycles.csv"])
+    result = _verify_subprocess(repo, full_semantic=False)
+    detected = (
+        not result["valid"]
+        and result["chain"]["valid"]
+        and not result.get("lineage_binding_valid", True)
+        and "v060_lineage_hash_mismatch:results/generational_cycles.csv" in result["errors"]
+    )
+    return {
+        "detected": detected,
+        "verifier": result,
+        "attack": "mutate one generational active-context value, patch hashes, replace keypair, resign chain",
+    }
+
 
 def _walker_cycle_reseal(temp: Path) -> dict[str, Any]:
     repo = _clone(temp)
@@ -236,12 +295,12 @@ def _walker_cycle_reseal(temp: Path) -> dict[str, Any]:
     rewritten.replace(path)
     _patch_manifest(repo, "results/tip_capture_cycles.csv")
     _resign_with_patched_hashes(repo, ["results/tip_capture_cycles.csv"])
-    result = _verify_subprocess(repo, full_semantic=True)
+    result = _verify_subprocess(repo, full_semantic=False)
     detected = (
         not result["valid"]
         and result["chain"]["valid"]
         and not result.get("lineage_binding_valid", True)
-        and "v040_lineage_hash_mismatch:results/tip_capture_cycles.csv" in result["errors"]
+        and "v060_lineage_hash_mismatch:results/tip_capture_cycles.csv" in result["errors"]
     )
     return {
         "detected": detected,
@@ -250,17 +309,117 @@ def _walker_cycle_reseal(temp: Path) -> dict[str, Any]:
     }
 
 
+
+def _state_restoration_cycle_reseal(temp: Path) -> dict[str, Any]:
+    repo = _clone(temp)
+    relative = "results/state_restoration_cycles.part-000.csv.gz"
+    path = repo / relative
+    rewritten = path.with_name(path.name + ".tampered")
+    changed = False
+    with gzip.open(path, "rt", newline="", encoding="utf-8") as source, rewritten.open("wb") as raw:
+        with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as gz, io.TextIOWrapper(
+            gz, encoding="utf-8", newline=""
+        ) as destination:
+            reader = csv.DictReader(source)
+            fields = list(reader.fieldnames or [])
+            if "rolling_noise_epsilon" not in fields:
+                raise RuntimeError("state-restoration shard is missing rolling_noise_epsilon")
+            writer = csv.DictWriter(destination, fieldnames=fields)
+            writer.writeheader()
+            for row in reader:
+                if not changed and row.get("rolling_noise_epsilon") not in {None, ""}:
+                    row["rolling_noise_epsilon"] = f"{float(row['rolling_noise_epsilon']) + 0.001:.10f}"
+                    changed = True
+                writer.writerow(row)
+    if not changed:
+        raise RuntimeError("no state-restoration telemetry value available to tamper")
+    rewritten.replace(path)
+    _patch_manifest(repo, relative)
+    _resign_with_patched_hashes(repo, [relative])
+    fast = _verify_subprocess(repo, full_semantic=False)
+    shard = verify_state_restoration_shard(repo, 0, persist=False)
+    detected = (
+        fast["chain"]["valid"]
+        and fast["artifact_binding_valid"]
+        and not shard["passed"]
+        and not shard["cycle_bytes_match"]
+    )
+    return {
+        "detected": detected,
+        "verifier": fast,
+        "semantic_shard": shard,
+        "attack": "mutate one compressed state-restoration telemetry row, patch hashes, replace keypair, resign chain",
+    }
+
 def _source_drift(temp: Path) -> dict[str, Any]:
     repo = _clone(temp)
-    path = repo / "src/openline_endurance_gate/tip_capture.py"
+    path = repo / "src/openline_endurance_gate/generational.py"
     path.write_text(path.read_text(encoding="utf-8") + "\n# attacker source drift\n", encoding="utf-8")
     result = _verify_subprocess(repo, full_semantic=False)
     detected = (
         not result["valid"]
-        and any(error.startswith("manifest_hash_mismatch:src/openline_endurance_gate/tip_capture.py") for error in result["errors"])
-        and any(error.startswith("preregistration_mechanism_hash_mismatch:src/openline_endurance_gate/tip_capture.py") for error in result["errors"])
+        and any(error.startswith("manifest_hash_mismatch:src/openline_endurance_gate/generational.py") for error in result["errors"])
+        and any(error.startswith("preregistration_mechanism_hash_mismatch:src/openline_endurance_gate/generational.py") for error in result["errors"])
     )
     return {"detected": detected, "verifier": result}
+
+
+def _release_report_mutation(temp: Path) -> dict[str, Any]:
+    repo = _clone(temp)
+
+    # This attack must be runnable before the real release attestation exists;
+    # otherwise the tamper suite and final attestation depend on each other.
+    # Build a minimal internally consistent provisional pair in the isolated
+    # clone, attest it, then mutate only the release verdict.
+    experiment = json.loads((repo / "experiment.json").read_text(encoding="utf-8"))
+    chain = verify_chain(repo / "receipts/experiment.jsonl", repo / "receipts/experiment.anchor.json")
+    provisional_tamper = {
+        "schema": "openline.endurance.tamper-report.provisional.v1",
+        "release_version": experiment["release_version"],
+        "passed": True,
+        "attacks": {},
+        "report_role": "ISOLATED_ATTACK_FIXTURE",
+    }
+    provisional_run = {
+        "schema": "openline.endurance.release-report.provisional.v1",
+        "passed": True,
+        "semantic_verification": {
+            "valid": True,
+            "chain": {
+                "chain_digest": chain["chain_digest"],
+                "tail_hash": chain["tail_hash"],
+            },
+        },
+        "tamper_suite": {
+            "returncode": 0,
+            "report": provisional_tamper,
+        },
+    }
+    (repo / "TAMPER_REPORT.json").write_text(
+        json.dumps(provisional_tamper, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    path = repo / "RUN_REPORT.json"
+    path.write_text(json.dumps(provisional_run, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    write_release_attestation(repo)
+
+    report = json.loads(path.read_text(encoding="utf-8"))
+    report["passed"] = False
+    path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result = _verify_subprocess(repo, full_semantic=False)
+    detected = (
+        not result["valid"]
+        and result["chain"]["valid"]
+        and not result.get("release_attestation_valid", True)
+        and "release_attestation_artifact_hash_mismatch:RUN_REPORT.json" in result["errors"]
+    )
+    return {
+        "detected": detected,
+        "verifier": result,
+        "attack": (
+            "establish a valid provisional detached release receipt in an isolated clone, "
+            "then edit the final release verdict without touching scientific artifacts"
+        ),
+    }
 
 
 def _attack_map():
@@ -268,9 +427,12 @@ def _attack_map():
         "resealed_raw_cycle_forgery": _raw_cycle_reseal,
         "resealed_first_contact_forgery": _walker_cycle_reseal,
         "resealed_collision_spacing_forgery": _collision_cycle_reseal,
+        "resealed_generational_forgery": _generational_cycle_reseal,
+        "resealed_state_restoration_forgery": _state_restoration_cycle_reseal,
         "resealed_summary_forgery": _summary_reseal,
         "tail_truncation": _tail_truncation,
         "unpatched_source_drift": _source_drift,
+        "release_report_mutation": _release_report_mutation,
     }
 
 
@@ -282,10 +444,10 @@ def _run_single_attack(name: str) -> int:
     return 0 if result["detected"] else 1
 
 
-def _aggregate_reports(directory: Path) -> int:
+def _aggregate_reports(directory: Path, output_path: Path) -> int:
     report: dict[str, Any] = {
-        "schema": "openline.endurance.tamper-report.v3",
-        "release_version": "0.5.0",
+        "schema": "openline.endurance.tamper-report.v6",
+        "release_version": json.loads((ROOT / "experiment.json").read_text(encoding="utf-8"))["release_version"],
         "attacks": {},
         "execution_boundary": "Each complete hostile attack, including its semantic verifier, ran as a separate top-level Python process under a low-memory shell orchestrator.",
         "trust_boundary": {
@@ -304,7 +466,13 @@ def _aggregate_reports(directory: Path) -> int:
             item = {"detected": False, "runner_error": f"invalid isolated report: {exc}"}
         report["attacks"][name] = item
     report["passed"] = all(item.get("detected") for item in report["attacks"].values())
-    (ROOT / "TAMPER_REPORT.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    output_path = output_path.resolve()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    report["report_role"] = (
+        "RELEASE_ATTESTATION_INPUT" if output_path == (ROOT / "TAMPER_REPORT.json").resolve()
+        else "STANDALONE_UNATTESTED_WITNESS"
+    )
+    output_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["passed"] else 1
 
@@ -313,11 +481,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--attack", choices=list(_attack_map()))
     parser.add_argument("--aggregate-dir", type=Path)
+    parser.add_argument("--output", type=Path, default=ROOT / "TAMPER_REPORT.standalone.json")
     args = parser.parse_args()
     if args.attack:
         return _run_single_attack(args.attack)
     if args.aggregate_dir:
-        return _aggregate_reports(args.aggregate_dir)
+        return _aggregate_reports(args.aggregate_dir, args.output)
 
     shell = ROOT / "scripts" / "tamper_check.sh"
     if os.name != "nt" and shell.exists():

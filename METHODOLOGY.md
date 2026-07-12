@@ -2,143 +2,68 @@
 
 ## Question
 
-Can individually subcritical requirement changes accumulate history-dependent failure across agent handoffs, and does a fitted cumulative damage variable predict failure beyond current-state observables?
+Do pruning, instance retirement, telemetry-triggered restoration, or ECC-style correction add endurance beyond a verified inheritance capsule?
 
-The synthetic world is a mechanism test, not evidence that deployed models possess literal material fatigue.
+## Matched modes
 
-## Hidden ground truth and invariants
+Each of 96 declared seeds runs the same 320-event packet with mode excluded from every event-bound random draw. Eight seeds are training, eight validation, and 80 held out.
 
-The toy repository has six latent requirement variables. A deterministic solver maps them into twelve configuration fields. Twelve immutable tests define the consistency and safety boundary.
+1. `capsule_baseline` uses the inherited verified capsule every 20 cycles.
+2. `scheduled_prune_80` prunes active state every 80 cycles.
+3. `fixed_retirement_85` starts a fresh instance every 85 cycles and reconstructs state from verified records.
+4. `telemetry_breaker` restores when the synthetic noise or margin trigger crosses its frozen threshold.
+5. `ecc_digest` checks state every 10 cycles and attempts one graph-prioritized correction.
+6. `restoration_stack` combines adaptive restoration and ECC.
+7. `sham_retirement_85` follows the same restart schedule while preserving defects and noise.
 
-The simulated assembly carries an estimated requirement state, a configuration, known causal edges, unresolved notes, and a handoff representation. Only `fresh_ground_truth` receives canonical state directly each cycle.
+The pressure-disabled null repeats baseline and stack with context pressure removed and exogenous noise reduced.
 
-## Matched load schedules
+## Frozen design
 
-Each seed generates one multiset of seven low, six medium, and seven high events. Every event has a fixed id, target, sign, ambiguity draw, correction draw, and token cost. The four schedules reorder those exact events.
+- horizons: 160 and 320 cycles;
+- generation boundary: every 20 cycles;
+- scheduled pruning: every 80 cycles;
+- fixed retirement: every 85 cycles;
+- ECC interval: every 10 cycles;
+- adaptive trigger begins after cycle 40;
+- epsilon trigger: 0.63;
+- margin trigger: 0.16;
+- restoration cooldown: 30 cycles;
+- held-out seeds: 8117–8196;
+- material median-life gain: 4 cycles for pruning/fixed retirement and 2 cycles for adaptive/ECC comparisons;
+- significance ceiling: 0.10;
+- minimum survival for absolute horizon gates: 0.50.
 
-Requirement deltas are additive, so all schedules reach the same final ground truth.
+All mechanisms, thresholds, gates, and seeds were frozen before the held-out block opened. `STATE_RESTORATION_PILOT_LOG.json` preserves the excluded pilot and validation history.
 
-### Common random numbers
+## Failure endpoint
 
-v0.2.0 binds application, correction, compression, reference, and checkpoint random draws to event identity or checkpoint position. The schedule label is excluded from those keys.
+A transient action error is not automatically permanent failure. A run fails when the system crosses the declared invariant, configuration-accuracy, omission, or negative-margin hazard rule. Restoration can quarantine invalid records and reconstruct requirement state from the signed ledger.
 
-For a given event and mode, the latent uniform draw is therefore identical across schedules. Different outcomes can arise only because the preceding state changes the decision threshold or because the event occurs at a different point in the history.
+## Anti-rigging controls
 
-This corrects a confound in v0.1.0, where schedule labels generated independent random draws.
+The sham restart asks whether a fresh process wins while inheriting the same defects. The pressure-disabled null asks whether the stack receives an automatic advantage after the modeled pressure mechanism is removed. Both can fail.
 
-## Matched amplitude sweep
+## Gates
 
-The low, medium, and high amplitude conditions share event ids, targets, signs, and latent random draws at each cycle. Amplitude alone changes delta magnitude, ambiguity transformation, correction threshold, and token cost.
+The nine preregistered gates test:
 
-This replaces the earlier sweep, which generated a different random event set for each amplitude.
+- pruning versus capsule baseline;
+- fixed retirement versus baseline;
+- telemetry breaker versus fixed retirement;
+- ECC versus baseline;
+- absolute stack survival through 160;
+- absolute stack survival through 320;
+- checkpoint-accuracy preservation;
+- sham-restart specificity;
+- pressure-disabled null specificity.
 
-## Failure and censoring
+Absolute horizon gates and paired relative-effect gates are separate. Passing 320 does not silently convert a zero paired median into a material relative win.
 
-First failure occurs when either:
+## Evidence and verification
 
-- a consequential configuration error produces an unsafe action attempt; or
-- a five-cycle checkpoint falls below 11 correct fields out of 12.
+The release stores 276,480 cycle rows in eight deterministic gzip shards, plus 864 run summaries. Sharding is evidence plumbing only: shards split at fixed 12-seed boundaries, lexical decompression preserves the original seed/mode/cycle order, and their raw canonical Merkle leaves are combined before global reduction.
 
-Runs continue after first failure so later state remains observable. Hazard models use only at-risk cycles. A run with no failure by cycle 20 is recorded as `N_f = 21` and treated as right-censored at the fixed horizon in survival summaries.
+The semantic verifier can run as eight bounded independent phases. Each phase regenerates its cycle shard byte-for-byte and compares its run metrics. The finalizer combines all fresh leaves, recomputes the global cycle and run roots, all nine gates, the design witness, the public witness, the signed experiment chain, and the pinned v0.6 lineage.
 
-## Coherence observables
-
-For each cycle the harness records `kappa`, `phi_star`, `VKD`, `epsilon`, and `delta_hol`, plus operational state such as context pressure, unresolved dependencies, retry count, handoff loss, token representation size, and cycle index.
-
-The simulator does not read `D`, `m`, `beta`, `lambda`, `mu`, or `tau_r` while generating outcomes.
-
-## Damage fitting
-
-The declared parameter grid lives in `experiment.json` before the run.
-
-- Four seeds fit candidate one-variable hazard models.
-- Two validation seeds select the candidate with minimum log loss.
-- Twenty held-out seeds evaluate final models.
-
-The fit report includes the ten best candidates, the number of near-ties, grid-boundary hits, saturation behavior, and an identifiability warning. A selected coefficient is called simulation-calibrated, never universal.
-
-## Prediction witnesses
-
-The held-out comparison includes:
-
-```text
-cycle only
-current Coherence Dynamics observables
-CD + cycle
-operational state
-operational state + cycle
-CD + D
-operational state + D
-operational state + cycle + D
-```
-
-The original gate asks whether `D` improves over current CD. The stronger robustness witness asks whether it still improves over cycle plus operational state.
-
-## Sequence test
-
-The primary contrast is paired `N_f(low_to_high) - N_f(high_to_low)` within held-out seed and handoff mode.
-
-Pre-registered requirements:
-
-```text
-80 paired differences
-absolute median effect >= 2 cycles
-exact two-sided sign-flip p <= 0.10
-```
-
-The sign-flip distribution is computed exactly by dynamic programming for integer cycle differences. No pair is discarded. Confidence intervals use deterministic percentile bootstrap resampling.
-
-All other schedule contrasts are exploratory and receive Holm adjustment.
-
-## Fractography witness
-
-A cycle's crack load is the observed burden of unresolved dependencies, invariant failures, newly added contradictions, and unsafe attempts. Co-occurring nodes form an undirected diagnostic graph.
-
-The analyzer reports crack origin, peak, burden, unresolved span, repair half-life, and the largest connected cluster. These measurements describe the synthetic trace surface. They do not establish a physical crack mechanism.
-
-## Integrity
-
-`PREREGISTRATION.json` binds the experiment configuration and mechanism files before results are generated. Raw rows are committed by Merkle roots. A signed receipt chain binds run summaries and evidence artifacts. In v0.5, the verifier pins the released v0.4 mechanisms and evidence byte-for-byte through `V040_LINEAGE.json`, then independently regenerates all consequential v0.5 collision-spacing claims from the frozen mechanism and seed block.
-
-The local anchor cannot defend against an attacker replacing the entire repository and generating a new keypair. External publication of the compact witness digest is the next trust boundary.
-
-## Execution tip-capture extension
-
-The graph extension reuses the endurance dependency substrate. Each disturbance creates or attaches to an unresolved dependency node embedded on an integer lattice. The attachment conditions are `uniform_null`, `least_capture_balancer`, and `diffusive_first_contact`. The first-contact treatment launches a cardinal random walker outside the active bounding box and attaches at its first Moore-neighborhood contact. Its path never reads the reported exposure ranking or capture history. Walker starts, steps, restarts, fallbacks, contact coordinates, and node coordinates are exported as raw evidence.
-
-The reported exposure ranking is a separate spatial heuristic: graph-tip status first, followed by open neighboring cells, radius from the active centroid, lower local density, and graph depth. Geometry Lift uses those spatial fields against the same count-and-age baseline. `least_capture_balancer` retains the v0.3.1 least-captured-node behavior under a descriptive name; its leaf bias remains visible and it is not used as a neutral control or supporting gate.
-
-Every attachment condition and policy receives packet-bound common random numbers. The five policies are no intervention, logging only, random repair, oldest-first repair, and tip-targeted repair. Random and tip-targeted policies receive identical repair opportunities and budgets. Logging records ancestry without changing the graph.
-
-The v0.4.0 design uses 96 fresh seeds, 5101–5196: 8 train, 8 validation, and 80 held out. The 16 implementation-pilot seeds 4901–4916 are retained in `TIP_CAPTURE_V040_PILOT_LOG.json` and permanently excluded. No parameter or threshold changed after that pilot. The older v0.3.1 seed block and result remain historical evidence rather than being overwritten.
-
-The primary graph witnesses are frontier capture concentration, held-out Geometry Lift beyond count/age baselines, null specificity, equal-budget repair yield, and receipt-ancestry root recovery. Burial depth, shielding, branch concentration, and oldest-first behavior remain descriptive unless named in a gate.
-
-Receipts preserve ancestry and visible pointers. They do not directly close defects. Any outcome change requires a gate, rollback, quarantine, or repair policy that actually consults the receipt structure.
-
-## Inherited graph evidence binding
-
-The v0.4 release established the first-contact graph result. v0.5 preserves that result as pinned lineage rather than silently rerunning the expensive inherited simulator. `V040_LINEAGE.json` commits the released v0.4 raw artifacts, summaries, receipts, and mechanism files; any inherited change breaks the lineage witness. The v0.5 verifier independently regenerates only the new collision-spacing events, run summaries, gates, and design witness, with exact canonical Merkle comparison.
-
-## v0.3.1 reporting correction
-
-The scientific run is unchanged. Paired repair-yield effects are reported in violations prevented per successful repair, violation contrasts in violation counts, and ancestry recovery effects in recovery-rate points. Reports now separate the majority direction from consistency in the preregistered positive direction. Tied pairs remain explicit and are excluded from both nonzero-direction consistency denominators.
-
-## v0.4.0 mechanism revision
-
-The v0.3.1 selector chose uniformly among active tips and then sometimes walked inward; it was a weak proxy for diffusion-limited first contact and failed its concentration gate. v0.4.0 replaces it with an explicit random-walk contact process. Recent captures remain diagnostic evidence and never enter the selector. This is a new preregistered experiment, not a repair of the old outcome.
-
-## v0.5.0 collision-aware spacing experiment
-
-This extension asks a narrower question: with event identity, amplitude, order, count, and random draws held fixed, does the ordering of idle gaps change semantic collision and accumulated synthetic damage?
-
-The primary Ulam contrast is deliberately matched. The first twenty Ulam numbers define nineteen gaps over a 69-tick span. `random_sparse_a` and `random_sparse_b` independently permute that exact gap multiset. `conflict_aware` permutes the same gaps by assigning larger gaps to interfaces with higher predicted interference. No condition changes event order or sees an observed failure.
-
-The conflict graph is derived from overlap in `REQ_TO_FIELDS`. Same-target events have score 1. Requirements that update overlapping configuration fields have a positive edge; disconnected requirements have score 0. This graph is a declared synthetic proxy for semantic interference, not a learned ontology.
-
-At each event, prior conflicting traces decay with elapsed time. Their remaining strength contributes to collision burden. Damage also decays during gaps and rises from the current event plus collision burden. The same schedule-independent random draw is compared with each condition's failure probability. These equations define the toy world only; their constants were frozen after the excluded 6001–6016 implementation pilot and before opening seeds 6201–6296.
-
-Seven exploratory gates test matching, a clustered positive control, a two-random negative control, Ulam collision and damage reduction, and conflict-graph collision and damage reduction. The v0.4.0 ten-gate score remains unchanged regardless of these outcomes.
-
-Held-out result: Ulam failed both operational gates. Its median collision burden and damage AUC were higher than the matched random-sparse control. Conflict-aware spacing passed both corresponding gates. The clean inference is that sparse irregular timing alone carried no useful structure here, while graph-informed placement of the same gaps did.
-
+The post-open sharding amendment is recorded in `PREREGISTRATION.json`. `experiment.json` and `state_restoration.py` remained byte-frozen after the held-out seeds opened.

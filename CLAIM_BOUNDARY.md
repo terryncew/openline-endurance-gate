@@ -1,48 +1,32 @@
 # Claim Boundary
 
-## Supported when the full verifier passes
+## Supported inside this seeded synthetic world
 
-- The powered endurance experiment used 26 declared seeds, including 20 untouched held-out seeds and 80 paired load-order differences.
-- Reordered schedules use the same event multiset and event-bound random draws; constant-amplitude conditions use matched packets.
-- Damage parameters were absent from the failure generator and selected only through the declared train/validation split.
-- The powered tip-capture experiment used 96 fresh declared graph seeds: 8 train, 8 validation, and 80 held out.
-- The graph conditions receive matched packet streams; random and tip-targeted policies receive the same repair opportunities and budget.
-- `uniform_null` is a real uniform-attachment control, and the first-contact selector reads neither the reported exposure heuristic nor capture history.
-- Every successful first-contact attachment is bound to walker start, step count, restart count, contact coordinate, and parent coordinate; fallback rate is a frozen gate precondition.
-- Logging-only leaves graph dynamics unchanged relative to no intervention.
-- Geometry Lift is evaluated against event count, context length, unresolved count, retry count, node age, and branch age.
-- The retired graph pilot and its reason for retirement remain evidence-bound.
-- The released v0.4 endurance, geometry, repair, root-recovery, and null-specificity artifacts and mechanisms are pinned byte-for-byte as inherited lineage; v0.5 collision-spacing claims are independently recomputed from the frozen mechanism and seed block.
-- The Ed25519 chain is internally valid and complete relative to its signed local anchor.
-- The semantic verifier rejects summary, endurance-cycle, first-contact, and collision-spacing tampering even after artifact hashes are patched and the local chain is resigned.
-- The collision-spacing experiment uses 96 fresh seeds, including 80 held out; matched sparse conditions share event order, gap multiset, span, and schedule-independent random draws.
-- The v0.4.0 result remains 8/10. Collision-spacing results are exploratory and reported under a separate 5/7 denominator.
+- The combined restoration stack met the preregistered absolute 160- and 320-cycle survival gates.
+- It preserved checkpoint accuracy relative to the verified-capsule baseline.
+- Survival at 320 was 82.5% for the stack and 43.75% for baseline.
+- The paired median stack-minus-baseline life difference was 0 cycles because 44 of 80 pairs tied.
+- Scheduled pruning, fixed retirement, adaptive retirement, and ECC each failed their preregistered material median-life gates.
+- A sham restart that preserved defects produced no material median benefit.
+- The pressure-disabled null showed no positive median advantage, while 18 of 80 seeds still favored the stack.
 
 ## Unsupported
 
-- Deployed AI systems possess literal material fatigue, fracture mechanics, or DLA behavior.
-- `D` is a physical state variable rather than a fitted synthetic predictor.
-- Selected damage or graph constants transfer across models, tools, workspaces, or agent assemblies.
-- A failed load-order gate proves history is commutative.
-- A frontier-concentration failure proves graph shape is irrelevant.
-- Geometry prediction alone proves that tip-targeted repair is useful. The repair gate remained failed even after first-contact concentration was recovered: 20 held-out pairs favored random repair, 15 favored tip-targeted repair, and 45 tied.
-- The high `least_capture_balancer` frontier lift validates first-contact capture. It preserves the old leaf-biased behavior only as a descriptive lineage condition.
-- Receipts automatically stabilize or repair a system.
-- A signed receipt is truthful merely because its signature verifies.
-- Receipt ancestry will outperform prose summaries or other recovery methods in production.
-- The dominant crack cluster is a causal fracture path without a real intervention test.
-- The local public key or witness proves global history completeness.
-- Ulam numbers discover semantic conflicts or provide a general repair schedule. Ulam failed the held-out collision and damage gates in this synthetic world.
-- The conflict-aware result transfers to real prompts, tools, memories, or deployed agents without a trace-based intervention test.
+- 160 cycles is an exact physical Coherence Dynamics boundary.
+- The synthetic `rolling_noise_epsilon`, `coherence_margin_proxy`, or `stability_lambda_proxy` identifies a deployed model's physical state.
+- Restarting a process purges semantic damage by itself.
+- The combined stack materially increases median lifetime; the preregistered paired median was zero.
+- The v0.7 policies generalize to any model, task, context window, or agent framework.
+- Reaching 320 synthetic cycles predicts a production service life.
 
-## Whole-repository replacement boundary
+## Telemetry boundary
 
-An attacker with full repository write access can generate a new keypair, replace the anchor, alter source and artifacts, rerun the experiment, and produce a new internally consistent repository.
+The three telemetry values are declared observables inside the simulator. They test whether a trigger policy can use rolling state pressure. Their names preserve the theoretical mapping, while the release makes no claim that the simulator has measured COLE Core variables in a real model.
 
-The included `results/public_witness.json` becomes useful only when its digest is published somewhere the attacker cannot rewrite: a mirrored Git commit, a release page, a transparency log, another institution's signed receipt, or a timestamping service.
+## Custody boundary
 
-## Allowed label
+The experiment chain protects scientific artifacts relative to its local anchor. The detached release chain protects `RUN_REPORT.json` and `TAMPER_REPORT.json`. A full-write attacker can replace both chains, their keypairs, source, evidence, and anchors. An externally published witness digest is required to detect whole-repository replacement.
 
-`POWERED_SYNTHETIC_ENDURANCE_TIP_CAPTURE_AND_COLLISION_SPACING`
+## Lineage boundary
 
-The label may advance only after real-agent experiments use independently measured telemetry, frozen substrates, declared calibration, external held-out witnesses, and interventions whose outcomes were not generated by the proposed explanatory variables.
+v0.7 independently recomputes the state-restoration extension. Prior v0.6 scientific artifacts are pinned byte-for-byte through `V060_LINEAGE.json`; the v0.7 gate does not rerun the inherited endurance, first-contact, collision-spacing, or generational worlds.

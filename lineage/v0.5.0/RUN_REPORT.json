@@ -1,0 +1,214 @@
+{
+  "clean_install": {
+    "collision_spacing_cli_valid": true,
+    "fast_verification_valid": true,
+    "import_path": "/tmp/olg_v050_site/openline_endurance_gate/__init__.py",
+    "method": "pip install repository copy into isolated --target directory with --no-deps --no-build-isolation",
+    "passed": true,
+    "tip_capture_cli_valid": true,
+    "version": "0.5.0"
+  },
+  "execution_boundary": "Release witnesses were run as separate top-level commands because the hosted runner kills wrappers near its command cap. No scientific gate, threshold, seed, or outcome was changed.",
+  "generated_at": "2026-07-12T01:18:01.033245Z",
+  "lineage_boundary": {
+    "v040_evidence_and_mechanisms_pinned_byte_for_byte": true,
+    "v040_rerun_in_v050_release_gate": false,
+    "v050_collision_spacing_independently_recomputed": true
+  },
+  "passed": true,
+  "release_label": "EXPLORATORY_COLLISION_AWARE_SPACING_RELEASE",
+  "release_version": "0.5.0",
+  "schema": "openline.endurance.release-report.v5",
+  "scientific_result": {
+    "collision_spacing_v050": {
+      "claim_boundary": "This is a synthetic timing experiment. Ulam positions supply an irregular clock; the conflict graph is declared from overlapping requirement dependencies. A signal would justify testing real agent traces. It would not establish that Ulam numbers have semantic intelligence or that deployed agents repair during idle time according to this simulator.",
+      "conflict_graph_collision_reduction": true,
+      "conflict_graph_damage_reduction": true,
+      "gate_count": 7,
+      "passed_gate_count": 5,
+      "status": "EXPLORATORY_NULL_OR_MIXED",
+      "ulam_collision_reduction": false,
+      "ulam_damage_reduction": false
+    },
+    "legacy_v040": {
+      "gate_count": 10,
+      "passed_gate_count": 8,
+      "status": "MIXED_POWERED_SYNTHETIC_RESULT",
+      "unchanged_by_v050": true
+    }
+  },
+  "tamper_suite": {
+    "attacks": {
+      "resealed_collision_spacing_forgery": {
+        "attack": "mutate one collision-spacing damage row, patch hashes, replace keypair, resign chain",
+        "detected": true,
+        "verifier": {
+          "artifact_binding_valid": true,
+          "chain": {
+            "chain_digest": "47f0d6ceedfd468501faa454145e4c6a86a4aa1fa86e488cc9c9b777d335df6b",
+            "completeness_verified": true,
+            "count": 735,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "2fcea341543527f94ae3ebb44069711295154465acf2a7d619e7529cd421aa96",
+            "valid": true
+          },
+          "errors": [
+            "collision_spacing_events_recompute_mismatch",
+            "public_witness_recompute_mismatch",
+            "evidence_public_witness_digest_mismatch"
+          ],
+          "lineage_binding_valid": true,
+          "semantic_recomputation_valid": false,
+          "valid": false
+        }
+      },
+      "resealed_first_contact_forgery": {
+        "attack": "mutate one first-contact lattice coordinate, patch hashes, replace keypair, resign chain",
+        "detected": true,
+        "verifier": {
+          "artifact_binding_valid": false,
+          "chain": {
+            "chain_digest": "1294404fa490ca7112de85b7f4e90c7edd72aa16e29252f6c4193db5a8648d8f",
+            "completeness_verified": true,
+            "count": 735,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "c8f519134e383e55a389027ef2911b65b44977cf405416b093963c50d305a970",
+            "valid": true
+          },
+          "errors": [
+            "v040_lineage_hash_mismatch:results/tip_capture_cycles.csv",
+            "public_witness_recompute_mismatch",
+            "evidence_public_witness_digest_mismatch"
+          ],
+          "lineage_binding_valid": false,
+          "semantic_recomputation_valid": false,
+          "valid": false
+        }
+      },
+      "resealed_raw_cycle_forgery": {
+        "attack": "mutate fitted damage_D in a raw primary-cycle row, patch hashes, replace keypair, resign chain",
+        "detected": true,
+        "verifier": {
+          "artifact_binding_valid": false,
+          "chain": {
+            "chain_digest": "6b264eb1cf7328c1a755df8708b55a82f2f6c77ba4b6c77ab7f69d447659d8d9",
+            "completeness_verified": true,
+            "count": 735,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "94797e4dad1801ea0db16fb58b86c886edf68ba3545d1dc90dca67ffb35f9f3c",
+            "valid": true
+          },
+          "errors": [
+            "v040_lineage_hash_mismatch:results/cycles.csv",
+            "public_witness_recompute_mismatch",
+            "evidence_public_witness_digest_mismatch"
+          ],
+          "lineage_binding_valid": false,
+          "semantic_recomputation_valid": false,
+          "valid": false
+        }
+      },
+      "resealed_summary_forgery": {
+        "attack": "flip one gate, patch hashes, replace keypair, resign chain",
+        "detected": true,
+        "verifier": {
+          "artifact_binding_valid": true,
+          "chain": {
+            "chain_digest": "6bc6fb3c95c881a316b354e44005d4fe026df183561f037d92b3990c1f7c155d",
+            "completeness_verified": true,
+            "count": 735,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "6cac02fdac309165f95ef9b729e84eb44b32f7f26008c1775e0967ad0c4ee674",
+            "valid": true
+          },
+          "errors": [
+            "summary_semantic_recompute_mismatch",
+            "public_witness_recompute_mismatch",
+            "evidence_public_witness_digest_mismatch"
+          ],
+          "lineage_binding_valid": true,
+          "semantic_recomputation_valid": false,
+          "valid": false
+        }
+      },
+      "tail_truncation": {
+        "detected": true,
+        "verifier": {
+          "chain_digest": "c9c7a303a23f736e58531f2891b90d31c134853dcc0a7c2892ec2721162204da",
+          "completeness_verified": false,
+          "count": 734,
+          "errors": [
+            "completeness_count_mismatch",
+            "completeness_tail_mismatch",
+            "completeness_digest_mismatch"
+          ],
+          "integrity_valid": false,
+          "tail_hash": "0da82a9b5322b7ad725b12fdbb9d893231f8de3201dfaa28145fdc2510000fcf",
+          "valid": false
+        }
+      },
+      "unpatched_source_drift": {
+        "detected": true,
+        "verifier": {
+          "artifact_binding_valid": false,
+          "chain": {
+            "chain_digest": "e7d7c5556f8c79e3a18ce2dfe9a9a5a7de034d44db35ee936710f4ced7c45b89",
+            "completeness_verified": true,
+            "count": 735,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "2dffc8aac0e9c36093563a31ab6c044c1579b52e7e8c13683cf174bc173e6e37",
+            "valid": true
+          },
+          "errors": [
+            "manifest_hash_mismatch:src/openline_endurance_gate/tip_capture.py",
+            "preregistration_mechanism_hash_mismatch:src/openline_endurance_gate/tip_capture.py",
+            "v040_lineage_hash_mismatch:src/openline_endurance_gate/tip_capture.py"
+          ],
+          "lineage_binding_valid": false,
+          "semantic_recomputation_valid": true,
+          "valid": false
+        }
+      }
+    },
+    "execution_boundary": "Each complete hostile attack, including its semantic verifier, ran as a separate top-level Python process under a low-memory shell orchestrator.",
+    "passed": true,
+    "release_version": "0.5.0",
+    "schema": "openline.endurance.tamper-report.v3",
+    "trust_boundary": {
+      "reason": "A full-write attacker can replace source, artifacts, keypair, anchor, and local witness. Publish results/public_witness.json or its digest outside the repository.",
+      "whole_repository_replacement": "OUT_OF_SCOPE_WITHOUT_EXTERNAL_WITNESS"
+    }
+  },
+  "tests": {
+    "command": "PYTHONPATH=src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q",
+    "count": 38,
+    "passed": true
+  },
+  "verification": {
+    "fast_valid": true,
+    "full": {
+      "artifact_binding_valid": true,
+      "chain": {
+        "chain_digest": "e7d7c5556f8c79e3a18ce2dfe9a9a5a7de034d44db35ee936710f4ced7c45b89",
+        "completeness_verified": true,
+        "count": 735,
+        "errors": [],
+        "integrity_valid": true,
+        "tail_hash": "2dffc8aac0e9c36093563a31ab6c044c1579b52e7e8c13683cf174bc173e6e37",
+        "valid": true
+      },
+      "errors": [],
+      "lineage_binding_valid": true,
+      "semantic_recomputation_valid": true,
+      "valid": true
+    },
+    "receipt_count": 735,
+    "v040_lineage_binding_valid": true
+  },
+  "whole_repository_replacement_boundary": "The local key and witness remain self-declared. Publish the public witness digest outside the repository to detect wholesale replacement."
+}

@@ -1,198 +1,82 @@
-# OpenLine Endurance Gate
+# OpenLine Endurance Gate v0.7.0
 
-**Digital fractography for AI-agent handoffs, built to lose honestly.**
+A falsifiable synthetic reliability harness for one question: can an agent keep carrying the right state across repeated handoffs without slowly becoming a confident copy of an earlier mistake?
 
-This repository now runs two powered synthetic mechanism tests plus one explicitly exploratory spacing test on the same dependency substrate.
+v0.7 adds a state-restoration experiment on top of the released v0.6 inheritance capsule. It separates four interventions that are easy to blur together: pruning active history, restarting an instance, reconstructing state from verified lineage, and correcting detected state errors.
 
-The endurance test asks whether individually subcritical changes can consume residual coherence capacity across handoffs, and whether reordering the same event multiset changes cycles-to-first-failure. The proposed damage variable `D` is an observer. It never generates failure. Its parameters begin unfit, are selected on declared training and validation seeds, and are judged on untouched held-out seeds.
+## v0.7 result
 
-The execution tip-capture test asks whether the shape of an unresolved dependency frontier predicts where later disturbances attach, whether that geometry adds information beyond ordinary counts and age, and whether equal-budget tip-targeted repair beats random repair. The v0.4.0 treatment launches an explicit lattice random walker and attaches at first contact. The selector never reads the reported exposure score or capture history; `uniform_null` remains the genuine no-geometry specificity control.
+Seven matched modes ran for 320 cycles across 80 untouched held-out seeds. Every mode received the same event packets and event-bound random draws. The controls included a sham restart that preserved defects and a pressure-disabled null world.
 
+**State-restoration result: 5/9 exploratory gates passed.**
 
-## v0.5.0: Collision-Aware Spacing
+The combined restoration stack met the absolute 160- and 320-cycle survival gates and preserved checkpoint accuracy. It reached 82.5% survival at 320 cycles, compared with 43.75% for the verified-capsule baseline. Its paired median life gain was still zero because 44 of 80 pairs tied. The preregistered relative-effect rule therefore does not support the stronger claim that the stack materially extended median lifetime.
 
-The v0.4.0 endurance and first-contact results are frozen and preserved at **8 of 10 gates passed**. v0.5.0 adds a separate exploratory timing experiment; its gates do not change that denominator.
+The individual interventions failed their material-life gates:
 
-Each of 96 fresh seeds receives the same 20 events in the same order. `ulam_spaced`, two random-sparse controls, and `conflict_aware` all use the same 19-gap multiset and the same 69-tick span. Event outcome draws exclude the schedule label. `clustered` is a density positive control.
+- scheduled pruning at cycle 80: median gain 0 cycles;
+- fixed retirement every 85 cycles: median gain 0;
+- telemetry-triggered retirement versus fixed retirement: median gain 0;
+- ECC-style digest correction: median gain 0.
 
-```text
-5 spacing conditions
-96 fresh seeds: 8 train, 8 validation, 80 held out
-20 events per run
-= 480 runs
-= 9,600 event observations
-```
+Several improved mean life or survival for a minority of seeds, but the preregistered statistic was the paired median. They stay failed.
 
-The first twenty Ulam positions are `1, 2, 3, 4, 6, 8, 11, 13, 16, 18, 26, 28, 36, 38, 47, 48, 53, 57, 62, 69`. The random-sparse conditions permute the exact same gaps. The conflict-aware condition also permutes those gaps, assigning the largest gaps to interfaces with the highest graph-derived interference score. It uses declared requirement-to-field overlap and cannot see failures.
+The sham retirement passed its specificity gate: restarting while carrying the same defects produced essentially no benefit. The pressure-disabled null also passed its one-sided median rule, although 18 of 80 seeds still favored the stack. That residual is disclosed rather than called equivalence.
 
-The exploratory result is **mixed: 5 of 7 spacing gates passed**. Ulam spacing did not beat matched random spacing: random-minus-Ulam median collision burden was −0.02015, and random-minus-Ulam damage AUC was −0.79805. In plain language, Ulam was slightly worse on collision and worse on accumulated synthetic damage. Failure count showed no reliable Ulam advantage.
+## What this does—and does not—say
 
-Conflict-aware spacing did beat matched random spacing: median collision reduction was 0.18767 and median damage-AUC reduction was 1.24447, both with held-out sign-flip p below 0.00001. This is evidence for the conflict graph inside this synthetic world, not evidence that Ulam numbers carry semantic structure.
+The build supports a narrower engineering claim: verified reconstruction can participate in a stack that survives farther than the inherited capsule baseline in this seeded world. It does not identify an exact 160-cycle law, prove that rolling noise physically saturates, or establish that the synthetic `epsilon`, coherence-margin, and stability values are measured Coherence Dynamics variables. They are trigger-policy proxies.
 
-## v0.4.0: Independent First-Contact Tip Capture
+The clean result is slightly rude to the original pitch: ordinary pruning and fresh-process retirement were weak. Repair only became useful when the runtime reconstructed load-bearing state from verified lineage. A clean reboot carrying dirty state is still dirty state, just well rested.
 
-The endurance design retains the powered v0.2.0 experiment:
+## Preserved prior results
 
-```text
-12 immutable invariants
-4 handoff modes
-4 load schedules
-26 seeds: 4 train, 2 validation, 20 held out
-20 cycles per primary run
-= 8,320 primary observations
+`V060_LINEAGE.json` pins the released v0.6 scientific evidence byte-for-byte.
 
-3 matched constant-amplitude conditions
-4 handoff modes
-26 seeds
-20 cycles
-= 6,240 amplitude observations
+- v0.4 endurance and tip capture: **8/10**;
+- v0.5 collision spacing: **5/7**—Ulam failed, conflict-aware spacing passed;
+- v0.6 generational inheritance: **5/7**—capsules cleared 40 and 80, then failed 160;
+- v0.7 state restoration: **5/9**.
 
-Primary order contrast
-20 held-out seeds × 4 modes
-= 80 paired differences
-```
+These remain separate scores.
 
-The revised graph extension is frozen before its release run:
-
-```text
-3 attachment conditions
-5 equal-interface repair/logging policies
-96 fresh seeds: 8 train, 8 validation, 80 held out
-48 cycles per run
-= 1,440 graph runs
-= 69,120 graph-cycle observations
-```
-
-The v0.3.1 run remains the failed baseline: its uniform-among-tips selector missed the frontier-concentration gate, while the condition named `even_spread` produced a misleadingly large lift through a leaf-selection artifact. v0.4.0 renames that descriptive condition `least_capture_balancer` and replaces the diffusive selector with first-contact lattice walks. A separate 16-seed implementation pilot is retained in `TIP_CAPTURE_V040_PILOT_LOG.json`; all pilot seeds are excluded from the frozen 5101–5196 analysis block.
-
-## Current bound result
-
-The preserved v0.4.0 powered result is **mixed: 8 of 10 pre-registered gates passed**. The v0.5.0 spacing experiment is reported separately at 5 of 7 exploratory gates.
-
-The endurance test passed fresh subcritical calibration, the matched amplitude gradient, held-out prediction from fitted `D`, and receipt-handoff advantage. Load-order noncommutativity did not pass.
-
-The first-contact treatment passed its previously failed concentration gate: frontier lift was 0.2537 versus −0.0042 for the uniform null, with a 0.00096 walker-fallback rate under the frozen 0.02 ceiling. Spatial Geometry Lift, null specificity, and receipt-ancestry root recovery also passed.
-
-Tip-targeted repair still did not beat equal-budget random repair. Across 80 held-out pairs, 20 favored random repair, 15 favored tip-targeted repair, and 45 tied. The endurance load-order gate also remains failed. The prior 7/10 result stays in the v0.3.1 release; v0.4.0 advances to 8/10 without rewriting either loss.
-
-## Four handoff mechanisms
-
-All endurance modes receive the same perturbation packets and a 256-token representation ceiling.
-
-- `fresh_ground_truth` reconstructs canonical state each cycle and acts as the one-shot control.
-- `persistent_history` preserves raw history until the budget clips older causal events.
-- `prose_summary` compresses broad state and can omit dependencies or distort a value.
-- `receipt_ancestry` preserves referenced dependency structure, while stale or missing references remain real failure paths.
-
-Receipt ancestry can lose. A valid signature can preserve a wrong action perfectly.
-
-## Attachment and repair boundary
-
-The attachment selector and the reported exposure metric are separate code paths.
-
-- `uniform_null` selects uniformly among active unresolved nodes.
-- `least_capture_balancer` retains the old least-captured-node behavior under an accurate descriptive name. It is not a gate control.
-- `diffusive_first_contact` launches a cardinal lattice random walk and attaches at its first neighboring contact with an active node.
-
-The exposure observable ranks graph tips using open lattice neighbors, radius from the active centroid, local density, and depth. The first-contact selector does not call that ranking or read recent captures. Walker restarts and fallbacks are recorded in every raw cycle row, and the concentration gate fails if fallback exceeds its frozen ceiling.
-
-Every policy receives the same packet stream and repair opportunities. `random_repair` and `tip_targeted` spend the same repair budget. Logging-only is mechanically checked to leave graph dynamics unchanged.
-
-Receipts do not repair anything by themselves. In this harness they preserve ancestry and visible pointers. A gate or repair policy must consult that structure to change outcomes.
-
-## Ten pre-registered gates
-
-Endurance:
-
-1. Fresh isolated perturbations clear the 95% subcritical floor.
-2. Matched low-amplitude packets outlast high-amplitude packets.
-3. Low→high and high→low schedules differ materially under common random numbers.
-4. Fitted `D` adds held-out prediction over current Coherence Dynamics observables.
-5. Receipt ancestry extends median fatigue life over equal-token prose summaries without exceeding the checkpoint-accuracy tolerance.
-
-Execution tip capture:
-
-1. Independent first-contact attachment materially concentrates capture at exposed frontier nodes beyond the null while staying below the walker-fallback ceiling.
-2. Geometry adds held-out prediction over event count, context length, unresolved count, retries, node age, and branch age.
-3. The uniform null shows no material geometry lift.
-4. Equal-budget tip-targeted repair beats random repair.
-5. Receipt ancestry improves recovery of buried initiating causes.
-
-## Statistical boundary
-
-The endurance sequence test uses all 80 pairs. The graph repair contrast uses 80 untouched held-out seeds. Exact sign-flip tests, deterministic bootstrap intervals, effect sizes, and declared material thresholds are reported.
-
-A failed gate can mean either a materially excluded effect or an unresolved interval. The report preserves that distinction. Synthetic passage does not establish that deployed agents obey material fatigue, fracture mechanics, or DLA.
-
-## Evidence integrity
-
-The full verifier checks:
-
-```text
-pre-registration and mechanism hashes
-Ed25519 signatures and parent continuity
-anchored receipt count, tail, and chain digest
-manifest and evidence-bundle hashes
-pinned byte-for-byte lineage for the released v0.4.0 mechanisms and evidence
-independent regeneration of every v0.5 collision-spacing event and run
-collision-spacing bootstrap and sign-flip summaries
-canonical v0.5 event/run Merkle roots
-combined summary and public witness digest
-retired pilot and implementation-pilot disclosure binding
-```
-
-v0.5 does not rerun the inherited v0.4 first-contact simulator during release verification. It binds that released evidence and mechanism tree through `V040_LINEAGE.json`, then independently recomputes the new spacing experiment. This keeps the extension testable without pretending an expensive inherited rerun occurred.
-
-The mandatory tamper suite runs six attacks: tail deletion, source drift, resealed summary forgery, resealed inherited endurance-cycle forgery, resealed inherited first-contact forgery, and resealed v0.5 collision-spacing forgery. Each hostile semantic attack runs in a fresh process so verifier memory is released between witnesses. Inherited-artifact attacks are rejected by the pinned v0.4 lineage; v0.5 forgeries are rejected by independent semantic recomputation. Metric forgeries remain detectable even when an attacker updates artifact hashes, replaces the local keypair, and resigns the chain.
-
-The local public key and witness are self-declared. A full-write attacker can replace the entire repository and create a new internally consistent history. Publish `results/public_witness.json` or its digest outside the repository to make that replacement detectable.
-
-## Run
+## Run and verify
 
 ```bash
-python -m pip install -e .
-python -m pytest -q
-openline-endurance run --root .
+python -m pip install -e . --no-deps --no-build-isolation
+openline-endurance verify --root . --source-root . --fast
+openline-endurance state-restoration --root .
+```
+
+The full v0.7 semantic witness is deliberately shardable. Each phase independently regenerates 12 seeds, then the finalizer combines the canonical Merkle leaves and recomputes all nine gates:
+
+```bash
+for shard in 0 1 2 3 4 5 6 7; do
+  openline-endurance semantic-shard --root . --index "$shard"
+done
+openline-endurance semantic-finalize --root .
+```
+
+A normal machine may also use the one-command verifier:
+
+```bash
 openline-endurance verify --root . --source-root .
-python scripts/tamper_check.py
-python scripts/release_check.py
-openline-endurance witness --root .
-openline-endurance fracture --root .
-openline-endurance tip-capture --root .
-openline-endurance collision-spacing --root .
 ```
 
-## Main artifacts
+Run the documented release sequence:
 
-```text
-PREREGISTRATION.json
-TIP_CAPTURE_PILOT_LOG.json
-TIP_CAPTURE_V040_PILOT_LOG.json
-COLLISION_SPACING_PILOT_LOG.json
-experiment.json
-results/cycles.csv
-results/amplitude_cycles.csv
-results/tip_capture_cycles.csv
-results/tip_capture_candidates.csv
-results/tip_capture_probes.csv
-results/collision_spacing_events.csv
-results/collision_spacing_runs.csv
-results/collision_spacing_summary.json
-results/damage_fit.json
-results/model_comparison.json
-results/fractography_summary.json
-results/tip_capture_summary.json
-results/heldout_witness.json
-results/cycle_roots.json
-results/public_witness.json
-results/summary.json
-receipts/experiment.jsonl
-receipts/experiment.anchor.json
-MANIFEST.json
-TAMPER_REPORT.json
-RUN_REPORT.json
+```bash
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -q
+bash scripts/tamper_check.sh
+bash scripts/release_check.sh
 ```
 
-The signing private key is generated in memory and never written into the repository.
+The standalone tamper command writes `TAMPER_REPORT.standalone.json`, which is intentionally outside the detached release attestation. `release_check.sh` rebuilds the attested `TAMPER_REPORT.json`, reruns the semantic shards, writes `RUN_REPORT.json`, and signs the final reports. Running the standalone hostile gate first therefore cannot deadlock or falsely strand a clean clone as tampered.
 
-**Unrepaired errors grow at the edge while their causes disappear into the interior. A receipt preserves the path back.**
+## Evidence boundary
+
+The experiment chain is Ed25519-signed and hash-linked. A detached release receipt binds the final run and hostile-test reports. The v0.7 verifier independently regenerates 276,480 cycle observations and 864 run summaries while checking prior v0.6 evidence against pinned lineage.
+
+The local public keys remain self-declared. A full-write attacker can replace the repository, source, evidence, keys, and anchors. Publish `results/public_witness.json` and `receipts/release.anchor.json`, or their digests, outside the repository to detect whole-repository replacement.
+
+This remains a seeded toy world with canonical ground truth. The next serious test uses real agent traces and externally scored reconstruction checkpoints.

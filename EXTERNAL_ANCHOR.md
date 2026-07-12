@@ -1,5 +1,5 @@
 # External Anchor
 
-Release: `v0.5.0`
+Release: `openline-endurance-gate v0.7.0`
 
-The locally generated witness is stored at `results/public_witness.json`. Publish its `witness_digest` outside this repository after final release packaging. Until then, whole-repository replacement remains outside the local trust boundary.
+Publish the SHA-256 digest of `results/public_witness.json` and the anchor hash from `receipts/release.anchor.json`, or publish both complete files outside this repository. Until that happens, the witness status remains `UNPUBLISHED_LOCAL_WITNESS` and whole-repository replacement remains outside the local proof boundary.

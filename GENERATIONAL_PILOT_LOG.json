@@ -1,0 +1,38 @@
+{
+  "final_frozen_block": {
+    "heldout_seeds": "7317-7396",
+    "opened_after": "mechanism, comparator, thresholds, endpoint, and analysis plan frozen",
+    "training_seeds": "7301-7308",
+    "validation_seeds": "7309-7316"
+  },
+  "release_version": "0.6.0",
+  "retired_blocks": [
+    {
+      "reason": "implementation pilot; early floor effect before first generation boundary",
+      "seeds": "7001-7016"
+    },
+    {
+      "reason": "implementation pilot after lowering one-shot noise",
+      "seeds": "7051-7066"
+    },
+    {
+      "reason": "retired because transient event mistakes were incorrectly treated as permanent lineage death",
+      "seeds": "7101-7196"
+    },
+    {
+      "reason": "endpoint validation after redefining failure as inability to reconstruct safe inheritance",
+      "seeds": "7201-7216"
+    },
+    {
+      "reason": "retired because ordinary-summary comparator could carry only four of six values",
+      "seeds": "7251-7266"
+    },
+    {
+      "reason": "hard-comparator validation after equal-budget summary was allowed to carry all six values",
+      "seeds": "7271-7286"
+    }
+  ],
+  "schema": "openline.generational-endurance.pilot-log.v1",
+  "scientific_boundary": "No threshold, mechanism, or gate changed after opening held-out seeds 7317-7396.",
+  "status": "DISCLOSED_RETIRED_DESIGN_BLOCKS"
+}

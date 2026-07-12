@@ -1,0 +1,109 @@
+{
+  "blocks": {
+    "pilot_8001_8016": {
+      "cycle_observations": 46080,
+      "effect_medians": {
+        "breaker_vs_fixed": 0.0,
+        "ecc_vs_baseline": 0.0,
+        "fixed_retirement_vs_baseline": 0.0,
+        "null_stack_vs_baseline": 0.0,
+        "prune_vs_baseline": 0.0,
+        "sham_vs_baseline": 0.0,
+        "stack_vs_baseline": 0.0
+      },
+      "elapsed_seconds_observed": 5.65,
+      "gate_count": 9,
+      "mode_medians_320": {
+        "capsule_baseline": 262.5,
+        "ecc_digest": 321.0,
+        "fixed_retirement_85": 321.0,
+        "restoration_stack": 321.0,
+        "scheduled_prune_80": 262.5,
+        "sham_retirement_85": 262.5,
+        "telemetry_breaker": 321.0
+      },
+      "passed_gate_count": 5,
+      "run_count": 144,
+      "seed_count": 16,
+      "status": "MIXED_EXPLORATORY_STATE_RESTORATION_RESULT"
+    },
+    "validation_8109_8116": {
+      "cycle_observations": 23040,
+      "effect_medians": {
+        "breaker_vs_fixed": 0.0,
+        "ecc_vs_baseline": 0.0,
+        "fixed_retirement_vs_baseline": 0.0,
+        "null_stack_vs_baseline": 0.0,
+        "prune_vs_baseline": 0.0,
+        "sham_vs_baseline": 0.0,
+        "stack_vs_baseline": 12.5
+      },
+      "elapsed_seconds_observed": 2.905,
+      "gate_count": 9,
+      "mode_medians_320": {
+        "capsule_baseline": 110.0,
+        "ecc_digest": 218.0,
+        "fixed_retirement_85": 115.0,
+        "restoration_stack": 321.0,
+        "scheduled_prune_80": 110.0,
+        "sham_retirement_85": 110.0,
+        "telemetry_breaker": 321.0
+      },
+      "passed_gate_count": 5,
+      "run_count": 72,
+      "seed_count": 8,
+      "status": "MIXED_EXPLORATORY_STATE_RESTORATION_RESULT"
+    }
+  },
+  "frozen_design_witness": {
+    "breaker_thresholds": {
+      "cooldown": 30,
+      "epsilon": 0.63,
+      "margin": 0.16
+    },
+    "common_randomness": "EVENT_BOUND_COMMON_RANDOM_DRAWS_MODE_EXCLUDED",
+    "empty_result_root": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "falsifiers": [
+      "State pruning does not extend held-out endurance over the capsule baseline.",
+      "A fixed cycle-85 retirement does not extend endurance once inherited defects are preserved.",
+      "Telemetry-triggered retirement does not outperform the fixed schedule.",
+      "Digest-based correction adds no endurance or harms checkpoint accuracy.",
+      "The combined restoration stack fails to carry a median run through 160 or 320 cycles.",
+      "A sham restart that preserves defects performs as well as verified reconstruction.",
+      "The restoration stack still wins when context pressure and most exogenous noise are disabled."
+    ],
+    "fixed_retirement_interval_cycles": 85,
+    "heldout_seed_count": 80,
+    "horizons": [
+      160,
+      320
+    ],
+    "mechanism_digest": "8ff115517271623add40f5ffaa81077ddc8efdf9f64304c2b205007dce882171",
+    "modes": [
+      "capsule_baseline",
+      "scheduled_prune_80",
+      "fixed_retirement_85",
+      "telemetry_breaker",
+      "ecc_digest",
+      "restoration_stack",
+      "sham_retirement_85"
+    ],
+    "pressure_disabled_null": "CONTEXT_PRESSURE_DISABLED_AND_EXOGENOUS_NOISE_REDUCED",
+    "schema": "openline.state-restoration.design-witness.v1",
+    "sham_control": "SAME_RESTART_SCHEDULE_WITH_DEFECT_AND_NOISE_STATE_PRESERVED",
+    "telemetry_status": "SYNTHETIC_PROXY_NOT_PHYSICAL_IDENTIFICATION"
+  },
+  "heldout_status": "UNOPENED_AT_LOG_CREATION",
+  "release_version": "0.7.0",
+  "retired_designs": [
+    {
+      "correction": "lowered one-shot application difficulty and raised the critical-failure floor before validation",
+      "reason": "EARLY_FAILURE_FLOOR_BEFORE_FIRST_RESTORATION"
+    },
+    {
+      "correction": "added lazy hash-referenced retrieval and preserved verified lineage across generation boundaries",
+      "reason": "CAPSULE_BASELINE_WAS_ACCIDENTALLY_AMNESIAC"
+    }
+  ],
+  "schema": "openline.state-restoration.pilot-log.v1"
+}

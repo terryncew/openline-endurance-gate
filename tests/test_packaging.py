@@ -19,6 +19,10 @@ def test_import_and_cli_help():
     assert "fracture" in completed.stdout
     assert "tip-capture" in completed.stdout
     assert "collision-spacing" in completed.stdout
+    assert "generational" in completed.stdout
+    assert "state-restoration" in completed.stdout
+    assert "semantic-shard" in completed.stdout
+    assert "semantic-finalize" in completed.stdout
 
 
 def test_no_private_signing_key_is_persisted():
@@ -28,10 +32,30 @@ def test_no_private_signing_key_is_persisted():
 
 def test_release_check_shell_uses_top_level_phases():
     wrapper = (ROOT / "scripts" / "release_check.sh").read_text(encoding="utf-8")
-    assert wrapper.count("scripts/release_check.py") == 3
+    assert "capture_step pytest-0" in wrapper
+    assert "capture_step pytest-1" in wrapper
+    assert "capture_step pytest-2" in wrapper
+    assert "--preflight-finalize-raw" in wrapper
     assert "--preflight-only" in wrapper
-    assert "--semantic-only" in wrapper
-    assert "scripts/tamper_check.py" in wrapper
+    assert "--semantic-shard" in wrapper
+    assert "--semantic-finalize" in wrapper
+    assert "scripts/tamper_check.sh --release" in wrapper
     assert "--finalize-existing" in wrapper
-    assert "--semantic-finalize" not in wrapper
     assert "sleep " not in wrapper
+
+
+def test_standalone_tamper_check_does_not_overwrite_attested_report():
+    wrapper = (ROOT / "scripts" / "tamper_check.sh").read_text(encoding="utf-8")
+    assert 'OUTPUT="$ROOT/TAMPER_REPORT.standalone.json"' in wrapper
+    assert 'OUTPUT="$ROOT/TAMPER_REPORT.json"' in wrapper
+    assert 'if [[ "${1:-}" == "--release" ]]' in wrapper
+
+
+def test_release_preflight_can_rebuild_stale_outer_attestation():
+    source = (ROOT / "scripts" / "release_check.py").read_text(encoding="utf-8")
+    assert "--skip-release-attestation" in source
+    assert "not test_fast_custody_verifier_passes_default_artifacts" in source
+    assert "not test_detached_release_attestation_binds_post_run_reports" in source
+    assert "PREFLIGHT_PARTS" in source
+    assert "preflight_group" in source
+    assert "preflight_finalize" in source

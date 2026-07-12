@@ -42,7 +42,7 @@ def verify_preregistration(root: Path) -> list[str]:
     if not path.exists():
         return ["preregistration_missing"]
     prereg = json.loads(path.read_text(encoding="utf-8"))
-    if prereg.get("schema") not in {"openline.endurance.preregistration.v1", "openline.endurance.preregistration.v2"}:
+    if prereg.get("schema") not in {"openline.endurance.preregistration.v1", "openline.endurance.preregistration.v2", "openline.endurance.preregistration.v3", "openline.endurance.preregistration.v4"}:
         errors.append("preregistration_schema_invalid")
     experiment_path = root / "experiment.json"
     if not experiment_path.exists() or sha256_file(experiment_path) != prereg.get("experiment_sha256"):
@@ -60,7 +60,7 @@ def verify_preregistration(root: Path) -> list[str]:
             errors.append(f"preregistration_locked_design_mismatch:{key}")
     lineage_expected = prereg.get("lineage_sha256")
     if lineage_expected:
-        lineage_path = root / "V040_LINEAGE.json"
+        lineage_path = root / str(prereg.get("lineage_file", "V040_LINEAGE.json"))
         if not lineage_path.exists():
             errors.append("preregistration_lineage_missing")
         elif sha256_file(lineage_path) != lineage_expected:
@@ -86,6 +86,45 @@ def verify_v040_lineage(root: Path) -> list[str]:
                 errors.append(f"v040_lineage_hash_mismatch:{relative}")
     return errors
 
+
+
+def verify_v050_lineage(root: Path) -> list[str]:
+    """Verify the inherited v0.5.0 evidence boundary byte-for-byte."""
+    errors: list[str] = []
+    path = root / "V050_LINEAGE.json"
+    if not path.exists():
+        return ["v050_lineage_missing"]
+    lineage = json.loads(path.read_text(encoding="utf-8"))
+    if lineage.get("schema") != "openline.endurance.lineage.v2":
+        errors.append("v050_lineage_schema_invalid")
+    for bucket in ("inherited_artifact_hashes", "unchanged_mechanism_hashes", "snapshot_hashes"):
+        for relative, expected in lineage.get(bucket, {}).items():
+            candidate = root / relative
+            if not candidate.exists():
+                errors.append(f"v050_lineage_missing:{relative}")
+            elif sha256_file(candidate) != expected:
+                errors.append(f"v050_lineage_hash_mismatch:{relative}")
+    return errors
+
+
+
+def verify_v060_lineage(root: Path) -> list[str]:
+    """Verify the inherited v0.6.0 evidence boundary byte-for-byte."""
+    errors: list[str] = []
+    path = root / "V060_LINEAGE.json"
+    if not path.exists():
+        return ["v060_lineage_missing"]
+    lineage = json.loads(path.read_text(encoding="utf-8"))
+    if lineage.get("schema") != "openline.endurance.lineage.v3":
+        errors.append("v060_lineage_schema_invalid")
+    for bucket in ("inherited_artifact_hashes", "unchanged_mechanism_hashes", "snapshot_hashes"):
+        for relative, expected in lineage.get(bucket, {}).items():
+            candidate = root / relative
+            if not candidate.exists():
+                errors.append(f"v060_lineage_missing:{relative}")
+            elif sha256_file(candidate) != expected:
+                errors.append(f"v060_lineage_hash_mismatch:{relative}")
+    return errors
 
 def build_public_witness(
     root: Path,

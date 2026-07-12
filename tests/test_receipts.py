@@ -7,7 +7,15 @@ from pathlib import Path
 
 import pytest
 
-from openline_endurance_gate.receipts import ReceiptSigner, create_chain, read_chain, verify_chain, write_anchor, write_chain
+from openline_endurance_gate.receipts import (
+    ReceiptSigner,
+    create_chain,
+    read_chain,
+    verify_chain,
+    write_anchor,
+    write_chain,
+)
+from openline_endurance_gate.release_attestation import verify_release_attestation
 from openline_endurance_gate.util import sha256_file
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,8 +28,29 @@ def test_default_receipt_chain_is_signed_and_complete():
     amplitude_runs = len((ROOT / "results/amplitude_runs.csv").read_text().splitlines()) - 1
     assert result["valid"]
     assert result["completeness_verified"]
-    assert len(chain) == 2 + runs + amplitude_runs + 5
+    assert len(chain) == 2 + runs + amplitude_runs + 7
     assert sum(receipt["kind"] == "collision_aware_spacing" for receipt in chain) == 1
+    assert sum(receipt["kind"] == "generational_endurance" for receipt in chain) == 1
+    assert sum(receipt["kind"] == "state_restoration" for receipt in chain) == 1
+
+
+def test_detached_release_attestation_binds_post_run_reports():
+    result = verify_release_attestation(ROOT)
+    assert result["valid"], result["errors"]
+    assert result["chain"]["completeness_verified"]
+    assert result["payload"]["artifact_hashes"].keys() == {"RUN_REPORT.json", "TAMPER_REPORT.json"}
+
+
+def test_detached_release_attestation_rejects_report_edit(tmp_path):
+    copied = tmp_path / "repo"
+    shutil.copytree(ROOT, copied, ignore=shutil.ignore_patterns(".git", ".pytest_cache", "__pycache__", "*.egg-info"))
+    path = copied / "RUN_REPORT.json"
+    report = json.loads(path.read_text())
+    report["passed"] = not report["passed"]
+    path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    result = verify_release_attestation(copied)
+    assert not result["valid"]
+    assert "release_attestation_artifact_hash_mismatch:RUN_REPORT.json" in result["errors"]
 
 
 def test_tail_deletion_fails_completeness(tmp_path):

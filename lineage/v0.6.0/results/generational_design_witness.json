@@ -1,0 +1,31 @@
+{
+  "capsule_budget_tokens": 270,
+  "common_randomness": "EVENT_BOUND_COMMON_RANDOM_DRAWS_MODE_EXCLUDED",
+  "conflict_schedule_boundary": "DERIVED_ONLY_FROM_REQUIREMENT_TO_FIELD_OVERLAP_AMPLITUDE_AND_ORIGINAL_POSITION",
+  "falsifiers": [
+    "The verified capsule fails to carry a median run through 40 cycles.",
+    "Active capsule context exceeds half the continuous-history context.",
+    "Critical omissions rise beyond the declared noninferiority margin.",
+    "Capsule endurance does not beat an equal-budget ordinary summary.",
+    "Conflict-aware scheduling does not improve capsule endurance.",
+    "The capsule still shows a positive endurance advantage when context pressure is disabled."
+  ],
+  "generation_length_cycles": 20,
+  "heldout_seed_count": 80,
+  "horizons": [
+    40,
+    80,
+    160
+  ],
+  "mechanism_digest": "3606b1ef23e3c8b13534ea36fc56dd2aa3ee83ebfdd15bb1d601f294cebdd28f",
+  "modes": [
+    "continuous_full_history",
+    "ordinary_summary_reset",
+    "verified_inheritance_capsule",
+    "capsule_conflict_aware"
+  ],
+  "null_world": "PRESSURE_DISABLED_COMMON_EVENT_WORLD",
+  "raw_record_policy": "OUTSIDE_ACTIVE_CONTEXT_RETRIEVABLE_BY_HASH_REFERENCE",
+  "schema": "openline.generational-endurance.design-witness.v1",
+  "summary_budget_tokens": 270
+}

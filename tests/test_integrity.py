@@ -10,10 +10,14 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_preregistration_locks_experiment_and_mechanisms():
     assert verify_preregistration(ROOT) == []
     prereg = json.loads((ROOT / "PREREGISTRATION.json").read_text())
-    assert prereg["schema"] == "openline.endurance.preregistration.v2"
+    assert prereg["schema"] == "openline.endurance.preregistration.v4"
     assert prereg["experiment_sha256"] == sha256_file(ROOT / "experiment.json")
     assert prereg["locked_design"]["randomness_coupling"] == "EVENT_BOUND_COMMON_RANDOM_NUMBERS"
     assert prereg["locked_design"]["tip_capture"]["analysis_plan"]["heldout_seed_count"] == 80
+    assert prereg["locked_design"]["generational_endurance"]["analysis_plan"]["minimum_pairs"] == 80
+    assert prereg["locked_design"]["state_restoration"]["analysis_plan"]["minimum_pairs"] == 80
+    assert prereg["locked_design"]["state_restoration"]["fixed_retirement_interval_cycles"] == 85
+    assert prereg["lineage_file"] == "V060_LINEAGE.json"
 
 
 def test_public_witness_is_compact_and_self_scoped():
