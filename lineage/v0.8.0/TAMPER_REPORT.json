@@ -1,0 +1,684 @@
+{
+  "attacks": {
+    "release_report_mutation": {
+      "attack": "establish a valid provisional detached release receipt in an isolated clone, then edit the final release verdict without touching scientific artifacts",
+      "detected": true,
+      "verifier": {
+        "artifact_binding_valid": true,
+        "chain": {
+          "chain_digest": "eb39988fc36f1e49dac9eb97b03c33f2c115ea741371c41ae1384a8c3397639f",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "ee0bffca0d103f431cbe332d446ab3ba5f6e58e29f5ee1a5af53c3acc50cfb99",
+          "valid": true
+        },
+        "errors": [
+          "release_attestation_artifact_hash_mismatch:RUN_REPORT.json",
+          "release_attestation_run_report_not_passed"
+        ],
+        "lineage_binding_valid": true,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "753bfea4f2ca9b69e757efbb1fb7a147b765672d0876e175e5e56ae6839ee52c",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "c05de90fca14c834a9e2cea70d2f7e265090320c6c40e78a222966b5a0077b1f",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_artifact_hash_mismatch:RUN_REPORT.json",
+            "release_attestation_run_report_not_passed"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "0bb8a85188c4b807fc9d2dbceff9232eb29c9374907656a337249a32b740d575",
+              "TAMPER_REPORT.json": "3af4fac41e7e55316094e45f7cf1ef53d611eddae0a3bde8faac9a47abf20512"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "eb39988fc36f1e49dac9eb97b03c33f2c115ea741371c41ae1384a8c3397639f",
+            "experiment_tail_hash": "ee0bffca0d103f431cbe332d446ab3ba5f6e58e29f5ee1a5af53c3acc50cfb99",
+            "preregistration_sha256": "2336aab3bfca11976a649c287cb0bc7608750fe0823549a79364f1ac8d28131a",
+            "public_witness_digest": "4d2057ec64129a6a6e9b250e6ef37b01b8c0751efc150fb14bbed15909f3b632",
+            "release_version": "0.8.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "3285e8841d4aae7fb6acea656a93eaf7b43728667795afc27c2e879561de2977"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    },
+    "resealed_collision_spacing_forgery": {
+      "attack": "mutate one collision-spacing damage row, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "verifier": {
+        "artifact_binding_valid": false,
+        "chain": {
+          "chain_digest": "b432f28bb21e8eb00a01525617553b9dfefb6d2a3794f6b47d4334fe5e892cd5",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "9db5ba7ebdc42a26589c4c4039d13b9bf3df66d92786a5eeddce644baad7340f",
+          "valid": true
+        },
+        "errors": [
+          "v070_lineage_hash_mismatch:results/collision_spacing_events.csv",
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch"
+        ],
+        "lineage_binding_valid": false,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    },
+    "resealed_first_contact_forgery": {
+      "attack": "mutate one first-contact lattice coordinate, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "verifier": {
+        "artifact_binding_valid": false,
+        "chain": {
+          "chain_digest": "9519950eb562d12600924b3dfa985011af8bd643a5af7c4d21860d67d6429bfc",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "be09fdf16c6dabdd7a84182408501d2f17ba83c8127493018586b38984fc1005",
+          "valid": true
+        },
+        "errors": [
+          "v070_lineage_hash_mismatch:results/tip_capture_cycles.csv",
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch"
+        ],
+        "lineage_binding_valid": false,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    },
+    "resealed_generational_forgery": {
+      "attack": "mutate one generational active-context value, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "verifier": {
+        "artifact_binding_valid": false,
+        "chain": {
+          "chain_digest": "947df19a4795c37a081ee1d995c578cbfc3c10f4b6692ed5e7e8fa0dde2587e2",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "e36cad99fdc60d2c03a4fe41c4b78a7ad406d9370f35765054bf7dc42db349a2",
+          "valid": true
+        },
+        "errors": [
+          "v070_lineage_hash_mismatch:results/generational_cycles.csv",
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch"
+        ],
+        "lineage_binding_valid": false,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    },
+    "resealed_load_rate_cycle_forgery": {
+      "attack": "mutate one v0.8 load-rate cycle value, patch the manifest and evidence hashes, replace the keypair, and resign the complete chain",
+      "detected": true,
+      "semantic_shard": {
+        "cycle_artifact": "load_rate_cycles.part-000.csv.gz",
+        "cycle_bytes_match": false,
+        "cycle_count": 30720,
+        "fresh_cycle_sha256": "8505af2da18ac223bf38fa38be41bec435602de9eb6dcfb6e27b23096737e56b",
+        "leaf_count": 30720,
+        "passed": false,
+        "run_count": 192,
+        "run_metrics_match": true,
+        "schema": "openline.load-rate.semantic-shard.v1",
+        "seeds": [
+          8101,
+          8102,
+          8103,
+          8104,
+          8105,
+          8106,
+          8107,
+          8108
+        ],
+        "shard_index": 0,
+        "stored_cycle_sha256": "6deafac9cc9613f162eb7ae098083199600258283d2e9c88ddb1b5dca82b0dcb"
+      },
+      "verifier": {
+        "artifact_binding_valid": true,
+        "chain": {
+          "chain_digest": "bb578eb7a3e7a70bfe34050ce273593d6ce346dbe216eeb76f3d31b81136fac3",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "a9720f9549963acc5fbe8f635c9e4cc358b70cec1b19fe70f18c066f8458115a",
+          "valid": true
+        },
+        "errors": [
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch"
+        ],
+        "lineage_binding_valid": true,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    },
+    "resealed_raw_cycle_forgery": {
+      "attack": "mutate fitted damage_D in a raw primary-cycle row, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "verifier": {
+        "artifact_binding_valid": false,
+        "chain": {
+          "chain_digest": "bc5eb062ecbc6eec66688de2ce651d746e9269a239e60fd1a631259a6f825499",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "889f5ebc330ab47a65568fde3ff689dcaa57673f3e41890fa2dfffa3088e5fe5",
+          "valid": true
+        },
+        "errors": [
+          "v070_lineage_hash_mismatch:results/cycles.csv",
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch"
+        ],
+        "lineage_binding_valid": false,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    },
+    "resealed_state_restoration_forgery": {
+      "attack": "mutate one compressed state-restoration telemetry row, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "semantic_shard": {
+        "cycle_artifact": "state_restoration_cycles.part-000.csv.gz",
+        "cycle_bytes_match": false,
+        "cycle_count": 34560,
+        "fresh_cycle_sha256": "14d181cb6a1c4a624a441c4c033d40b62555f00bb75eaa35d9c27f2bd11f9715",
+        "leaf_count": 34560,
+        "passed": false,
+        "run_count": 108,
+        "run_metrics_match": true,
+        "schema": "openline.state-restoration.semantic-shard.v1",
+        "seeds": [
+          8101,
+          8102,
+          8103,
+          8104,
+          8105,
+          8106,
+          8107,
+          8108,
+          8109,
+          8110,
+          8111,
+          8112
+        ],
+        "shard_index": 0,
+        "stored_cycle_sha256": "b352df3b5168974b7e9c5c3a705e52e1c27fbaa65b85c8db2a8abb4194828a76"
+      },
+      "verifier": {
+        "artifact_binding_valid": false,
+        "chain": {
+          "chain_digest": "91222b5a6382f926cd869a74b7650710e103317c861eb6faf973db386dbc6aab",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "701450bd7d3947caf44b1f10c3136ad2f15ad53f152c84331d815341c1e88bb7",
+          "valid": true
+        },
+        "errors": [
+          "v070_lineage_hash_mismatch:results/state_restoration_cycles.part-000.csv.gz",
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch"
+        ],
+        "lineage_binding_valid": false,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    },
+    "resealed_summary_forgery": {
+      "attack": "flip one gate, patch hashes, replace keypair, resign chain",
+      "detected": true,
+      "verifier": {
+        "artifact_binding_valid": true,
+        "chain": {
+          "chain_digest": "9f7fabea734d450de1025a9743d0d9fb9bcccdd62c10e52323094ae3b31edae1",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "f63f8359702e7b06d54ea96c77182f60ca25f83bfc80802d8b0b327210486c45",
+          "valid": true
+        },
+        "errors": [
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch",
+          "summary_semantic_recompute_mismatch"
+        ],
+        "lineage_binding_valid": true,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": false,
+        "valid": false
+      }
+    },
+    "tail_truncation": {
+      "detected": true,
+      "verifier": {
+        "chain_digest": "b89eefd812d9fa8b6ddf71d84fa385789d07b191e9b546de70eaff55e0335816",
+        "completeness_verified": false,
+        "count": 737,
+        "errors": [
+          "completeness_count_mismatch",
+          "completeness_tail_mismatch",
+          "completeness_digest_mismatch"
+        ],
+        "integrity_valid": false,
+        "tail_hash": "2d686b943b3f24274f3843e5f46563f00f7ecfbc691576ed62a048dec2a98cfb",
+        "valid": false
+      }
+    },
+    "unpatched_source_drift": {
+      "detected": true,
+      "verifier": {
+        "artifact_binding_valid": false,
+        "chain": {
+          "chain_digest": "eb39988fc36f1e49dac9eb97b03c33f2c115ea741371c41ae1384a8c3397639f",
+          "completeness_verified": true,
+          "count": 738,
+          "errors": [],
+          "integrity_valid": true,
+          "tail_hash": "ee0bffca0d103f431cbe332d446ab3ba5f6e58e29f5ee1a5af53c3acc50cfb99",
+          "valid": true
+        },
+        "errors": [
+          "manifest_hash_mismatch:src/openline_endurance_gate/load_rate.py",
+          "preregistration_mechanism_hash_mismatch:src/openline_endurance_gate/load_rate.py",
+          "release_attestation_version_mismatch",
+          "release_attestation_experiment_chain_digest_mismatch",
+          "release_attestation_experiment_tail_mismatch",
+          "release_attestation_public_witness_mismatch",
+          "release_attestation_source_tree_mismatch",
+          "release_attestation_preregistration_mismatch",
+          "release_attestation_reported_chain_digest_mismatch",
+          "release_attestation_reported_chain_tail_mismatch",
+          "release_attestation_tamper_version_mismatch"
+        ],
+        "lineage_binding_valid": true,
+        "release_attestation": {
+          "chain": {
+            "chain_digest": "5b84aaf708baacf0d7fb2b19de05a901f7d5022d811c65987f9b7bec8c063cd0",
+            "completeness_verified": true,
+            "count": 1,
+            "errors": [],
+            "integrity_valid": true,
+            "tail_hash": "3694670a856166b4bf78ee1bdc5ca2fbd7bfa937370d9d2729b6a03982e14db2",
+            "valid": true
+          },
+          "errors": [
+            "release_attestation_version_mismatch",
+            "release_attestation_experiment_chain_digest_mismatch",
+            "release_attestation_experiment_tail_mismatch",
+            "release_attestation_public_witness_mismatch",
+            "release_attestation_source_tree_mismatch",
+            "release_attestation_preregistration_mismatch",
+            "release_attestation_reported_chain_digest_mismatch",
+            "release_attestation_reported_chain_tail_mismatch",
+            "release_attestation_tamper_version_mismatch"
+          ],
+          "payload": {
+            "artifact_hashes": {
+              "RUN_REPORT.json": "feef07e6a905e8058e80a41270cbfb4e2fa43de9a09488c9d3526af8164cca18",
+              "TAMPER_REPORT.json": "988036098796b0b590352a73d6494575aacd3678fd6e911b53f35b58808da73a"
+            },
+            "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+            "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+            "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+            "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
+            "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
+            "release_version": "0.7.0",
+            "schema": "openline.endurance.release-attestation.v1",
+            "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+          },
+          "valid": false
+        },
+        "release_attestation_valid": false,
+        "semantic_recomputation_valid": true,
+        "valid": false
+      }
+    }
+  },
+  "execution_boundary": "Each complete hostile attack, including its semantic verifier, ran as a separate top-level Python process under a low-memory shell orchestrator.",
+  "passed": true,
+  "release_version": "0.8.0",
+  "report_role": "RELEASE_ATTESTATION_INPUT",
+  "schema": "openline.endurance.tamper-report.v8",
+  "trust_boundary": {
+    "reason": "A full-write attacker can replace source, artifacts, keypair, anchor, and local witness. Publish results/public_witness.json or its digest outside the repository.",
+    "whole_repository_replacement": "OUT_OF_SCOPE_WITHOUT_EXTERNAL_WITNESS"
+  }
+}

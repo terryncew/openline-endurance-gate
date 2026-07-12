@@ -24,10 +24,20 @@ ATTACKS=(
   resealed_collision_spacing_forgery
   resealed_generational_forgery
   resealed_state_restoration_forgery
+  resealed_load_rate_cycle_forgery
   resealed_summary_forgery
   tail_truncation
   unpatched_source_drift
   release_report_mutation
+  recovery_signed_packet_mutation
+  recovery_evidence_hash_mutation
+  recovery_receipt_chain_mutation
+  recovery_report_forgery
+  recovery_summary_reseal
+  recovery_stale_packet_replay
+  recovery_cross_run_packet_copy
+  recovery_generation_rollback
+  recovery_same_packet_replay
 )
 status=0
 for attack in "${ATTACKS[@]}"; do

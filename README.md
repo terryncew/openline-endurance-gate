@@ -1,69 +1,67 @@
-# OpenLine Endurance Gate v0.7.0
+# OpenLine Endurance Gate
 
-A falsifiable synthetic reliability harness for one question: can an agent keep carrying the right state across repeated handoffs without slowly becoming a confident copy of an earlier mistake?
+Version 0.9.1 completes Recovery Intervention Pass 2. It preserves v0.9.0 byte-for-byte, reruns the five matched conditions on 80 fresh held-out seeds, and adds stateful `run_id`, packet-parent, and generation binding. A valid signature is not sufficient for acceptance: stale, cross-run, and incomplete packets fail through independent checks.
 
-v0.7 adds a state-restoration experiment on top of the released v0.6 inheritance capsule. It separates four interventions that are easy to blur together: pruning active history, restarting an instance, reconstructing state from verified lineage, and correcting detected state errors.
+`openline-endurance-gate` is a falsifiable synthetic reliability harness for cumulative state loss, dependency-frontier geometry, verified inheritance, restoration, and disturbance-rate effects.
 
-## v0.7 result
+## v0.9.1 — Replay and freshness binding, Pass 2
 
-Seven matched modes ran for 320 cycles across 80 untouched held-out seeds. Every mode received the same event packets and event-bound random draws. The controls included a sham restart that preserved defects and a pressure-disabled null world.
+Both compact tracks carry the same `run_id`, `parent_hash`, and `generation_index` fields and check them against the same verifier-session shape. The unsigned track covers its fields only with an unkeyed checksum; an attacker can rewrite them and recompute it. The OLP track signs the fields in the envelope body and in all eight receipts.
 
-**State-restoration result: 5/9 exploratory gates passed.**
+Verification is pure: it returns a proposed session update, and the caller advances expected parent/generation state only after acceptance. The nine module hostile controls add stale replay, cross-run copy, isolated generation rollback, and immediate same-packet replay to the five Pass-1 controls. Correctly signed state omission remains a separate supporting control and must be `undecidable`, never accepted.
 
-The combined restoration stack met the absolute 160- and 320-cycle survival gates and preserved checkpoint accuracy. It reached 82.5% survival at 320 cycles, compared with 43.75% for the verified-capsule baseline. Its paired median life gain was still zero because 44 of 80 pairs tied. The preregistered relative-effect rule therefore does not support the stronger claim that the stack materially extended median lifetime.
+All **8 of 8** preregistered Pass-2 gates passed on 80 fresh held-out seeds. Empty reset failed at cycle 80; state-bearing arms averaged 136.7625 cycles to failure. Clean unsigned and OLP compact arms were exactly equal at 153.0125 cycles and 0.350207 post-intervention decision accuracy. OLP retained every required field at 97.5% or better at intervention.
 
-The individual interventions failed their material-life gates:
+The OLP packet averaged 8,486 bytes versus 2,203 for unsigned compact state and 19,874 for full history. Under all four replay/freshness attacks, OLP rejected while signature validity remained intact; after attacker rebinding and checksum recomputation, the unsigned packet accepted. The prior Pass-1 result remains pinned in `lineage/v0.9.0`.
 
-- scheduled pruning at cycle 80: median gain 0 cycles;
-- fixed retirement every 85 cycles: median gain 0;
-- telemetry-triggered retirement versus fixed retirement: median gain 0;
-- ECC-style digest correction: median gain 0.
+## v0.9.0 — Recovery Intervention, Pass 1 (preserved)
 
-Several improved mean life or survival for a minority of seeds, but the preregistered statistic was the paired median. They stay failed.
+All **7 of 7** preregistered recovery gates passed on 32 held-out seeds. Empty reset failed at cycle 80; the state-bearing arms averaged 135.854 cycles to failure. The clean unsigned and OLP compact arms were exactly equal at 153.031 cycles and 0.345176 post-intervention decision accuracy, while full history averaged 101.5 cycles and 0.077412 accuracy. Every OLP field retained at least 96.875% at intervention; three retained 100%.
 
-The sham retirement passed its specificity gate: restarting while carrying the same defects produced essentially no benefit. The pressure-disabled null also passed its one-sided median rule, although 18 of 80 seeds still favored the stack. That residual is disclosed rather than called equivalence.
+The OLP packet averaged 7,280 bytes versus 19,880 for full history. Its overhead over the 1,952-byte unsigned packet is the signed eight-receipt evidence and coverage layer. The v0.9.0 top-level tamper runner detected all 15 attacks: the inherited ten plus five recovery-specific controls.
 
-## What this does—and does not—say
+The clean equality is intentional. This experiment does not let signing make the runtime smarter; verification’s distinct role is fail-closed refusal when integrity, evidence, chain, report, or trusted-summary binding is challenged.
 
-The build supports a narrower engineering claim: verified reconstruction can participate in a stack that survives farther than the inherited capsule baseline in this seeded world. It does not identify an exact 160-cycle law, prove that rolling noise physically saturates, or establish that the synthetic `epsilon`, coherence-margin, and stability values are measured Coherence Dynamics variables. They are trigger-policy proxies.
+## v0.8.1 — Same Disturbance, Different Speed: phase-controlled replication
 
-The clean result is slightly rude to the original pitch: ordinary pruning and fresh-process retirement were weak. Repair only became useful when the runtime reconstructed load-bearing state from verified lineage. A clean reboot carrying dirty state is still dirty state, just well rested.
+v0.8.0 found a real spacing association but failed its null because ordinary-work tokens accumulated permanently in active context. Slow schedules therefore reached the same disturbance index with more retained context than burst schedules. That hidden schedule-to-context pathway was concentrated in continuous history.
 
-## Preserved prior results
+v0.8.1 preserves the original 3/4 result byte-for-byte in `lineage/v0.8.0` and reruns the same four gates on fresh seeds after one mechanism correction:
 
-`V060_LINEAGE.json` pins the released v0.6 scientific evidence byte-for-byte.
+> Ordinary work still executes, consumes the same tokens, and can perform bounded repair, but its scratch context is released after the task. Only receipt-worthy disturbances persist in active context.
 
-- v0.4 endurance and tip capture: **8/10**;
-- v0.5 collision spacing: **5/7**—Ulam failed, conflict-aware spacing passed;
-- v0.6 generational inheritance: **5/7**—capsules cleared 40 and 80, then failed 160;
-- v0.7 state restoration: **5/9**.
+Everything else remains matched: disturbance identities, order, amplitudes, total load, ordinary work, horizon, event-bound random draws, active-context ceiling, schedules, gates, and thresholds.
 
-These remain separate scores.
+## Held-out result
 
-## Run and verify
+v0.8.1 passed **4 of 4** exploratory gates on 80 fresh held-out seeds.
 
-```bash
-python -m pip install -e . --no-deps --no-build-isolation
-openline-endurance verify --root . --source-root . --fast
-openline-endurance state-restoration --root .
-```
+- Slow delivery survived **4.5792 more disturbances** than sudden burst on average; 95% interval **3.8458 to 5.3417**.
+- The direction replicated in all three modes: continuous history **+4.30**, ordinary summary **+3.8875**, verified capsule **+5.55**.
+- Ordinary-work recovery windows survived **4.0583 more disturbances** than a continuous burst; 95% interval **3.3458 to 4.7833**.
+- The rate-disabled null was **+0.0417** overall; 95% interval **0.0 to 0.125**. Mode-specific nulls were continuous history **+0.1125**, ordinary summary **+0.0125**, and verified capsule **0.0**.
 
-The full v0.7 semantic witness is deliberately shardable. Each phase independently regenerates 12 seeds, then the finalizer combines the canonical Merkle leaves and recomputes all nine gates:
+This closes the discovered phase confound inside the declared synthetic world. It does not establish a universal load-rate law for deployed agents.
 
-```bash
-for shard in 0 1 2 3 4 5 6 7; do
-  openline-endurance semantic-shard --root . --index "$shard"
-done
-openline-endurance semantic-finalize --root .
-```
+## Claim boundary
 
-A normal machine may also use the one-command verifier:
+The hard result is narrow:
+
+**With retained context matched by disturbance index, concentrated disturbances shortened synthetic survival relative to slow delivery.**
+
+This release does not claim that AI agents obey fluid mechanics, identify a universal breaking rate, validate a physical Coherence Dynamics variable, or establish an activation-envelope retirement policy.
+
+## Run
 
 ```bash
-openline-endurance verify --root . --source-root .
+python -m openline_endurance_gate run --root .
+python -m openline_endurance_gate recovery --root .
+python -m openline_endurance_gate load-rate --root .
+python -m openline_endurance_gate verify --root . --source-root . --fast
+python -m openline_endurance_gate verify --root . --source-root .
 ```
 
-Run the documented release sequence:
+## Release gate
 
 ```bash
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -q
@@ -71,12 +69,10 @@ bash scripts/tamper_check.sh
 bash scripts/release_check.sh
 ```
 
-The standalone tamper command writes `TAMPER_REPORT.standalone.json`, which is intentionally outside the detached release attestation. `release_check.sh` rebuilds the attested `TAMPER_REPORT.json`, reruns the semantic shards, writes `RUN_REPORT.json`, and signs the final reports. Running the standalone hostile gate first therefore cannot deadlock or falsely strand a clean clone as tampered.
+The standalone hostile check writes `TAMPER_REPORT.standalone.json`; it does not overwrite the report bound by the detached release attestation.
 
 ## Evidence boundary
 
-The experiment chain is Ed25519-signed and hash-linked. A detached release receipt binds the final run and hostile-test reports. The v0.7 verifier independently regenerates 276,480 cycle observations and 864 run summaries while checking prior v0.6 evidence against pinned lineage.
+The experiment chain is Ed25519-signed and hash-linked. The verifier checks the byte-pinned v0.9.0 snapshot, every earlier inherited lineage boundary, recovery preregistration, deterministic cycle shards, timing-stripped handoff semantics, module gates, the integrated summary, and the detached outer release attestation.
 
-The local public keys remain self-declared. A full-write attacker can replace the repository, source, evidence, keys, and anchors. Publish `results/public_witness.json` and `receipts/release.anchor.json`, or their digests, outside the repository to detect whole-repository replacement.
-
-This remains a seeded toy world with canonical ground truth. The next serious test uses real agent traces and externally scored reconstruction checkpoints.
+A local key and witness cannot detect total repository replacement by an attacker with full write access. Publish `results/public_witness.json`, `receipts/release.anchor.json`, or their digests outside the repository to close that boundary.

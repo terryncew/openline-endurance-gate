@@ -1,0 +1,749 @@
+{
+  "claim_boundary": "In this controlled experiment, a compact verified handoff preserved specified state and changed post-intervention performance by the measured amount.",
+  "deferred_to_v0.9.1": {
+    "hostile_controls": [
+      "stale_packet_replay",
+      "cross_run_packet_copy",
+      "signed_required_state_omission"
+    ],
+    "mechanism": "stateful freshness verifier with run_id, parent_hash, and generation_index",
+    "seeds": "fresh held-out seeds not used in v0.9.0"
+  },
+  "excluded_claims": [
+    "epsilon",
+    "m",
+    "Lambda",
+    "coherence recovery",
+    "universal cycle-count law",
+    "signing makes the runtime smarter",
+    "transfer to deployed agents"
+  ],
+  "exploratory_by_mode": {
+    "continuous_control": {
+      "mean_cycles_until_failure": 101.75,
+      "mean_packet_bytes": 0.0,
+      "mean_packet_tokens": 0.0,
+      "mean_post_handoff_decision_accuracy": 0.07650414939375,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.30238589211618255,
+        "latency_floor": 0.23054979253112035,
+        "memory_horizon": 0.23729253112033194,
+        "retry_demand": 0.2712655601659751,
+        "risk_tolerance": 0.21395228215767634,
+        "token_capacity": 0.2987551867219917
+      },
+      "median_cycles_until_failure": 96.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.0625,
+        "retry_demand": 0.0,
+        "risk_tolerance": 0.0,
+        "token_capacity": 0.25
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 1.0,
+        "latency_floor": 1.0,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 1.0,
+        "token_capacity": 0.9375
+      },
+      "run_count": 16,
+      "same_failure_return_rate": 0.75,
+      "total_policy_violations": 0
+    },
+    "empty_reset": {
+      "mean_cycles_until_failure": 80.0,
+      "mean_packet_bytes": 45.0,
+      "mean_packet_tokens": 17.0,
+      "mean_post_handoff_decision_accuracy": 0.0,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.6135892116182573,
+        "latency_floor": 0.666753112033195,
+        "memory_horizon": 0.5845435684647303,
+        "retry_demand": 0.6130705394190872,
+        "risk_tolerance": 0.6312240663900415,
+        "token_capacity": 0.6779045643153527
+      },
+      "median_cycles_until_failure": 80.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.125,
+        "memory_horizon": 0.0625,
+        "retry_demand": 0.0625,
+        "risk_tolerance": 0.125,
+        "token_capacity": 0.125
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.1875,
+        "memory_horizon": 0.375,
+        "retry_demand": 0.125,
+        "risk_tolerance": 0.1875,
+        "token_capacity": 0.0625
+      },
+      "run_count": 16,
+      "same_failure_return_rate": 1.0,
+      "total_policy_violations": 176
+    },
+    "full_history_handoff": {
+      "mean_cycles_until_failure": 101.75,
+      "mean_packet_bytes": 19879.5625,
+      "mean_packet_tokens": 4359.875,
+      "mean_post_handoff_decision_accuracy": 0.07650414939375,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.30238589211618255,
+        "latency_floor": 0.23054979253112035,
+        "memory_horizon": 0.23729253112033194,
+        "retry_demand": 0.2712655601659751,
+        "risk_tolerance": 0.21395228215767634,
+        "token_capacity": 0.2987551867219917
+      },
+      "median_cycles_until_failure": 96.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.0625,
+        "retry_demand": 0.0,
+        "risk_tolerance": 0.0,
+        "token_capacity": 0.25
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 1.0,
+        "latency_floor": 1.0,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 1.0,
+        "token_capacity": 0.9375
+      },
+      "run_count": 16,
+      "same_failure_return_rate": 0.75,
+      "total_policy_violations": 0
+    },
+    "olp_handoff": {
+      "mean_cycles_until_failure": 147.9375,
+      "mean_packet_bytes": 7277.25,
+      "mean_packet_tokens": 1619.8125,
+      "mean_post_handoff_decision_accuracy": 0.33765560164999997,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.5967323651452282,
+        "latency_floor": 0.5557572614107884,
+        "memory_horizon": 0.5153008298755186,
+        "retry_demand": 0.5137448132780082,
+        "risk_tolerance": 0.5682053941908713,
+        "token_capacity": 0.558091286307054
+      },
+      "median_cycles_until_failure": 160.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.0,
+        "retry_demand": 0.0625,
+        "risk_tolerance": 0.0625,
+        "token_capacity": 0.125
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 1.0,
+        "latency_floor": 1.0,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 1.0,
+        "token_capacity": 0.9375
+      },
+      "run_count": 16,
+      "same_failure_return_rate": 0.8125,
+      "total_policy_violations": 0
+    },
+    "unsigned_minimal_handoff": {
+      "mean_cycles_until_failure": 147.9375,
+      "mean_packet_bytes": 1949.25,
+      "mean_packet_tokens": 557.5,
+      "mean_post_handoff_decision_accuracy": 0.33765560164999997,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.5967323651452282,
+        "latency_floor": 0.5557572614107884,
+        "memory_horizon": 0.5153008298755186,
+        "retry_demand": 0.5137448132780082,
+        "risk_tolerance": 0.5682053941908713,
+        "token_capacity": 0.558091286307054
+      },
+      "median_cycles_until_failure": 160.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.0,
+        "retry_demand": 0.0625,
+        "risk_tolerance": 0.0625,
+        "token_capacity": 0.125
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 1.0,
+        "latency_floor": 1.0,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 1.0,
+        "token_capacity": 0.9375
+      },
+      "run_count": 16,
+      "same_failure_return_rate": 0.8125,
+      "total_policy_violations": 0
+    }
+  },
+  "gate_count": 7,
+  "gates": {
+    "checksum_detects_bit_flip": {
+      "mechanism": "plain_sha256_unkeyed_without_run_binding",
+      "passed": true
+    },
+    "clean_unsigned_olp_equivalence": {
+      "absolute_accuracy_difference": 0.0,
+      "passed": true
+    },
+    "compact_not_materially_worse_than_full_history": {
+      "compact_mean_accuracy": 0.345176348546875,
+      "full_history_accuracy": 0.07741182571562501,
+      "minimum_handoff_field_retention": 0.9,
+      "olp_per_field_retention_at_intervention": {
+        "handoff_depth": 0.96875,
+        "latency_floor": 0.96875,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 0.96875,
+        "token_capacity": 1.0
+      },
+      "passed": true
+    },
+    "effect_replicates_on_heldout_seeds": {
+      "heldout_direction": 55.85416666666666,
+      "passed": true
+    },
+    "empty_reset_underperforms_state_bearing_handoffs": {
+      "empty_mean_nf": 80.0,
+      "passed": true,
+      "state_bearing_mean_nf": 135.85416666666666
+    },
+    "not_a_fixed_failure_postponement": {
+      "observed_positive_recurrence_delays": [
+        15,
+        16,
+        32,
+        37,
+        54,
+        64,
+        70,
+        94,
+        108,
+        112,
+        113,
+        128,
+        139,
+        144,
+        160,
+        172,
+        176,
+        192,
+        224,
+        240
+      ],
+      "passed": true
+    },
+    "olp_refuses_corrupted_or_incomplete_state": {
+      "controls": [
+        "signed_packet_changed_after_signing",
+        "evidence_changed_after_hashing",
+        "receipt_chain_reordered_or_truncated"
+      ],
+      "passed": true
+    }
+  },
+  "heldout_by_mode": {
+    "continuous_control": {
+      "mean_cycles_until_failure": 101.0,
+      "mean_packet_bytes": 0.0,
+      "mean_packet_tokens": 0.0,
+      "mean_post_handoff_decision_accuracy": 0.07585580911875,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.31574170124481327,
+        "latency_floor": 0.30627593360995853,
+        "memory_horizon": 0.25609439834024894,
+        "retry_demand": 0.3399896265560166,
+        "risk_tolerance": 0.2868257261410788,
+        "token_capacity": 0.287603734439834
+      },
+      "median_cycles_until_failure": 96.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.09375,
+        "retry_demand": 0.03125,
+        "risk_tolerance": 0.0,
+        "token_capacity": 0.03125
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 0.96875,
+        "latency_floor": 0.96875,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 0.96875,
+        "token_capacity": 1.0
+      },
+      "run_count": 32,
+      "same_failure_return_rate": 0.84375,
+      "total_policy_violations": 0
+    },
+    "empty_reset": {
+      "mean_cycles_until_failure": 80.0,
+      "mean_packet_bytes": 45.0,
+      "mean_packet_tokens": 17.0,
+      "mean_post_handoff_decision_accuracy": 0.0,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.6373184647302904,
+        "latency_floor": 0.6119035269709544,
+        "memory_horizon": 0.6393931535269709,
+        "retry_demand": 0.6627334024896265,
+        "risk_tolerance": 0.6395228215767634,
+        "token_capacity": 0.6330394190871369
+      },
+      "median_cycles_until_failure": 80.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.09375,
+        "memory_horizon": 0.09375,
+        "retry_demand": 0.0625,
+        "risk_tolerance": 0.03125,
+        "token_capacity": 0.15625
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 0.09375,
+        "latency_floor": 0.15625,
+        "memory_horizon": 0.25,
+        "retry_demand": 0.15625,
+        "risk_tolerance": 0.1875,
+        "token_capacity": 0.15625
+      },
+      "run_count": 32,
+      "same_failure_return_rate": 0.90625,
+      "total_policy_violations": 352
+    },
+    "full_history_handoff": {
+      "mean_cycles_until_failure": 101.5,
+      "mean_packet_bytes": 19880.09375,
+      "mean_packet_tokens": 4358.34375,
+      "mean_post_handoff_decision_accuracy": 0.07741182571562501,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.31574170124481327,
+        "latency_floor": 0.30627593360995853,
+        "memory_horizon": 0.25609439834024894,
+        "retry_demand": 0.3399896265560166,
+        "risk_tolerance": 0.2868257261410788,
+        "token_capacity": 0.29304979253112035
+      },
+      "median_cycles_until_failure": 96.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.0625,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.09375,
+        "retry_demand": 0.03125,
+        "risk_tolerance": 0.0,
+        "token_capacity": 0.03125
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 0.96875,
+        "latency_floor": 0.96875,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 0.96875,
+        "token_capacity": 1.0
+      },
+      "run_count": 32,
+      "same_failure_return_rate": 0.875,
+      "total_policy_violations": 0
+    },
+    "olp_handoff": {
+      "mean_cycles_until_failure": 153.03125,
+      "mean_packet_bytes": 7279.5625,
+      "mean_packet_tokens": 1618.9375,
+      "mean_post_handoff_decision_accuracy": 0.345176348546875,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.5717064315352697,
+        "latency_floor": 0.5447354771784232,
+        "memory_horizon": 0.5977697095435685,
+        "retry_demand": 0.5813018672199171,
+        "risk_tolerance": 0.5890819502074689,
+        "token_capacity": 0.5582209543568465
+      },
+      "median_cycles_until_failure": 176.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.03125,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.0625,
+        "retry_demand": 0.0625,
+        "risk_tolerance": 0.0625,
+        "token_capacity": 0.09375
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 0.96875,
+        "latency_floor": 0.96875,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 0.96875,
+        "token_capacity": 1.0
+      },
+      "run_count": 32,
+      "same_failure_return_rate": 0.8125,
+      "total_policy_violations": 0
+    },
+    "unsigned_minimal_handoff": {
+      "mean_cycles_until_failure": 153.03125,
+      "mean_packet_bytes": 1951.5625,
+      "mean_packet_tokens": 558.1875,
+      "mean_post_handoff_decision_accuracy": 0.345176348546875,
+      "mean_post_intervention_retention": {
+        "handoff_depth": 0.5717064315352697,
+        "latency_floor": 0.5447354771784232,
+        "memory_horizon": 0.5977697095435685,
+        "retry_demand": 0.5813018672199171,
+        "risk_tolerance": 0.5890819502074689,
+        "token_capacity": 0.5582209543568465
+      },
+      "median_cycles_until_failure": 176.0,
+      "rejection_counts": {
+        "rejected": 0,
+        "undecidable": 0
+      },
+      "required_state_retention": {
+        "handoff_depth": 0.03125,
+        "latency_floor": 0.0625,
+        "memory_horizon": 0.0625,
+        "retry_demand": 0.0625,
+        "risk_tolerance": 0.0625,
+        "token_capacity": 0.09375
+      },
+      "retention_at_intervention": {
+        "handoff_depth": 0.96875,
+        "latency_floor": 0.96875,
+        "memory_horizon": 1.0,
+        "retry_demand": 1.0,
+        "risk_tolerance": 0.96875,
+        "token_capacity": 1.0
+      },
+      "run_count": 32,
+      "same_failure_return_rate": 0.8125,
+      "total_policy_violations": 0
+    }
+  },
+  "passed_gate_count": 7,
+  "release": "0.9.0",
+  "schema": "openline.endurance.recovery-summary.v1",
+  "secondary_fractography_diagnostic": {
+    "by_mode": {
+      "continuous_control": {
+        "crack_initiation_rate": 1.0,
+        "mean_crack_burden": 408.28125,
+        "median_empirical_repair_half_life": 3.5,
+        "median_initiation_cycle": 89.0,
+        "median_max_crack_load": 6.0,
+        "run_count": 32
+      },
+      "empty_reset": {
+        "crack_initiation_rate": 1.0,
+        "mean_crack_burden": 211.25,
+        "median_empirical_repair_half_life": 2.0,
+        "median_initiation_cycle": 88.0,
+        "median_max_crack_load": 5.0,
+        "run_count": 32
+      },
+      "full_history_handoff": {
+        "crack_initiation_rate": 1.0,
+        "mean_crack_burden": 407.71875,
+        "median_empirical_repair_half_life": 3.5,
+        "median_initiation_cycle": 89.0,
+        "median_max_crack_load": 6.0,
+        "run_count": 32
+      },
+      "olp_handoff": {
+        "crack_initiation_rate": 1.0,
+        "mean_crack_burden": 239.5,
+        "median_empirical_repair_half_life": 3.0,
+        "median_initiation_cycle": 157.0,
+        "median_max_crack_load": 5.0,
+        "run_count": 32
+      },
+      "unsigned_minimal_handoff": {
+        "crack_initiation_rate": 1.0,
+        "mean_crack_burden": 239.5,
+        "median_empirical_repair_half_life": 3.0,
+        "median_initiation_cycle": 157.0,
+        "median_max_crack_load": 5.0,
+        "run_count": 32
+      }
+    },
+    "definition": "A crack is an observed connected burden of unresolved dependencies, invariant failures, new contradictions, or unsafe attempts. It is a diagnostic proxy, not a physical fracture.",
+    "dominant_crack_cluster": {
+      "node_count": 9,
+      "nodes": [
+        "dependency:handoff_depth",
+        "dependency:latency_floor",
+        "dependency:memory_horizon",
+        "dependency:retry_demand",
+        "dependency:risk_tolerance",
+        "dependency:token_capacity",
+        "invariant:evidence_fits_token_budget",
+        "signal:new_contradiction",
+        "signal:unsafe_attempt"
+      ],
+      "weighted_occurrence_count": 73429
+    },
+    "heldout_run_count": 160,
+    "run_count": 240,
+    "schema": "openline.endurance.fractography.v1",
+    "top_crack_nodes": [
+      {
+        "node": "dependency:risk_tolerance",
+        "occurrences": 10044
+      },
+      {
+        "node": "dependency:token_capacity",
+        "occurrences": 9965
+      },
+      {
+        "node": "signal:new_contradiction",
+        "occurrences": 9872
+      },
+      {
+        "node": "dependency:memory_horizon",
+        "occurrences": 9229
+      },
+      {
+        "node": "dependency:latency_floor",
+        "occurrences": 9174
+      },
+      {
+        "node": "dependency:retry_demand",
+        "occurrences": 9173
+      },
+      {
+        "node": "dependency:handoff_depth",
+        "occurrences": 9095
+      },
+      {
+        "node": "invariant:evidence_fits_token_budget",
+        "occurrences": 6349
+      },
+      {
+        "node": "signal:unsafe_attempt",
+        "occurrences": 528
+      }
+    ]
+  },
+  "seed_sets": {
+    "heldout": [
+      9125,
+      9126,
+      9127,
+      9128,
+      9129,
+      9130,
+      9131,
+      9132,
+      9133,
+      9134,
+      9135,
+      9136,
+      9137,
+      9138,
+      9139,
+      9140,
+      9141,
+      9142,
+      9143,
+      9144,
+      9145,
+      9146,
+      9147,
+      9148,
+      9149,
+      9150,
+      9151,
+      9152,
+      9153,
+      9154,
+      9155,
+      9156
+    ],
+    "training": [
+      9101,
+      9102,
+      9103,
+      9104,
+      9105,
+      9106,
+      9107,
+      9108
+    ],
+    "validation": [
+      9117,
+      9118,
+      9119,
+      9120,
+      9121,
+      9122,
+      9123,
+      9124
+    ]
+  },
+  "status": "PASSES_ALL_PREREGISTERED_V090_RECOVERY_GATES",
+  "timing_observations": {
+    "by_mode": {
+      "continuous_control": {
+        "handoff_cpu_ns": {
+          "maximum": 5798,
+          "median": 3065,
+          "minimum": 2494
+        },
+        "handoff_wall_ns": {
+          "maximum": 9363,
+          "median": 4527,
+          "minimum": 3154
+        },
+        "verification_cpu_ns": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0
+        },
+        "verification_wall_ns": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0
+        }
+      },
+      "empty_reset": {
+        "handoff_cpu_ns": {
+          "maximum": 58767,
+          "median": 40259,
+          "minimum": 34752
+        },
+        "handoff_wall_ns": {
+          "maximum": 62082,
+          "median": 41672,
+          "minimum": 35011
+        },
+        "verification_cpu_ns": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0
+        },
+        "verification_wall_ns": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0
+        }
+      },
+      "full_history_handoff": {
+        "handoff_cpu_ns": {
+          "maximum": 2145948,
+          "median": 1437198,
+          "minimum": 1353815
+        },
+        "handoff_wall_ns": {
+          "maximum": 2145731,
+          "median": 1437021,
+          "minimum": 1354147
+        },
+        "verification_cpu_ns": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0
+        },
+        "verification_wall_ns": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0
+        }
+      },
+      "olp_handoff": {
+        "handoff_cpu_ns": {
+          "maximum": 3497981,
+          "median": 1293796,
+          "minimum": 1198916
+        },
+        "handoff_wall_ns": {
+          "maximum": 3498456,
+          "median": 1294129,
+          "minimum": 1200340
+        },
+        "verification_cpu_ns": {
+          "maximum": 352722,
+          "median": 249550,
+          "minimum": 237191
+        },
+        "verification_wall_ns": {
+          "maximum": 352643,
+          "median": 250070,
+          "minimum": 237292
+        }
+      },
+      "unsigned_minimal_handoff": {
+        "handoff_cpu_ns": {
+          "maximum": 758764,
+          "median": 482094,
+          "minimum": 443157
+        },
+        "handoff_wall_ns": {
+          "maximum": 763782,
+          "median": 483066,
+          "minimum": 444068
+        },
+        "verification_cpu_ns": {
+          "maximum": 35192,
+          "median": 15853,
+          "minimum": 14552
+        },
+        "verification_wall_ns": {
+          "maximum": 35012,
+          "median": 15763,
+          "minimum": 14482
+        }
+      }
+    },
+    "status": "ENVIRONMENT_SENSITIVE_EXCLUDED_FROM_REPRODUCIBILITY_CLAIMS",
+    "units": "nanoseconds"
+  }
+}

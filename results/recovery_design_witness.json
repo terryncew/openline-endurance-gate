@@ -1,0 +1,39 @@
+{
+  "common_random_design": "Event identity, order, amplitude, target, delta, and correction draw are condition-independent.",
+  "conditions": {
+    "continuous_control": "No handoff and no integrity mechanism.",
+    "empty_reset": "Fresh runtime without state.",
+    "full_history_handoff": "Fresh runtime receives unverified full history.",
+    "olp_handoff": "Compact packet with Ed25519, evidence hashes, chain integrity, coverage, and stateful run/parent/generation freshness binding.",
+    "unsigned_minimal_handoff": "Compact packet with the same run/parent/generation fields under a rewritable unkeyed SHA-256."
+  },
+  "critical_pair_payload_equivalence": "Unsigned and OLP restore the same compact semantic payload in clean runs.",
+  "damage_status": "SECONDARY_DIAGNOSTIC_REUSING_EXISTING_SUBSTRATE_NOT_PHYSICAL_IDENTIFICATION",
+  "fresh_seed_status": "NO_V0.9.0_RECOVERY_SEED_REUSED",
+  "freshness_controls": [
+    "stale_packet_replay",
+    "cross_run_packet_copy",
+    "generation_rollback",
+    "same_packet_replay"
+  ],
+  "freshness_fields": [
+    "run_id",
+    "generation_index",
+    "parent_hash"
+  ],
+  "freshness_status": "ACTIVE_STATEFUL_VERIFIER_V0.9.1",
+  "hidden_truth_exposure": "evaluator_only_never_in_handoff_payload",
+  "horizon_cycles": 320,
+  "intervention_cycle": 80,
+  "question": "Can a fresh runtime continue from compact state, and does verification do work beyond compression?",
+  "release": "0.9.1",
+  "schema": "openline.endurance.recovery-design.v2",
+  "signed_omission_supporting_control": "UNDECIDABLE_NOT_ACCEPTED",
+  "timing_status": "ENVIRONMENT_SENSITIVE_MEASURED_SEPARATELY_NOT_REPRODUCIBILITY_CLAIM",
+  "verification_purity": "VERIFY_RETURNS_PROPOSED_UPDATE_CALLER_ADVANCES_SESSION_ONLY_ON_ACCEPTANCE",
+  "verifier_held_state": [
+    "expected_run_id",
+    "last_accepted_parent_hash",
+    "last_accepted_generation_index"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "claim_boundary": "Pilot and validation only establish that the corrected mechanism is wired and the null is neutral before the fresh held-out block. They are not the release result.",
+  "correction": {
+    "ordinary_repair_still_available_in_rate_sensitive_world": true,
+    "ordinary_work_still_executes": true,
+    "ordinary_work_tokens_still_counted": true,
+    "persistent_context_growth_matched_by_disturbance_index": true,
+    "scratch_context_released_after_task": true
+  },
+  "discovered_v080_confound": {
+    "description": "Ordinary-work tokens accumulated permanently in active context. Slow schedules therefore reached the same disturbance index with more retained context and more budget pressure than burst schedules, even in the rate-disabled null.",
+    "v080_mode_specific_null_mean_differences": {
+      "continuous_history": -0.8,
+      "ordinary_summary": 0.0,
+      "verified_capsule": 0.025
+    },
+    "v080_result_preserved": "lineage/v0.8.0/results/load_rate_summary.json"
+  },
+  "heldout_seeds_opened": false,
+  "pilot_result": {
+    "gates": "4/4",
+    "null_mean_difference_disturbances": 0.0,
+    "per_mode_primary": {
+      "continuous_history": 2.625,
+      "ordinary_summary": 7.5,
+      "verified_capsule": 2.625
+    },
+    "primary_mean_difference_disturbances": 4.25
+  },
+  "pilot_seeds": [
+    8201,
+    8202,
+    8203,
+    8204,
+    8205,
+    8206,
+    8207,
+    8208
+  ],
+  "release": "v0.8.1",
+  "schema": "openline.load-rate.pilot-log.v2",
+  "status": "MECHANISM_FROZEN_BEFORE_HELDOUT",
+  "threshold_changes": null,
+  "validation_result": {
+    "gates": "4/4",
+    "null_mean_difference_disturbances": 0.0,
+    "per_mode_primary": {
+      "continuous_history": 4.0,
+      "ordinary_summary": 7.375,
+      "verified_capsule": 4.25
+    },
+    "primary_mean_difference_disturbances": 5.208333333333333,
+    "recovery_mean_difference_disturbances": 3.3333333333333335
+  },
+  "validation_seeds": [
+    8217,
+    8218,
+    8219,
+    8220,
+    8221,
+    8222,
+    8223,
+    8224
+  ]
+}

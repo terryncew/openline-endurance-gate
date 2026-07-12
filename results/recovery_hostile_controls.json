@@ -1,0 +1,140 @@
+{
+  "all_passed": true,
+  "attack_count": 9,
+  "attacks": [
+    {
+      "attack_id": "signed_packet_changed_after_signing",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "signature_invalid"
+      ],
+      "unsigned_checksum_control_passed": true
+    },
+    {
+      "attack_id": "evidence_changed_after_hashing",
+      "expected": "undecidable",
+      "observed": "undecidable",
+      "passed": true,
+      "reason_codes": [
+        "evidence_hash_mismatch:policy_constraints"
+      ]
+    },
+    {
+      "attack_id": "receipt_chain_reordered_or_truncated",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "receipt_chain_incomplete",
+        "receipt_chain_invalid",
+        "receipt_claim_coverage_invalid",
+        "receipt_order_invalid",
+        "signature_invalid"
+      ]
+    },
+    {
+      "attack_id": "forged_recovery_report",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "report_envelope_binding_mismatch"
+      ]
+    },
+    {
+      "attack_id": "altered_summary_followed_by_chain_resealing",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "detached_trusted_witness_signature_invalid"
+      ]
+    },
+    {
+      "attack_id": "stale_packet_replay",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "generation_index_not_advancing",
+        "parent_hash_mismatch"
+      ],
+      "signature_valid": true,
+      "unsigned_rebound_observed": "accepted"
+    },
+    {
+      "attack_id": "cross_run_packet_copy",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "run_id_mismatch"
+      ],
+      "second_genuine_run_packet_sha256": "cf583e1003aebe4cf19e067487727a949431da06dc524ae21e17c62a327e79f4",
+      "signature_valid": true,
+      "unsigned_rebound_observed": "accepted"
+    },
+    {
+      "attack_id": "generation_rollback",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "generation_index_not_advancing"
+      ],
+      "signature_valid": true,
+      "unsigned_rebound_observed": "accepted"
+    },
+    {
+      "attack_id": "same_packet_replay",
+      "expected": "rejected",
+      "observed": "rejected",
+      "passed": true,
+      "reason_codes": [
+        "generation_index_not_advancing",
+        "parent_hash_mismatch"
+      ],
+      "signature_valid": true,
+      "unsigned_rebound_observed": "accepted"
+    }
+  ],
+  "freshness_controls": [
+    "stale_packet_replay",
+    "cross_run_packet_copy",
+    "generation_rollback",
+    "same_packet_replay"
+  ],
+  "passed_count": 9,
+  "rejection_rule_counts": {
+    "detached_trusted_witness_signature_invalid": 1,
+    "evidence_hash_mismatch:policy_constraints": 1,
+    "generation_index_not_advancing": 3,
+    "parent_hash_mismatch": 2,
+    "receipt_chain_incomplete": 1,
+    "receipt_chain_invalid": 1,
+    "receipt_claim_coverage_invalid": 1,
+    "receipt_order_invalid": 1,
+    "report_envelope_binding_mismatch": 1,
+    "required_state_incomplete": 1,
+    "run_id_mismatch": 1,
+    "signature_invalid": 2
+  },
+  "release": "0.9.1",
+  "schema": "openline.endurance.recovery-hostile-controls.v2",
+  "supporting_controls": {
+    "signed_required_state_omission": {
+      "attack_id": "signed_required_state_omission",
+      "expected": "undecidable",
+      "observed": "undecidable",
+      "omitted_field": "retry_demand",
+      "passed": true,
+      "reason_codes": [
+        "required_state_incomplete"
+      ],
+      "signature_valid": true
+    }
+  },
+  "unsigned_rebinding_result": "ACCEPTED_AFTER_ATTACKER_RECOMPUTED_UNKEYED_CHECKSUM"
+}

@@ -1,0 +1,31 @@
+{
+  "all_preregistered_gates_pass": true,
+  "artifact_hashes": {
+    "results/recovery_cycles.part-000.csv.gz": "52796de64c378514ae8b445c212c41a6349e94ab1271bc66f892c67d46c0b280",
+    "results/recovery_cycles.part-001.csv.gz": "59b874fb0796d61dc43b4ef7fd2bc0303848ba8ea1b3b941a1e3e7b2b0008741",
+    "results/recovery_cycles.part-002.csv.gz": "b693ad6cdf25ce6a04c3595f2cc931da0c65eabc4c6564db37489f531f3a6bba",
+    "results/recovery_cycles.part-003.csv.gz": "ed045ccd59165c2ef7d3877818fa269889b69411de2d53fb5004835ab8a2c0ca",
+    "results/recovery_cycles.part-004.csv.gz": "634fa02f5b5810ab4c318b2c6e22f6626eefa2476269b7c00b6b2f4c085455de",
+    "results/recovery_cycles.part-005.csv.gz": "30bc94519e76b534cdc6864c808d6c705beca1863fe86ea62b212cc77218fd7f",
+    "results/recovery_cycles.part-006.csv.gz": "6466535cdc07560cba316838103bd68a11daac33780005285f822489fd1c8386",
+    "results/recovery_cycles.part-007.csv.gz": "2a73992f354e58d1462d891802ac599a3562c6f8f7d55908291ac4de888eae1a",
+    "results/recovery_cycles.part-008.csv.gz": "b76276d8daf774003348842b8290a69cf0bccf72cd06513fc72773ce91247cbc",
+    "results/recovery_cycles.part-009.csv.gz": "a215325c555e75f0f29db279dfca89e4f3a07e305c27f61311d0ab31fb80062e",
+    "results/recovery_cycles.part-010.csv.gz": "b7e0957eaf61e396bd1465dea1bdf8049cb644c7a4097b42c4d2e653122202ef",
+    "results/recovery_cycles.part-011.csv.gz": "ba7d5d3b63adfc3db77ece48c58c3ad6100596cdf65d1834ee88911457098ced",
+    "results/recovery_design_witness.json": "60dac0e7b0d0555e5588ded1598e5726d1e76502998f0c1f2b2d1ed22c278c8b",
+    "results/recovery_handoffs.jsonl": "29e5cf96bc124fb03c03ba38482a365de7642deaee7707b0d18f3e409e2a5e24",
+    "results/recovery_hostile_controls.json": "5f1ca7229163725b880ef98dcff0c64c841abe07a5abff5a74465c2fa62f6ace",
+    "results/recovery_runs.csv": "1c36cf5c023d8b4320f9eb60cf59d86a2cb5f144a1ebdab341023d27e073136f",
+    "results/recovery_summary.json": "c682ffca43f9177da20070b1e6affa1eadc16c9a1aa951a36768a33d86615fa9"
+  },
+  "freshness_replay_status": "ACTIVE_AND_HOSTILE_TESTED",
+  "hostile_control_count": 9,
+  "hostile_controls_pass": true,
+  "outer_attestation": "BOUND_BY_EXISTING_RELEASE_ATTESTATION_PIPELINE",
+  "pass": 2,
+  "passed": true,
+  "release": "0.9.1",
+  "schema": "openline.endurance.recovery-release-gate.v2",
+  "scientific_status": "PASSES_ALL_PREREGISTERED_V091_RECOVERY_GATES"
+}

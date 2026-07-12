@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openline-endurance-gate"
-version = "0.7.0"
-description = "A falsifiable synthetic harness for cumulative coherence damage, generational inheritance, and verified state restoration."
+version = "0.9.1"
+description = "A falsifiable synthetic harness for endurance, state restoration, and verified recovery handoffs."
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}

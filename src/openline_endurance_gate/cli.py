@@ -7,6 +7,10 @@ from pathlib import Path
 from .experiment import run_experiment
 from .verification import verify_evidence
 from .semantic_phases import finalize_state_restoration_semantics, verify_state_restoration_shard
+from .rate_semantic import finalize_load_rate_semantics, verify_load_rate_shard
+from .rate_streaming import generate_load_rate_shard
+from .recovery_semantic import finalize_recovery_semantics, verify_recovery_shard
+from .recovery_streaming import generate_recovery_shard
 
 
 def main() -> int:
@@ -45,6 +49,35 @@ def main() -> int:
     restoration_parser = sub.add_parser("state-restoration", help="print the pruning, retirement, and error-correction summary")
     restoration_parser.add_argument("--root", default=".")
 
+    rate_parser = sub.add_parser("load-rate", help="print the same-disturbance different-speed summary")
+    rate_parser.add_argument("--root", default=".")
+
+    recovery_parser = sub.add_parser("recovery", help="print the recovery intervention summary")
+    recovery_parser.add_argument("--root", default=".")
+
+    recovery_generate_parser = sub.add_parser("recovery-generate-shard", help="generate one bounded v0.9 recovery evidence shard")
+    recovery_generate_parser.add_argument("--root", default=".")
+    recovery_generate_parser.add_argument("--index", type=int, required=True)
+
+    recovery_semantic_shard_parser = sub.add_parser("recovery-semantic-shard", help="recompute one bounded v0.9 semantic shard")
+    recovery_semantic_shard_parser.add_argument("--root", default=".")
+    recovery_semantic_shard_parser.add_argument("--index", type=int, required=True)
+
+    recovery_semantic_finalize_parser = sub.add_parser("recovery-semantic-finalize", help="combine completed v0.9 recovery witnesses")
+    recovery_semantic_finalize_parser.add_argument("--root", default=".")
+
+
+    rate_generate_parser = sub.add_parser("load-rate-generate-shard", help="generate one bounded v0.8 evidence shard")
+    rate_generate_parser.add_argument("--root", default=".")
+    rate_generate_parser.add_argument("--index", type=int, required=True)
+
+    rate_semantic_shard_parser = sub.add_parser("load-rate-semantic-shard", help="recompute one bounded v0.8 semantic shard")
+    rate_semantic_shard_parser.add_argument("--root", default=".")
+    rate_semantic_shard_parser.add_argument("--index", type=int, required=True)
+
+    rate_semantic_finalize_parser = sub.add_parser("load-rate-semantic-finalize", help="combine completed v0.8 semantic shard witnesses")
+    rate_semantic_finalize_parser.add_argument("--root", default=".")
+
     semantic_shard_parser = sub.add_parser("semantic-shard", help="recompute one bounded v0.7 semantic shard")
     semantic_shard_parser.add_argument("--root", default=".")
     semantic_shard_parser.add_argument("--index", type=int, required=True)
@@ -65,6 +98,32 @@ def main() -> int:
             full_semantic=not args.fast,
             verify_release=not args.skip_release_attestation,
         )
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0 if result["valid"] else 1
+    if args.command == "load-rate-generate-shard":
+        experiment = json.loads((root / "experiment.json").read_text(encoding="utf-8"))
+        result = generate_load_rate_shard(root, experiment, args.index)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0
+    if args.command == "recovery-generate-shard":
+        experiment = json.loads((root / "experiment.json").read_text(encoding="utf-8"))
+        result = generate_recovery_shard(root, experiment, args.index)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0
+    if args.command == "recovery-semantic-shard":
+        result = verify_recovery_shard(root, args.index)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0 if result["passed"] else 1
+    if args.command == "recovery-semantic-finalize":
+        result = finalize_recovery_semantics(root)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0 if result["valid"] else 1
+    if args.command == "load-rate-semantic-shard":
+        result = verify_load_rate_shard(root, args.index)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0 if result["passed"] else 1
+    if args.command == "load-rate-semantic-finalize":
+        result = finalize_load_rate_semantics(root)
         print(json.dumps(result, indent=2, sort_keys=True))
         return 0 if result["valid"] else 1
     if args.command == "semantic-shard":
@@ -103,6 +162,18 @@ def main() -> int:
         path = root / "results" / "generational_summary.json"
         if not path.exists():
             parser.error(f"missing generational result: {path}")
+        print(path.read_text(encoding="utf-8"), end="")
+        return 0
+    if args.command == "load-rate":
+        path = root / "results" / "load_rate_summary.json"
+        if not path.exists():
+            parser.error(f"missing load-rate result: {path}")
+        print(path.read_text(encoding="utf-8"), end="")
+        return 0
+    if args.command == "recovery":
+        path = root / "results" / "recovery_summary.json"
+        if not path.exists():
+            parser.error(f"missing recovery result: {path}")
         print(path.read_text(encoding="utf-8"), end="")
         return 0
     path = root / "results" / "state_restoration_summary.json"

@@ -21,6 +21,8 @@ def test_import_and_cli_help():
     assert "collision-spacing" in completed.stdout
     assert "generational" in completed.stdout
     assert "state-restoration" in completed.stdout
+    assert "load-rate" in completed.stdout
+    assert "recovery" in completed.stdout
     assert "semantic-shard" in completed.stdout
     assert "semantic-finalize" in completed.stdout
 
@@ -37,8 +39,7 @@ def test_release_check_shell_uses_top_level_phases():
     assert "capture_step pytest-2" in wrapper
     assert "--preflight-finalize-raw" in wrapper
     assert "--preflight-only" in wrapper
-    assert "--semantic-shard" in wrapper
-    assert "--semantic-finalize" in wrapper
+    assert "--semantic-v91" in wrapper
     assert "scripts/tamper_check.sh --release" in wrapper
     assert "--finalize-existing" in wrapper
     assert "sleep " not in wrapper

@@ -23,6 +23,20 @@ from .generational import (
     GENERATIONAL_CYCLE_FIELDS, GENERATIONAL_RUN_FIELDS,
     analyze_generational_endurance, generational_design_witness, simulate_generational_endurance,
 )
+from .load_rate import (
+    LOAD_RATE_RUN_FIELDS, analyze_load_rate, load_rate_design_witness, read_gzip_csv,
+)
+from .rate_streaming import (
+    CountedRows, finalize_load_rate_shards, load_rate_shard_names,
+    load_rate_shards_ready, stream_load_rate,
+)
+from .recovery import (
+    RECOVERY_RUN_FIELDS, analyze_recovery, recovery_design_witness, run_hostile_controls,
+)
+from .recovery_streaming import (
+    CountedRows as RecoveryCountedRows, finalize_recovery_shards, recovery_shard_names,
+    recovery_shards_ready, stream_recovery,
+)
 from .state_restoration import (
     RESTORATION_CYCLE_FIELDS, RESTORATION_RUN_FIELDS,
     analyze_state_restoration, state_restoration_design_witness,
@@ -32,7 +46,8 @@ from .restoration_stream import (
 )
 from .integrity import (
     build_public_witness, merkle_root, verify_preregistration,
-    verify_v040_lineage, verify_v050_lineage, verify_v060_lineage,
+    verify_v040_lineage, verify_v050_lineage, verify_v060_lineage, verify_v070_lineage,
+    verify_v080_lineage, verify_v090_lineage, verify_v091_lineage,
 )
 from .receipts import ReceiptSigner, artifact_hashes, create_chain, read_chain, verify_chain, write_anchor, write_chain
 from .sim import calibrate_fresh, generate_perturbations, run_one, schedule_events
@@ -120,6 +135,58 @@ V7_SEMANTIC_ARTIFACTS = V6_SEMANTIC_ARTIFACTS + [
     "results/state_restoration_design_witness.json",
 ]
 
+V8_SEMANTIC_ARTIFACTS = V7_SEMANTIC_ARTIFACTS + [
+    "LOAD_RATE_PILOT_LOG.json",
+    "V070_LINEAGE.json",
+    "V080_LINEAGE.json",
+    "results/load_rate_cycles.part-000.csv.gz",
+    "results/load_rate_cycles.part-001.csv.gz",
+    "results/load_rate_cycles.part-002.csv.gz",
+    "results/load_rate_cycles.part-003.csv.gz",
+    "results/load_rate_cycles.part-004.csv.gz",
+    "results/load_rate_cycles.part-005.csv.gz",
+    "results/load_rate_cycles.part-006.csv.gz",
+    "results/load_rate_cycles.part-007.csv.gz",
+    "results/load_rate_cycles.part-008.csv.gz",
+    "results/load_rate_cycles.part-009.csv.gz",
+    "results/load_rate_cycles.part-010.csv.gz",
+    "results/load_rate_cycles.part-011.csv.gz",
+    "results/load_rate_runs.csv",
+    "results/load_rate_summary.json",
+    "results/load_rate_summary.md",
+    "results/load_rate_design_witness.json",
+]
+
+V9_SEMANTIC_ARTIFACTS = V8_SEMANTIC_ARTIFACTS + [
+    "V090_LINEAGE.json",
+    "docs/RECOVERY_PREREGISTRATION.md",
+    "docs/RECOVERY_METHODOLOGY.md",
+    "docs/RECOVERY_CLAIMS.md",
+    "docs/RECOVERY_THREAT_MODEL.md",
+    "results/recovery_cycles.part-000.csv.gz",
+    "results/recovery_cycles.part-001.csv.gz",
+    "results/recovery_cycles.part-002.csv.gz",
+    "results/recovery_cycles.part-003.csv.gz",
+    "results/recovery_cycles.part-004.csv.gz",
+    "results/recovery_cycles.part-005.csv.gz",
+    "results/recovery_runs.csv",
+    "results/recovery_handoffs.jsonl",
+    "results/recovery_summary.json",
+    "results/recovery_hostile_controls.json",
+    "results/recovery_design_witness.json",
+    "RECOVERY_RELEASE_GATE.json",
+]
+
+V91_SEMANTIC_ARTIFACTS = V9_SEMANTIC_ARTIFACTS + [
+    "results/recovery_cycles.part-006.csv.gz",
+    "results/recovery_cycles.part-007.csv.gz",
+    "results/recovery_cycles.part-008.csv.gz",
+    "results/recovery_cycles.part-009.csv.gz",
+    "results/recovery_cycles.part-010.csv.gz",
+    "results/recovery_cycles.part-011.csv.gz",
+    "V091_LINEAGE.json",
+]
+
 RUN_FIELDS = [
     "run_family", "mode", "schedule", "seed", "cycles", "n_f", "failed", "first_failure_cycle",
     "mean_checkpoint_accuracy", "final_config_accuracy", "final_requirement_accuracy", "unsafe_attempts",
@@ -129,7 +196,7 @@ RUN_FIELDS = [
 
 def load_experiment(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("schema") not in {"openline.endurance.experiment.v1", "openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7"}:
+    if data.get("schema") not in {"openline.endurance.experiment.v1", "openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
         raise ValueError("unsupported experiment schema")
     declared = set(map(int, data["training_seeds"] + data["validation_seeds"] + data["heldout_seeds"]))
     if declared != set(map(int, data["seeds"])):
@@ -138,7 +205,7 @@ def load_experiment(path: Path) -> dict[str, Any]:
         raise ValueError("training and validation seeds overlap")
     if len(data["modes"]) != 4 or len(data["schedules"]) != 4:
         raise ValueError("default discriminating test requires four modes and four schedules")
-    if data.get("schema") in {"openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7"}:
+    if data.get("schema") in {"openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
         required_pairs = int(data["analysis_plan"]["minimum_primary_order_pairs"])
         available_pairs = len(data["heldout_seeds"]) * len(data["modes"])
         if available_pairs < required_pairs:
@@ -147,9 +214,9 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("v2 requires event-bound common random numbers")
         if data.get("amplitude_sweep_design") != "COMMON_PACKET_AMPLITUDE_TRANSFORM":
             raise ValueError("v2 requires matched amplitude packets")
-    if data.get("schema") in {"openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7"}:
+    if data.get("schema") in {"openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
         tip = data.get("tip_capture")
-        expected_tip_schema = "openline.tip-capture.experiment.v2" if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7"} else "openline.tip-capture.experiment.v1"
+        expected_tip_schema = "openline.tip-capture.experiment.v2" if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"} else "openline.tip-capture.experiment.v1"
         if not isinstance(tip, dict) or tip.get("schema") != expected_tip_schema:
             raise ValueError(f"{data.get('schema')} requires {expected_tip_schema}")
         tip_declared = set(map(int, tip["training_seeds"] + tip["validation_seeds"] + tip["heldout_seeds"]))
@@ -157,18 +224,18 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("tip-capture train/validation/heldout seeds must partition seeds")
         if len(tip["heldout_seeds"]) < int(tip["analysis_plan"]["minimum_repair_pairs"]):
             raise ValueError("tip-capture heldout seed count is below the preregistered pair floor")
-        required_conditions = {"uniform_null", "diffusive_first_contact"} if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7"} else {"uniform_null", "diffusive_tip_capture"}
+        required_conditions = {"uniform_null", "diffusive_first_contact"} if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"} else {"uniform_null", "diffusive_tip_capture"}
         if required_conditions - set(tip["attachment_conditions"]):
             raise ValueError("tip-capture requires both a genuine null and declared diffusive treatment")
         if {"random_repair", "tip_targeted"} - set(tip["repair_policies"]):
             raise ValueError("tip-capture requires matched random and tip-targeted repair policies")
         if tip.get("randomness_coupling") != "PACKET_BOUND_COMMON_RANDOM_NUMBERS":
             raise ValueError("tip-capture requires packet-bound common random numbers")
-        if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7"}:
+        if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
             required_walker = {"dla_launch_margin", "dla_kill_margin", "dla_max_steps", "dla_max_restarts", "root_spacing"}
             if required_walker - set(tip):
                 raise ValueError("v4/v5 first-contact walker configuration is incomplete")
-    if data.get("schema") in {"openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7"}:
+    if data.get("schema") in {"openline.endurance.experiment.v5", "openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
         spacing = data.get("collision_spacing")
         if not isinstance(spacing, dict) or spacing.get("schema") != "openline.collision-spacing.experiment.v1":
             raise ValueError("v5 requires openline.collision-spacing.experiment.v1")
@@ -184,7 +251,7 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("collision-spacing requires schedule-independent common random draws")
         if int(spacing["events_per_run"]) != sum(int(value) for value in data["amplitude_multiset"].values()):
             raise ValueError("collision-spacing event count must match the endurance perturbation multiset")
-    if data.get("schema") in {"openline.endurance.experiment.v6", "openline.endurance.experiment.v7"}:
+    if data.get("schema") in {"openline.endurance.experiment.v6", "openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
         generational = data.get("generational_endurance")
         if not isinstance(generational, dict) or generational.get("schema") != "openline.generational-endurance.experiment.v1":
             raise ValueError("v6 requires openline.generational-endurance.experiment.v1")
@@ -209,7 +276,7 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("generational endurance requires event-bound common random draws")
         if int(generational["capsule_budget_tokens"]) != int(generational["summary_budget_tokens"]):
             raise ValueError("capsule and ordinary summary must use equal reset budgets")
-    if data.get("schema") == "openline.endurance.experiment.v7":
+    if data.get("schema") in {"openline.endurance.experiment.v7", "openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
         restoration = data.get("state_restoration")
         if not isinstance(restoration, dict) or restoration.get("schema") != "openline.state-restoration.experiment.v1":
             raise ValueError("v7 requires openline.state-restoration.experiment.v1")
@@ -232,6 +299,55 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("state restoration requires event-bound common random draws")
         if int(restoration["fixed_retirement_interval_cycles"]) != 85:
             raise ValueError("the fixed retirement comparator must remain at cycle 85")
+
+    if data.get("schema") in {"openline.endurance.experiment.v8", "openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
+        rate = data.get("load_rate")
+        if not isinstance(rate, dict) or rate.get("schema") != "openline.load-rate.experiment.v1":
+            raise ValueError("v8 requires openline.load-rate.experiment.v1")
+        declared_rate = set(map(int, rate["training_seeds"] + rate["validation_seeds"] + rate["heldout_seeds"]))
+        if declared_rate != set(map(int, rate["seeds"])):
+            raise ValueError("load-rate train/validation/heldout seeds must partition seeds")
+        if len(rate["heldout_seeds"]) < int(rate["analysis_plan"]["minimum_pairs"]):
+            raise ValueError("load-rate heldout seed count is below the preregistered pair floor")
+        if set(rate["modes"]) != {"continuous_history", "ordinary_summary", "verified_capsule"}:
+            raise ValueError("load-rate requires the frozen three-mode design")
+        if set(rate["schedules"]) != {"slow_drip", "steady_load", "sudden_burst", "burst_recovery"}:
+            raise ValueError("load-rate requires the frozen four-schedule design")
+        if set(rate["worlds"]) != {"rate_sensitive", "rate_disabled_null"}:
+            raise ValueError("load-rate requires a rate-sensitive world and rate-disabled null")
+        if int(rate["horizon_ticks"]) != 160 or int(rate["block_ticks"]) != 40:
+            raise ValueError("load-rate requires four matched 40-tick blocks")
+        if rate.get("randomness_coupling") != "EVENT_BOUND_COMMON_RANDOM_DRAWS_SCHEDULE_EXCLUDED":
+            raise ValueError("load-rate requires schedule-excluded event-bound common random draws")
+        if not load_rate_design_witness(data)["all_matching_checks_pass"]:
+            raise ValueError("load-rate schedule matching witness failed")
+    if data.get("schema") in {"openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
+        recovery = data.get("recovery")
+        if not isinstance(recovery, dict):
+            raise ValueError("v9 requires a recovery design")
+        declared_recovery = set(map(int, recovery["training_seeds"] + recovery["validation_seeds"] + recovery["heldout_seeds"]))
+        if declared_recovery != set(map(int, recovery["seeds"])):
+            raise ValueError("recovery train/validation/heldout seeds must partition seeds")
+        if set(recovery["modes"]) != {
+            "continuous_control", "empty_reset", "full_history_handoff",
+            "unsigned_minimal_handoff", "olp_handoff",
+        }:
+            raise ValueError("recovery requires the frozen five-condition design")
+        if int(recovery["horizon_cycles"]) != 320 or int(recovery["intervention_cycle"]) != 80:
+            raise ValueError("recovery requires a 320-cycle horizon and intervention at cycle 80")
+        if data.get("schema") == "openline.endurance.experiment.v9":
+            if recovery.get("freshness_mechanism_status") != "DEFERRED_TO_V0.9.1":
+                raise ValueError("v0.9.0 must not silently claim the deferred freshness state machine")
+        else:
+            if recovery.get("freshness_mechanism_status") != "ACTIVE_STATEFUL_V0.9.1":
+                raise ValueError("v0.9.1 requires active stateful freshness verification")
+            if int(recovery.get("pass", 0)) != 2 or not recovery.get("master_seed"):
+                raise ValueError("v0.9.1 requires the frozen Pass-2 master seed")
+            if len(recovery["heldout_seeds"]) != 80:
+                raise ValueError("v0.9.1 requires 80 fresh held-out recovery seeds")
+            v090_seeds = set(range(9101, 9109)) | set(range(9117, 9157))
+            if v090_seeds.intersection(map(int, recovery["seeds"])):
+                raise ValueError("v0.9.1 may not reuse a v0.9.0 recovery seed")
     return data
 
 
@@ -394,7 +510,14 @@ def _manifest_entries(root: Path) -> list[dict[str, str]]:
         if not path.is_file():
             continue
         rel = path.relative_to(root).as_posix()
-        if any(part in {".git", ".pytest_cache", "__pycache__"} or part.endswith(".egg-info") for part in path.parts):
+        if any(
+            part in {
+                ".git", ".pytest_cache", ".venv", "__pycache__", ".load_rate_work",
+                ".load_rate_semantic", ".state_restoration_work", ".state_restoration_semantic",
+                ".recovery_work", ".recovery_semantic", ".release_preflight_parts",
+            } or part.endswith(".egg-info")
+            for part in path.parts
+        ):
             continue
         if rel in {
             "MANIFEST.json",
@@ -974,6 +1097,393 @@ def _run_v7_state_restoration_extension(root: Path, experiment: dict[str, Any]) 
         "private_key_persisted": False,
     }
 
+
+def _load_rate_summary_markdown(summary: dict[str, Any]) -> str:
+    primary = summary["primary_effect"]
+    recovery = summary["recovery_effect"]
+    null = summary["null_effect"]
+    lines = [
+        "# OpenLine Load-Rate Transition — Same Disturbance, Different Speed",
+        "",
+        f"**Status:** `{summary['status']}`",
+        f"**Exploratory gates:** {summary['passed_gate_count']}/{summary['gate_count']} passed",
+        f"**Held-out seeds:** {summary['heldout_seed_count']}",
+        f"**Cycle observations:** {summary['cycle_observation_count']}",
+        "",
+        "## Primary contrast",
+        "",
+        "- Same perturbations, same order, same total load, same ordinary work, same horizon, and the same context cap.",
+        f"- Slow minus sudden-burst mean disturbances survived: {primary['mean_difference_disturbances']:.6f}; 95% interval={primary['mean_confidence_interval_disturbances']}; p={primary['exact_sign_flip_p']:.6g}",
+        f"- Recovery-window minus continuous-burst mean disturbances survived: {recovery['mean_difference_disturbances']:.6f}; 95% interval={recovery['mean_confidence_interval_disturbances']}; p={recovery['exact_sign_flip_p']:.6g}",
+        f"- Rate-disabled null mean difference: {null['mean_difference_disturbances']:.6f}; 95% interval={null['mean_confidence_interval_disturbances']}",
+        "- Mode-specific null differences: " + ", ".join(
+            f"{mode}={effect['mean_difference_disturbances']:.6f}"
+            for mode, effect in summary.get("per_mode_null_effects", {}).items()
+        ),
+        "",
+        "## Exploratory gate results",
+        "",
+    ]
+    for name, gate in summary["gates"].items():
+        lines.append(f"- `{name}`: **{'PASS' if gate['passed'] else 'FAIL'}**")
+    lines.extend([
+        "",
+        "## Boundary",
+        "",
+        summary["claim_boundary"],
+        "",
+        "Synthetic damage is reported as a secondary diagnostic. It does not decide the primary rate gate.",
+        "",
+    ])
+    return "\n".join(lines) + "\n"
+
+
+def _run_v8_load_rate_extension(root: Path, experiment: dict[str, Any]) -> dict[str, Any]:
+    is_phase_controlled_replication = str(experiment.get("release_version")) == "0.8.1"
+    lineage_errors = (verify_v070_lineage(root) + verify_v080_lineage(root)) if is_phase_controlled_replication else verify_v070_lineage(root)
+    if lineage_errors:
+        label = "v0.8.0" if is_phase_controlled_replication else "v0.7.0"
+        raise RuntimeError(f"{label} lineage failed: {lineage_errors}")
+    lineage_root = root / ("lineage/v0.8.0" if is_phase_controlled_replication else "lineage/v0.7.0")
+
+    results_dir = root / "results"
+    receipts_dir = root / "receipts"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    receipts_dir.mkdir(parents=True, exist_ok=True)
+
+    streamed_rate = (
+        finalize_load_rate_shards(root, experiment)
+        if load_rate_shards_ready(root, experiment)
+        else stream_load_rate(experiment, root)
+    )
+    runs = streamed_rate["runs"]
+    # The bounded generation witnesses are transient execution plumbing. The
+    # released evidence is the deterministic cycle shards and their global root.
+    shutil.rmtree(results_dir / ".load_rate_work", ignore_errors=True)
+    rate_summary = analyze_load_rate(CountedRows(streamed_rate["cycle_count"]), runs, experiment)
+    design = load_rate_design_witness(experiment)
+    old_summary = json.loads((lineage_root / "results/summary.json").read_text(encoding="utf-8"))
+    summary = dict(old_summary)
+    summary["claim_label"] = "POWERED_SYNTHETIC_ENDURANCE_AND_PHASE_CONTROLLED_LOAD_RATE_REPLICATION" if is_phase_controlled_replication else "POWERED_SYNTHETIC_ENDURANCE_AND_LOAD_RATE_TRANSITION"
+    if is_phase_controlled_replication:
+        summary["load_rate_v080_result_preserved"] = old_summary.get("load_rate")
+    summary["load_rate"] = rate_summary
+    summary["legacy_v070_result_preserved"] = {
+        "theory_status": old_summary["theory_status"],
+        "passed_gate_count": old_summary["passed_gate_count"],
+        "gate_count": old_summary["gate_count"],
+        "state_restoration_status": old_summary.get("state_restoration", {}).get("status"),
+        "state_restoration_passed_gate_count": old_summary.get("state_restoration", {}).get("passed_gate_count"),
+        "state_restoration_gate_count": old_summary.get("state_restoration", {}).get("gate_count"),
+    }
+
+    write_csv(results_dir / "load_rate_runs.csv", runs, LOAD_RATE_RUN_FIELDS)
+    _json_dump(results_dir / "load_rate_design_witness.json", design)
+    _json_dump(results_dir / "load_rate_summary.json", rate_summary)
+    (results_dir / "load_rate_summary.md").write_text(_load_rate_summary_markdown(rate_summary), encoding="utf-8")
+
+    old_heldout = json.loads((lineage_root / "results/heldout_witness.json").read_text(encoding="utf-8"))
+    heldout = dict(old_heldout)
+    if is_phase_controlled_replication:
+        heldout["load_rate_v080_result_preserved"] = old_heldout.get("load_rate")
+    heldout["load_rate"] = rate_summary
+    _json_dump(results_dir / "heldout_witness.json", heldout)
+    _json_dump(results_dir / "summary.json", summary)
+    old_summary_markdown = (lineage_root / "results/summary.md").read_text(encoding="utf-8")
+    (results_dir / "summary.md").write_text(
+        old_summary_markdown.rstrip() + "\n\n" + _load_rate_summary_markdown(rate_summary),
+        encoding="utf-8",
+    )
+
+    old_roots = json.loads((lineage_root / "results/cycle_roots.json").read_text(encoding="utf-8"))
+    cycle_roots = dict(old_roots)
+    cycle_roots["schema"] = "openline.endurance.cycle-roots.v6" if is_phase_controlled_replication else "openline.endurance.cycle-roots.v5"
+    if is_phase_controlled_replication:
+        cycle_roots["load_rate_v080_cycle_merkle_root"] = old_roots.get("load_rate_cycle_merkle_root")
+        cycle_roots["load_rate_v080_cycle_count"] = old_roots.get("load_rate_cycle_count")
+        cycle_roots["load_rate_v080_run_merkle_root"] = old_roots.get("load_rate_run_merkle_root")
+        cycle_roots["load_rate_v080_run_count"] = old_roots.get("load_rate_run_count")
+    cycle_roots.update({
+        "load_rate_cycle_merkle_root": streamed_rate["cycle_merkle_root"],
+        "load_rate_cycle_count": streamed_rate["cycle_count"],
+        "load_rate_run_merkle_root": streamed_rate["run_merkle_root"],
+        "load_rate_run_count": streamed_rate["run_count"],
+    })
+    _json_dump(results_dir / "cycle_roots.json", cycle_roots)
+
+    manifest = write_manifest(root)
+    base_semantic_artifacts = list(V8_SEMANTIC_ARTIFACTS)
+    additional_roots = {
+        key: value for key, value in cycle_roots.items()
+        if key.endswith("_merkle_root") and key not in {"primary_cycle_merkle_root", "amplitude_cycle_merkle_root"}
+    }
+    public_witness = build_public_witness(
+        root, experiment, summary, manifest["source_tree_digest"],
+        cycle_roots["primary_cycle_merkle_root"], cycle_roots["amplitude_cycle_merkle_root"],
+        additional_roots, base_semantic_artifacts,
+    )
+    _json_dump(results_dir / "public_witness.json", public_witness)
+    manifest = write_manifest(root)
+    semantic_artifacts = base_semantic_artifacts + ["results/public_witness.json", "MANIFEST.json"]
+    evidence = {
+        "claim": ("v0.8.0 is pinned byte-for-byte and v0.8.1 reruns the matched load-rate test after removing the ordinary-work context-retention confound" if is_phase_controlled_replication else "v0.7.0 scientific artifacts are pinned byte-for-byte and v0.8.0 independently tests matched disturbance delivery rates"),
+        "artifact_hashes": artifact_hashes(root, semantic_artifacts),
+        "source_tree_digest": manifest["source_tree_digest"],
+        "primary_cycle_merkle_root": cycle_roots["primary_cycle_merkle_root"],
+        "amplitude_cycle_merkle_root": cycle_roots["amplitude_cycle_merkle_root"],
+        **additional_roots,
+        "public_witness_digest": public_witness["witness_digest"],
+        "semantic_verifier": "openline-endurance verify --root . --source-root .",
+        "claim_boundary": ("v0.8.1 is a fresh-seed phase-controlled synthetic replication. It isolates retained context from spacing; it does not establish a deployed-agent law." if is_phase_controlled_replication else "v0.8 tests rate in a seeded synthetic world; it does not claim AI systems obey fluid mechanics or identify a universal retirement threshold."),
+    }
+
+    old_chain = read_chain(lineage_root / "receipts/experiment.jsonl")
+    items = [(receipt["kind"], receipt["payload"]) for receipt in old_chain if receipt["kind"] != "evidence_bundle"]
+    items.append((
+        "load_rate_phase_controlled_replication" if is_phase_controlled_replication else "load_rate_transition",
+        {
+            "claim": ("fresh-seed matched schedules were rerun after ordinary task scratch context was made ephemeral, removing the discovered schedule-to-context pathway" if is_phase_controlled_replication else "matched disturbance packets were delivered at four rates while ordinary work, order, load, horizon, and context cap remained fixed"),
+            "result": {
+                "status": rate_summary["status"],
+                "passed": rate_summary["passed_gate_count"],
+                "total": rate_summary["gate_count"],
+                "heldout_seeds": rate_summary["heldout_seed_count"],
+                "primary_mean_disturbance_gain": rate_summary["primary_effect"]["mean_difference_disturbances"],
+            },
+            "next_use": ("treat v0.8.0 as the confounded discovery run and v0.8.1 as the phase-controlled replication" if is_phase_controlled_replication else "only if rate survives, test an activation-envelope intervention in a later preregistered release"),
+        },
+    ))
+    items.append(("evidence_bundle", evidence))
+    signer = ReceiptSigner.generate()
+    chain = create_chain(items, signer)
+    write_chain(receipts_dir / "experiment.jsonl", chain)
+    write_anchor(receipts_dir / "experiment.anchor.json", chain, signer)
+    verification = verify_chain(receipts_dir / "experiment.jsonl", receipts_dir / "experiment.anchor.json")
+    return {
+        "summary": summary,
+        "load_rate_summary": rate_summary,
+        "receipt_verification": verification,
+        "public_witness": public_witness,
+        "v080_lineage_valid": bool(is_phase_controlled_replication),
+        "v070_lineage_valid": True,
+        "private_key_persisted": False,
+    }
+
+
+def _recovery_summary_markdown(summary: dict[str, Any]) -> str:
+    lines = [
+        "# OpenLine Recovery Intervention — Pass 1",
+        "",
+        f"**Status:** `{summary['status']}`",
+        f"**Preregistered {summary['release']} gates:** {summary['passed_gate_count']}/{summary['gate_count']} passed",
+        "",
+        "## Held-out condition measurements",
+        "",
+    ]
+    for mode, values in summary["heldout_by_mode"].items():
+        lines.append(
+            f"- `{mode}`: mean n_f={values['mean_cycles_until_failure']:.3f}; "
+            f"post-handoff accuracy={values['mean_post_handoff_decision_accuracy']:.6f}; "
+            f"policy violations={values['total_policy_violations']}; "
+            f"mean packet bytes={values['mean_packet_bytes']:.1f}"
+        )
+    lines.extend(["", "## Gates", ""])
+    for name, gate in summary["gates"].items():
+        lines.append(f"- `{name}`: **{'PASS' if gate['passed'] else 'FAIL'}**")
+    lines.extend(["", "## Boundary", "", summary["claim_boundary"], ""])
+    if "freshness_binding" in summary:
+        lines.extend([
+            "Stateful run, parent, and generation freshness binding is active. Stale replay, cross-run copy, and correctly signed omission were tested on fresh seeds.", "",
+        ])
+    else:
+        lines.extend([
+            "Freshness/replay state, cross-run binding, and signed omission testing are deferred to v0.9.1 with fresh seeds.", "",
+        ])
+    return "\n".join(lines)
+
+
+def _timing_observations(handoffs: list[dict[str, Any]]) -> dict[str, Any]:
+    output: dict[str, Any] = {
+        "status": "ENVIRONMENT_SENSITIVE_EXCLUDED_FROM_REPRODUCIBILITY_CLAIMS",
+        "units": "nanoseconds", "by_mode": {},
+    }
+    for mode in ["continuous_control", "empty_reset", "full_history_handoff", "unsigned_minimal_handoff", "olp_handoff"]:
+        rows = [row for row in handoffs if row["mode"] == mode]
+        output["by_mode"][mode] = {
+            field: {
+                "median": sorted(int(row[field]) for row in rows)[len(rows) // 2] if rows else None,
+                "minimum": min((int(row[field]) for row in rows), default=None),
+                "maximum": max((int(row[field]) for row in rows), default=None),
+            }
+            for field in ("handoff_wall_ns", "handoff_cpu_ns", "verification_wall_ns", "verification_cpu_ns")
+        }
+    return output
+
+
+def _run_v9_recovery_extension(root: Path, experiment: dict[str, Any]) -> dict[str, Any]:
+    is_v091 = experiment.get("schema") == "openline.endurance.experiment.v10"
+    lineage_errors = (
+        verify_v090_lineage(root) + verify_v091_lineage(root)
+        if is_v091 else verify_v090_lineage(root)
+    )
+    if lineage_errors:
+        label = "v0.9.0" if is_v091 else "v0.8.1"
+        raise RuntimeError(f"{label} lineage failed: {lineage_errors}")
+    lineage_root = root / ("lineage/v0.9.0" if is_v091 else "lineage/v0.8.1")
+    results = root / "results"
+    receipts = root / "receipts"
+    results.mkdir(parents=True, exist_ok=True)
+    receipts.mkdir(parents=True, exist_ok=True)
+    streamed = (
+        finalize_recovery_shards(root, experiment)
+        if recovery_shards_ready(root, experiment) else stream_recovery(experiment, root)
+    )
+    runs, handoffs = streamed["runs"], streamed["handoffs"]
+    shutil.rmtree(results / ".recovery_work", ignore_errors=True)
+    cycles: list[dict[str, Any]] = []
+    for name in recovery_shard_names(experiment):
+        cycles.extend(read_gzip_csv(results / name))
+    hostile = run_hostile_controls()
+    recovery_summary = analyze_recovery(cycles, runs, experiment, hostile)
+    recovery_summary["timing_observations"] = _timing_observations(handoffs)
+    design = recovery_design_witness(experiment)
+
+    write_csv(results / "recovery_runs.csv", runs, RECOVERY_RUN_FIELDS)
+    with (results / "recovery_handoffs.jsonl").open("w", encoding="utf-8") as handle:
+        for observation in handoffs:
+            handle.write(json.dumps(observation, sort_keys=True, separators=(",", ":")) + "\n")
+    _json_dump(results / "recovery_design_witness.json", design)
+    _json_dump(results / "recovery_hostile_controls.json", hostile)
+    _json_dump(results / "recovery_summary.json", recovery_summary)
+    (results / "recovery_summary.md").write_text(_recovery_summary_markdown(recovery_summary), encoding="utf-8")
+
+    gate_paths = [
+        *[f"results/{name}" for name in recovery_shard_names(experiment)],
+        "results/recovery_runs.csv", "results/recovery_handoffs.jsonl",
+        "results/recovery_design_witness.json", "results/recovery_hostile_controls.json",
+        "results/recovery_summary.json",
+    ]
+    module_gate = {
+        "schema": "openline.endurance.recovery-release-gate.v2" if is_v091 else "openline.endurance.recovery-release-gate.v1",
+        "release": experiment["release_version"],
+        "pass": 2 if is_v091 else 1, "scientific_status": recovery_summary["status"],
+        "all_preregistered_gates_pass": recovery_summary["passed_gate_count"] == recovery_summary["gate_count"],
+        "hostile_controls_pass": hostile["all_passed"], "hostile_control_count": hostile["attack_count"],
+        "artifact_hashes": artifact_hashes(root, gate_paths),
+        "outer_attestation": "BOUND_BY_EXISTING_RELEASE_ATTESTATION_PIPELINE",
+        "freshness_replay_status": "ACTIVE_AND_HOSTILE_TESTED" if is_v091 else "DEFERRED_TO_V0.9.1",
+    }
+    module_gate["passed"] = bool(module_gate["all_preregistered_gates_pass"] and module_gate["hostile_controls_pass"])
+    _json_dump(root / "RECOVERY_RELEASE_GATE.json", module_gate)
+
+    old_summary = json.loads((lineage_root / "results/summary.json").read_text(encoding="utf-8"))
+    summary = dict(old_summary)
+    summary["claim_label"] = (
+        "POWERED_SYNTHETIC_ENDURANCE_AND_STATEFUL_FRESHNESS_BOUND_RECOVERY"
+        if is_v091 else "POWERED_SYNTHETIC_ENDURANCE_PHASE_CONTROLLED_LOAD_RATE_AND_RECOVERY_INTERVENTION"
+    )
+    if is_v091:
+        summary["recovery_v090_result_preserved"] = old_summary.get("recovery")
+    summary["recovery"] = recovery_summary
+    if is_v091:
+        summary["legacy_v090_result_preserved"] = {
+            "recovery_status": old_summary.get("recovery", {}).get("status"),
+            "recovery_passed_gate_count": old_summary.get("recovery", {}).get("passed_gate_count"),
+            "recovery_gate_count": old_summary.get("recovery", {}).get("gate_count"),
+        }
+    else:
+        summary["legacy_v081_result_preserved"] = {
+            "load_rate": old_summary.get("load_rate"),
+            "theory_status": old_summary.get("theory_status"),
+            "passed_gate_count": old_summary.get("passed_gate_count"),
+            "gate_count": old_summary.get("gate_count"),
+        }
+    old_heldout = json.loads((lineage_root / "results/heldout_witness.json").read_text(encoding="utf-8"))
+    heldout = dict(old_heldout)
+    if is_v091:
+        heldout["recovery_v090_result_preserved"] = old_heldout.get("recovery")
+    heldout["recovery"] = recovery_summary
+    _json_dump(results / "heldout_witness.json", heldout)
+    _json_dump(results / "summary.json", summary)
+    inherited_markdown = (lineage_root / "results/summary.md").read_text(encoding="utf-8")
+    (results / "summary.md").write_text(
+        inherited_markdown.rstrip() + "\n\n" + _recovery_summary_markdown(recovery_summary), encoding="utf-8",
+    )
+
+    cycle_roots = dict(json.loads((lineage_root / "results/cycle_roots.json").read_text(encoding="utf-8")))
+    cycle_roots["schema"] = "openline.endurance.cycle-roots.v8" if is_v091 else "openline.endurance.cycle-roots.v7"
+    if is_v091:
+        cycle_roots.update({
+            "recovery_v090_cycle_merkle_root": cycle_roots.get("recovery_cycle_merkle_root"),
+            "recovery_v090_cycle_count": cycle_roots.get("recovery_cycle_count"),
+            "recovery_v090_run_merkle_root": cycle_roots.get("recovery_run_merkle_root"),
+            "recovery_v090_run_count": cycle_roots.get("recovery_run_count"),
+            "recovery_v090_handoff_semantic_merkle_root": cycle_roots.get("recovery_handoff_semantic_merkle_root"),
+            "recovery_v090_handoff_count": cycle_roots.get("recovery_handoff_count"),
+        })
+    cycle_roots.update({
+        "recovery_cycle_merkle_root": streamed["cycle_merkle_root"],
+        "recovery_cycle_count": streamed["cycle_count"],
+        "recovery_run_merkle_root": streamed["run_merkle_root"],
+        "recovery_run_count": streamed["run_count"],
+        "recovery_handoff_semantic_merkle_root": streamed["handoff_semantic_merkle_root"],
+        "recovery_handoff_count": streamed["handoff_count"],
+    })
+    _json_dump(results / "cycle_roots.json", cycle_roots)
+
+    manifest = write_manifest(root)
+    base_artifacts = list(V91_SEMANTIC_ARTIFACTS if is_v091 else V9_SEMANTIC_ARTIFACTS)
+    additional_roots = {
+        key: value for key, value in cycle_roots.items()
+        if key.endswith("_merkle_root") and key not in {"primary_cycle_merkle_root", "amplitude_cycle_merkle_root"}
+    }
+    public_witness = build_public_witness(
+        root, experiment, summary, manifest["source_tree_digest"],
+        cycle_roots["primary_cycle_merkle_root"], cycle_roots["amplitude_cycle_merkle_root"],
+        additional_roots, base_artifacts,
+    )
+    _json_dump(results / "public_witness.json", public_witness)
+    manifest = write_manifest(root)
+    semantic_artifacts = base_artifacts + ["results/public_witness.json", "MANIFEST.json"]
+    evidence = {
+        "claim": (
+            "v0.9.0 is pinned byte-for-byte and v0.9.1 independently tests stateful recovery freshness on fresh seeds"
+            if is_v091 else "v0.8.1 is pinned byte-for-byte and v0.9.0 independently tests the preregistered recovery intervention"
+        ),
+        "artifact_hashes": artifact_hashes(root, semantic_artifacts),
+        "source_tree_digest": manifest["source_tree_digest"],
+        "primary_cycle_merkle_root": cycle_roots["primary_cycle_merkle_root"],
+        "amplitude_cycle_merkle_root": cycle_roots["amplitude_cycle_merkle_root"],
+        **additional_roots, "public_witness_digest": public_witness["witness_digest"],
+        "semantic_verifier": "openline-endurance recovery-semantic-shard/finalize",
+        "claim_boundary": recovery_summary["claim_boundary"],
+    }
+    old_chain = read_chain(lineage_root / "receipts/experiment.jsonl")
+    items = [(item["kind"], item["payload"]) for item in old_chain if item["kind"] != "evidence_bundle"]
+    items.append(("recovery_freshness_binding" if is_v091 else "recovery_intervention", {
+        "claim": recovery_summary["claim_boundary"],
+        "action": {"conditions": list(experiment["recovery"]["modes"]), "intervention_cycle": 80, "horizon": 320},
+        "result": {"status": recovery_summary["status"], "passed": recovery_summary["passed_gate_count"], "total": recovery_summary["gate_count"]},
+        "next_use": (
+            "Test the stateful verifier on deployed-agent handoff traces without expanding the synthetic claim boundary."
+            if is_v091 else "Adversarially test Pass 1, then add stateful replay binding in v0.9.1 with fresh seeds."
+        ),
+    }))
+    items.append(("evidence_bundle", evidence))
+    signer = ReceiptSigner.generate()
+    chain = create_chain(items, signer)
+    write_chain(receipts / "experiment.jsonl", chain)
+    write_anchor(receipts / "experiment.anchor.json", chain, signer)
+    verification = verify_chain(receipts / "experiment.jsonl", receipts / "experiment.anchor.json")
+    return {
+        "summary": summary, "recovery_summary": recovery_summary,
+        "recovery_release_gate": module_gate, "receipt_verification": verification,
+        "public_witness": public_witness, "v090_lineage_valid": True,
+        "v091_lineage_valid": bool(is_v091),
+        "private_key_persisted": False,
+    }
+
+
 def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any]:
     root = root.resolve()
     config_path = (config_path or root / "experiment.json").resolve()
@@ -983,6 +1493,12 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
     prereg_errors = verify_preregistration(root)
     if prereg_errors:
         raise RuntimeError(f"preregistration failed: {prereg_errors}")
+    if experiment.get("schema") == "openline.endurance.experiment.v10":
+        return _run_v9_recovery_extension(root, experiment)
+    if experiment.get("schema") == "openline.endurance.experiment.v9":
+        return _run_v9_recovery_extension(root, experiment)
+    if experiment.get("schema") == "openline.endurance.experiment.v8":
+        return _run_v8_load_rate_extension(root, experiment)
     if experiment.get("schema") == "openline.endurance.experiment.v7":
         return _run_v7_state_restoration_extension(root, experiment)
     if experiment.get("schema") == "openline.endurance.experiment.v6":

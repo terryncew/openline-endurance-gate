@@ -8,6 +8,24 @@
     "stderr": "",
     "stdout": "{\n  \"claim_boundary\": \"This seeded toy world tests finite-context inheritance mechanics using the existing Endurance Gate requirement graph. It does not establish that deployed agents possess fatigue, that capsules generalize across models, or that synthetic context pressure matches transformer attention.\",\n  \"compression_witness\": {\n    \"active_context_ratio_160\": 0.14666332201040386,\n    \"active_context_ratio_40\": 0.43765184991785844,\n    \"active_context_ratio_80\": 0.2654448168159893,\n    \"checkpoint_accuracy_delta_40\": 0.10260416674999995,\n    \"critical_omission_delta_160\": -0.5487500000000001,\n    \"critical_omission_delta_40\": -0.17093749999999996,\n    \"critical_omission_delta_80\": -0.425\n  },\n  \"effects\": {\n    \"capsule_vs_summary\": {\n      \"differences\": [\n        -141.0,\n        -60.0,\n        81.0,\n        60.0,\n        141.0,\n        60.0,\n        121.0,\n        141.0,\n        141.0,\n        80.0,\n        20.0,\n        60.0,\n        -60.0,\n        60.0,\n        -60.0,\n        41.0,\n        41.0,\n        40.0,\n        -40.0,\n        -60.0,\n        -100.0,\n        -81.0,\n        141.0,\n        141.0,\n        81.0,\n        80.0,\n        21.0,\n        0.0,\n        81.0,\n        61.0,\n        21.0,\n        121.0,\n        -40.0,\n        141.0,\n        40.0,\n        -141.0,\n        20.0,\n        101.0,\n        121.0,\n        -20.0,\n        -100.0,\n        80.0,\n        81.0,\n        80.0,\n        20.0,\n        81.0,\n        120.0,\n        0.0,\n        -101.0,\n        121.0,\n        100.0,\n        41.0,\n        121.0,\n        140.0,\n        80.0,\n        -41.0,\n        -20.0,\n        -40.0,\n        40.0,\n        -1.0,\n        20.0,\n        121.0,\n        60.0,\n        -20.0,\n        -80.0,\n        0.0,\n        81.0,\n        141.0,\n        -20.0,\n        101.0,\n        20.0,\n        61.0,\n        121.0,\n        141.0,\n        -40.0,\n        0.0,\n        -80.0,\n        60.0,\n        60.0,\n        81.0\n      ],\n      \"directional_consistency\": 0.7105263157894737,\n      \"exact_sign_flip_p\": 2.0560610360819354e-05,\n      \"mean_confidence_interval\": [\n        22.175,\n        54.825\n      ],\n      \"mean_difference_cycles\": 38.5625,\n      \"median_confidence_interval\": [\n        20.5,\n        80.0\n      ],\n      \"median_difference_cycles\": 60.0,\n      \"negative_count\": 22,\n      \"nonzero_pair_count\": 76,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 54,\n      \"zero_count\": 4\n    },\n    \"conflict_vs_capsule\": {\n      \"differences\": [\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        -21.0,\n        0.0,\n        0.0,\n        0.0,\n        61.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        -60.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        101.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        -40.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        -40.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0\n      ],\n      \"directional_consistency\": 0.6666666666666666,\n      \"exact_sign_flip_p\": 1.0,\n      \"mean_confidence_interval\": [\n        -3.2625,\n        3.8\n      ],\n      \"mean_difference_cycles\": 0.0125,\n      \"median_confidence_interval\": [\n        0.0,\n        0.0\n      ],\n      \"median_difference_cycles\": 0.0,\n      \"negative_count\": 4,\n      \"nonzero_pair_count\": 6,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 2,\n      \"zero_count\": 74\n    },\n    \"pressure_disabled_capsule_vs_continuous\": {\n      \"differences\": [\n        -141.0,\n        -141.0,\n        -1.0,\n        -61.0,\n        0.0,\n        -61.0,\n        0.0,\n        0.0,\n        0.0,\n        -61.0,\n        -121.0,\n        -61.0,\n        -141.0,\n        -81.0,\n        -141.0,\n        0.0,\n        0.0,\n        -41.0,\n        -61.0,\n        -101.0,\n        -121.0,\n        -81.0,\n        0.0,\n        0.0,\n        0.0,\n        -61.0,\n        0.0,\n        -141.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        -121.0,\n        0.0,\n        -61.0,\n        -141.0,\n        -81.0,\n        0.0,\n        0.0,\n        -101.0,\n        -101.0,\n        -61.0,\n        0.0,\n        -61.0,\n        -101.0,\n        0.0,\n        -21.0,\n        -121.0,\n        -101.0,\n        0.0,\n        -21.0,\n        0.0,\n        0.0,\n        -1.0,\n        -1.0,\n        -41.0,\n        -41.0,\n        -141.0,\n        -101.0,\n        -1.0,\n        -81.0,\n        0.0,\n        -1.0,\n        0.0,\n        -121.0,\n        -141.0,\n        0.0,\n        0.0,\n        -141.0,\n        0.0,\n        -101.0,\n        0.0,\n        0.0,\n        0.0,\n        -61.0,\n        -81.0,\n        -101.0,\n        -21.0,\n        -61.0,\n        0.0\n      ],\n      \"directional_consistency\": 1.0,\n      \"exact_sign_flip_p\": 3.552713678800501e-15,\n      \"mean_confidence_interval\": [\n        -61.4625,\n        -37.975\n      ],\n      \"mean_difference_cycles\": -49.3625,\n      \"median_confidence_interval\": [\n        -61.0,\n        -0.5\n      ],\n      \"median_difference_cycles\": -41.0,\n      \"negative_count\": 49,\n      \"nonzero_pair_count\": 49,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 0,\n      \"zero_count\": 31\n    }\n  },\n  \"gate_count\": 7,\n  \"gates\": {\n    \"capsule_accuracy_noninferiority_40\": {\n      \"observed_checkpoint_accuracy_delta\": 0.10260416674999995,\n      \"passed\": true,\n      \"threshold\": -0.01\n    },\n    \"capsule_vs_summary_endurance\": {\n      \"observed\": {\n        \"differences\": [\n          -141.0,\n          -60.0,\n          81.0,\n          60.0,\n          141.0,\n          60.0,\n          121.0,\n          141.0,\n          141.0,\n          80.0,\n          20.0,\n          60.0,\n          -60.0,\n          60.0,\n          -60.0,\n          41.0,\n          41.0,\n          40.0,\n          -40.0,\n          -60.0,\n          -100.0,\n          -81.0,\n          141.0,\n          141.0,\n          81.0,\n          80.0,\n          21.0,\n          0.0,\n          81.0,\n          61.0,\n          21.0,\n          121.0,\n          -40.0,\n          141.0,\n          40.0,\n          -141.0,\n          20.0,\n          101.0,\n          121.0,\n          -20.0,\n          -100.0,\n          80.0,\n          81.0,\n          80.0,\n          20.0,\n          81.0,\n          120.0,\n          0.0,\n          -101.0,\n          121.0,\n          100.0,\n          41.0,\n          121.0,\n          140.0,\n          80.0,\n          -41.0,\n          -20.0,\n          -40.0,\n          40.0,\n          -1.0,\n          20.0,\n          121.0,\n          60.0,\n          -20.0,\n          -80.0,\n          0.0,\n          81.0,\n          141.0,\n          -20.0,\n          101.0,\n          20.0,\n          61.0,\n          121.0,\n          141.0,\n          -40.0,\n          0.0,\n          -80.0,\n          60.0,\n          60.0,\n          81.0\n        ],\n        \"directional_consistency\": 0.7105263157894737,\n        \"exact_sign_flip_p\": 2.0560610360819354e-05,\n        \"mean_confidence_interval\": [\n          22.175,\n          54.825\n        ],\n        \"mean_difference_cycles\": 38.5625,\n        \"median_confidence_interval\": [\n          20.5,\n          80.0\n        ],\n        \"median_difference_cycles\": 60.0,\n        \"negative_count\": 22,\n        \"nonzero_pair_count\": 76,\n        \"paired_difference_count\": 80,\n        \"positive_count\": 54,\n        \"zero_count\": 4\n      },\n      \"passed\": true,\n      \"thresholds\": {\n        \"median_gain_cycles\": 4.0,\n        \"p_max\": 0.1\n      }\n    },\n    \"conflict_aware_capsule_advantage\": {\n      \"observed\": {\n        \"differences\": [\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          -21.0,\n          0.0,\n          0.0,\n          0.0,\n          61.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          -60.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          101.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          -40.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          -40.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0\n        ],\n        \"directional_consistency\": 0.6666666666666666,\n        \"exact_sign_flip_p\": 1.0,\n        \"mean_confidence_interval\": [\n          -3.2625,\n          3.8\n        ],\n        \"mean_difference_cycles\": 0.0125,\n        \"median_confidence_interval\": [\n          0.0,\n          0.0\n        ],\n        \"median_difference_cycles\": 0.0,\n        \"negative_count\": 4,\n        \"nonzero_pair_count\": 6,\n        \"paired_difference_count\": 80,\n        \"positive_count\": 2,\n        \"zero_count\": 74\n      },\n      \"omission_rate_delta\": -0.08664062500000003,\n      \"passed\": false,\n      \"thresholds\": {\n        \"median_gain_cycles\": 2.0,\n        \"p_max\": 0.1\n      }\n    },\n    \"pressure_disabled_null_specificity\": {\n      \"decision_rule\": \"Fail if the capsule retains a positive median advantage above the materiality ceiling or any positive advantage at or below the declared p threshold. Negative values mean continuous history performs better and do not count as an artificial capsule advantage.\",\n      \"observed\": {\n        \"differences\": [\n          -141.0,\n          -141.0,\n          -1.0,\n          -61.0,\n          0.0,\n          -61.0,\n          0.0,\n          0.0,\n          0.0,\n          -61.0,\n          -121.0,\n          -61.0,\n          -141.0,\n          -81.0,\n          -141.0,\n          0.0,\n          0.0,\n          -41.0,\n          -61.0,\n          -101.0,\n          -121.0,\n          -81.0,\n          0.0,\n          0.0,\n          0.0,\n          -61.0,\n          0.0,\n          -141.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          -121.0,\n          0.0,\n          -61.0,\n          -141.0,\n          -81.0,\n          0.0,\n          0.0,\n          -101.0,\n          -101.0,\n          -61.0,\n          0.0,\n          -61.0,\n          -101.0,\n          0.0,\n          -21.0,\n          -121.0,\n          -101.0,\n          0.0,\n          -21.0,\n          0.0,\n          0.0,\n          -1.0,\n          -1.0,\n          -41.0,\n          -41.0,\n          -141.0,\n          -101.0,\n          -1.0,\n          -81.0,\n          0.0,\n          -1.0,\n          0.0,\n          -121.0,\n          -141.0,\n          0.0,\n          0.0,\n          -141.0,\n          0.0,\n          -101.0,\n          0.0,\n          0.0,\n          0.0,\n          -61.0,\n          -81.0,\n          -101.0,\n          -21.0,\n          -61.0,\n          0.0\n        ],\n        \"directional_consistency\": 1.0,\n        \"exact_sign_flip_p\": 3.552713678800501e-15,\n        \"mean_confidence_interval\": [\n          -61.4625,\n          -37.975\n        ],\n        \"mean_difference_cycles\": -49.3625,\n        \"median_confidence_interval\": [\n          -61.0,\n          -0.5\n        ],\n        \"median_difference_cycles\": -41.0,\n        \"negative_count\": 49,\n        \"nonzero_pair_count\": 49,\n        \"paired_difference_count\": 80,\n        \"positive_count\": 0,\n        \"zero_count\": 31\n      },\n      \"passed\": true,\n      \"thresholds\": {\n        \"positive_median_advantage_max_cycles\": 1.0,\n        \"significant_positive_advantage_p_max\": 0.1\n      }\n    },\n    \"verified_horizon_160\": {\n      \"observed\": {\n        \"active_context_ratio_vs_continuous\": 0.14666332201040386,\n        \"critical_omission_rate_delta_vs_continuous\": -0.5487500000000001,\n        \"median_n_f_censored\": 120.0,\n        \"survival_rate\": 0.3875\n      },\n      \"passed\": false,\n      \"thresholds\": {\n        \"context_ratio_max\": 0.5,\n        \"critical_omission_rate_margin\": 0.01,\n        \"median_n_f_censored_min\": 161\n      }\n    },\n    \"verified_horizon_40\": {\n      \"observed\": {\n        \"active_context_ratio_vs_continuous\": 0.43765184991785844,\n        \"critical_omission_rate_delta_vs_continuous\": -0.17093749999999996,\n        \"median_n_f_censored\": 41.0,\n        \"survival_rate\": 0.825\n      },\n      \"passed\": true,\n      \"thresholds\": {\n        \"context_ratio_max\": 0.5,\n        \"critical_omission_rate_margin\": 0.01,\n        \"median_n_f_censored_min\": 41\n      }\n    },\n    \"verified_horizon_80\": {\n      \"observed\": {\n        \"active_context_ratio_vs_continuous\": 0.2654448168159893,\n        \"critical_omission_rate_delta_vs_continuous\": -0.425,\n        \"median_n_f_censored\": 81.0,\n        \"survival_rate\": 0.6625\n      },\n      \"passed\": true,\n      \"thresholds\": {\n        \"context_ratio_max\": 0.5,\n        \"critical_omission_rate_margin\": 0.01,\n        \"median_n_f_censored_min\": 81\n      }\n    }\n  },\n  \"heldout_seed_count\": 80,\n  \"maximum_verified_horizon_cycles\": 80,\n  \"modes\": {\n    \"capsule_conflict_aware\": {\n      \"critical_omission_rate_160\": 0.211484375,\n      \"critical_omission_rate_40\": 0.18843749999999998,\n      \"critical_omission_rate_80\": 0.19765625,\n      \"mean_active_context_tokens_160\": 650.2791406250001,\n      \"mean_active_context_tokens_40\": 577.365625,\n      \"mean_active_context_tokens_80\": 625.46578125,\n      \"mean_checkpoint_accuracy_160\": 0.9568684896249999,\n      \"mean_checkpoint_accuracy_40\": 0.9611979165,\n      \"mean_checkpoint_accuracy_80\": 0.958463541875,\n      \"mean_external_retrievals\": 25.5125,\n      \"mean_quarantines\": 3.6125,\n      \"median_n_f_160\": 130.0,\n      \"median_n_f_40\": 41.0,\n      \"median_n_f_80\": 81.0,\n      \"run_count\": 80,\n      \"survival_160\": 0.4,\n      \"survival_40\": 0.8,\n      \"survival_80\": 0.65\n    },\n    \"continuous_full_history\": {\n      \"critical_omission_rate_160\": 0.846875,\n      \"critical_omission_rate_40\": 0.42062499999999997,\n      \"critical_omission_rate_80\": 0.69375,\n      \"mean_active_context_tokens_160\": 4493.486171875,\n      \"mean_active_context_tokens_40\": 1339.3415625,\n      \"mean_active_context_tokens_80\": 2390.5521875,\n      \"mean_checkpoint_accuracy_160\": 0.46455078175000003,\n      \"mean_checkpoint_accuracy_40\": 0.847265625,\n      \"mean_checkpoint_accuracy_80\": 0.631315103875,\n      \"mean_external_retrievals\": 0.0,\n      \"mean_quarantines\": 0.0,\n      \"median_n_f_160\": 40.0,\n      \"median_n_f_40\": 40.0,\n      \"median_n_f_80\": 40.0,\n      \"run_count\": 80,\n      \"survival_160\": 0.0,\n      \"survival_40\": 0.15,\n      \"survival_80\": 0.0\n    },\n    \"ordinary_summary_reset\": {\n      \"critical_omission_rate_160\": 0.48,\n      \"critical_omission_rate_40\": 0.3928125,\n      \"critical_omission_rate_80\": 0.41984374999999996,\n      \"mean_active_context_tokens_160\": 712.1580468750001,\n      \"mean_active_context_tokens_40\": 713.5290625,\n      \"mean_active_context_tokens_80\": 712.7396875000001,\n      \"mean_checkpoint_accuracy_160\": 0.900651042,\n      \"mean_checkpoint_accuracy_40\": 0.9145833337499999,\n      \"mean_checkpoint_accuracy_80\": 0.9087890625,\n      \"mean_external_retrievals\": 0.0,\n      \"mean_quarantines\": 0.0,\n      \"median_n_f_160\": 60.0,\n      \"median_n_f_40\": 41.0,\n      \"median_n_f_80\": 60.0,\n      \"run_count\": 80,\n      \"survival_160\": 0.075,\n      \"survival_40\": 0.5625,\n      \"survival_80\": 0.2875\n    },\n    \"verified_inheritance_capsule\": {\n      \"critical_omission_rate_160\": 0.29812500000000003,\n      \"critical_omission_rate_40\": 0.2496875,\n      \"critical_omission_rate_80\": 0.26875,\n      \"mean_active_context_tokens_160\": 659.0296093750001,\n      \"mean_active_context_tokens_40\": 586.1653125,\n      \"mean_active_context_tokens_80\": 634.5596875,\n      \"mean_checkpoint_accuracy_160\": 0.940755208,\n      \"mean_checkpoint_accuracy_40\": 0.94986979175,\n      \"mean_checkpoint_accuracy_80\": 0.9431640619999999,\n      \"mean_external_retrievals\": 25.7,\n      \"mean_quarantines\": 3.2125,\n      \"median_n_f_160\": 120.0,\n      \"median_n_f_40\": 41.0,\n      \"median_n_f_80\": 81.0,\n      \"run_count\": 80,\n      \"survival_160\": 0.3875,\n      \"survival_40\": 0.825,\n      \"survival_80\": 0.6625\n    }\n  },\n  \"passed_gate_count\": 5,\n  \"schema\": \"openline.generational-endurance.summary.v1\",\n  \"status\": \"MIXED_EXPLORATORY_GENERATIONAL_RESULT\"\n}\n"
   },
+  "clean_cli_load_rate": {
+    "command": [
+      "direct-shell-preflight",
+      "clean_cli_load_rate"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "{\n  \"claim_boundary\": \"This seeded synthetic experiment tests whether disturbance spacing changes critical-failure life when disturbance identities, order, total load, ordinary work, horizon, random draws, and context cap are matched. Ordinary task scratch context is released after each task so retained-context growth is matched by disturbance index. It does not claim that AI agents obey fluid mechanics, identify a universal rate threshold, or establish a deployed-agent retirement policy.\",\n  \"claim_label\": \"SAME_DISTURBANCE_DIFFERENT_SPEED_PHASE_CONTROLLED_REPLICATION\",\n  \"cycle_observation_count\": 368640,\n  \"design_witness_digest\": \"caa0a9e5d75729a21a45258277e128739cbece08f9f0102dc715c96975db175a\",\n  \"gate_count\": 4,\n  \"gates\": {\n    \"burst_causes_earlier_critical_failure\": {\n      \"observed\": {\n        \"differences\": [\n          0.0,\n          9.0,\n          0.0,\n          11.0,\n          1.0,\n          19.0,\n          16.0,\n          1.0,\n          0.0,\n          8.0,\n          0.0,\n          0.0,\n          2.0,\n          8.0,\n          19.0,\n          0.0,\n          7.0,\n          0.0,\n          12.0,\n          0.0,\n          0.0,\n          6.0,\n          0.0,\n          12.0,\n          0.0,\n          3.0,\n          18.0,\n          6.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          12.0,\n          0.0,\n          16.0,\n          0.0,\n          1.0,\n          0.0,\n          0.0,\n          7.0,\n          17.0,\n          0.0,\n          16.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          4.0,\n          16.0,\n          19.0,\n          -3.0,\n          0.0,\n          0.0,\n          11.0,\n          1.0,\n          6.0,\n          0.0,\n          3.0,\n          13.0,\n          15.0,\n          16.0,\n          0.0,\n          0.0,\n          0.0,\n          13.0,\n          0.0,\n          2.0,\n          0.0,\n          0.0,\n          0.0,\n          1.0,\n          11.0,\n          1.0,\n          2.0,\n          0.0,\n          7.0,\n          0.0,\n          0.0,\n          17.0,\n          0.0,\n          3.0,\n          0.0,\n          4.0,\n          15.0,\n          5.0,\n          0.0,\n          0.0,\n          0.0,\n          7.0,\n          0.0,\n          6.0,\n          5.0,\n          0.0,\n          0.0,\n          4.0,\n          7.0,\n          0.0,\n          0.0,\n          9.0,\n          0.0,\n          16.0,\n          13.0,\n          0.0,\n          0.0,\n          6.0,\n          11.0,\n          16.0,\n          0.0,\n          7.0,\n          13.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          6.0,\n          11.0,\n          7.0,\n          9.0,\n          0.0,\n          8.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          0.0,\n          11.0,\n          3.0,\n          8.0,\n          12.0,\n          -4.0,\n          5.0,\n          0.0,\n          0.0,\n          3.0,\n          0.0,\n          0.0,\n          10.0,\n          16.0,\n          9.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          16.0,\n          16.0,\n          0.0,\n          11.0,\n          0.0,\n          8.0,\n          12.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          0.0,\n          5.0,\n          11.0,\n          0.0,\n          11.0,\n          12.0,\n          11.0,\n          0.0,\n          13.0,\n          8.0,\n          12.0,\n          2.0,\n          18.0,\n          4.0,\n          7.0,\n          0.0,\n          0.0,\n          1.0,\n          0.0,\n          6.0,\n          18.0,\n          7.0,\n          8.0,\n          0.0,\n          4.0,\n          2.0,\n          6.0,\n          0.0,\n          0.0,\n          1.0,\n          7.0,\n          0.0,\n          0.0,\n          0.0,\n          17.0,\n          11.0,\n          0.0,\n          12.0,\n          18.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          2.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          7.0,\n          11.0,\n          1.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          18.0,\n          0.0,\n          0.0,\n          2.0,\n          0.0,\n          0.0,\n          8.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          13.0,\n          3.0,\n          14.0,\n          0.0,\n          0.0,\n          0.0,\n          2.0\n        ],\n        \"directional_consistency\": 0.9834710743801653,\n        \"exact_sign_flip_p\": 1.0638505993585899e-32,\n        \"mean_confidence_interval\": [\n          3.845833333333333,\n          5.341666666666667\n        ],\n        \"mean_confidence_interval_disturbances\": [\n          3.845833333333333,\n          5.341666666666667\n        ],\n        \"mean_difference_cycles\": 4.579166666666667,\n        \"mean_difference_disturbances\": 4.579166666666667,\n        \"median_confidence_interval\": [\n          0.0,\n          2.0\n        ],\n        \"median_confidence_interval_disturbances\": [\n          0.0,\n          2.0\n        ],\n        \"median_difference_cycles\": 0.0,\n        \"median_difference_disturbances\": 0.0,\n        \"negative_count\": 2,\n        \"nonzero_pair_count\": 121,\n        \"paired_difference_count\": 240,\n        \"positive_count\": 119,\n        \"unit\": \"disturbances_survived_before_critical_failure\",\n        \"zero_count\": 119\n      },\n      \"passed\": true,\n      \"thresholds\": {\n        \"mean_bootstrap_lower_bound_min\": 0.0,\n        \"mean_slow_minus_burst_min_disturbances\": 1.0,\n        \"p_max\": 0.1\n      }\n    },\n    \"ordinary_work_recovery_windows_reduce_burst_harm\": {\n      \"observed\": {\n        \"differences\": [\n          18.0,\n          4.0,\n          18.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          0.0,\n          0.0,\n          6.0,\n          0.0,\n          0.0,\n          2.0,\n          8.0,\n          0.0,\n          0.0,\n          7.0,\n          0.0,\n          12.0,\n          0.0,\n          0.0,\n          6.0,\n          0.0,\n          12.0,\n          0.0,\n          3.0,\n          18.0,\n          6.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          12.0,\n          0.0,\n          16.0,\n          0.0,\n          1.0,\n          0.0,\n          0.0,\n          7.0,\n          17.0,\n          0.0,\n          16.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          4.0,\n          16.0,\n          0.0,\n          -3.0,\n          0.0,\n          0.0,\n          11.0,\n          1.0,\n          6.0,\n          0.0,\n          3.0,\n          13.0,\n          1.0,\n          16.0,\n          0.0,\n          0.0,\n          0.0,\n          13.0,\n          0.0,\n          2.0,\n          0.0,\n          0.0,\n          0.0,\n          1.0,\n          11.0,\n          1.0,\n          2.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          17.0,\n          3.0,\n          0.0,\n          0.0,\n          15.0,\n          5.0,\n          0.0,\n          0.0,\n          0.0,\n          7.0,\n          0.0,\n          6.0,\n          5.0,\n          0.0,\n          0.0,\n          4.0,\n          7.0,\n          0.0,\n          0.0,\n          9.0,\n          0.0,\n          9.0,\n          13.0,\n          0.0,\n          0.0,\n          6.0,\n          11.0,\n          16.0,\n          0.0,\n          7.0,\n          13.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          12.0,\n          6.0,\n          11.0,\n          7.0,\n          9.0,\n          15.0,\n          8.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          0.0,\n          16.0,\n          3.0,\n          8.0,\n          0.0,\n          -4.0,\n          4.0,\n          0.0,\n          0.0,\n          3.0,\n          0.0,\n          0.0,\n          10.0,\n          16.0,\n          9.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          4.0,\n          16.0,\n          16.0,\n          0.0,\n          11.0,\n          0.0,\n          8.0,\n          12.0,\n          0.0,\n          0.0,\n          0.0,\n          16.0,\n          0.0,\n          5.0,\n          11.0,\n          0.0,\n          11.0,\n          12.0,\n          11.0,\n          0.0,\n          1.0,\n          8.0,\n          12.0,\n          2.0,\n          18.0,\n          4.0,\n          7.0,\n          0.0,\n          0.0,\n          1.0,\n          0.0,\n          6.0,\n          18.0,\n          0.0,\n          8.0,\n          0.0,\n          4.0,\n          2.0,\n          6.0,\n          0.0,\n          -2.0,\n          1.0,\n          7.0,\n          0.0,\n          0.0,\n          0.0,\n          17.0,\n          11.0,\n          0.0,\n          0.0,\n          18.0,\n          0.0,\n          0.0,\n          0.0,\n          7.0,\n          2.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          7.0,\n          11.0,\n          1.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          18.0,\n          0.0,\n          7.0,\n          4.0,\n          0.0,\n          0.0,\n          8.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          4.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          2.0\n        ],\n        \"directional_consistency\": 0.9736842105263158,\n        \"exact_sign_flip_p\": 7.223200256424328e-30,\n        \"mean_confidence_interval\": [\n          3.345833333333333,\n          4.783333333333333\n        ],\n        \"mean_confidence_interval_disturbances\": [\n          3.345833333333333,\n          4.783333333333333\n        ],\n        \"mean_difference_cycles\": 4.058333333333334,\n        \"mean_difference_disturbances\": 4.058333333333334,\n        \"median_confidence_interval\": [\n          0.0,\n          1.0\n        ],\n        \"median_confidence_interval_disturbances\": [\n          0.0,\n          1.0\n        ],\n        \"median_difference_cycles\": 0.0,\n        \"median_difference_disturbances\": 0.0,\n        \"negative_count\": 3,\n        \"nonzero_pair_count\": 114,\n        \"paired_difference_count\": 240,\n        \"positive_count\": 111,\n        \"unit\": \"disturbances_survived_before_critical_failure\",\n        \"zero_count\": 126\n      },\n      \"passed\": true,\n      \"thresholds\": {\n        \"mean_bootstrap_lower_bound_min\": 0.0,\n        \"mean_recovery_minus_burst_min_disturbances\": 0.5,\n        \"p_max\": 0.1\n      }\n    },\n    \"rate_direction_replicates_across_modes\": {\n      \"mode_count\": 3,\n      \"passed\": true,\n      \"per_mode\": {\n        \"continuous_history\": {\n          \"differences\": [\n            0.0,\n            11.0,\n            16.0,\n            8.0,\n            2.0,\n            0.0,\n            12.0,\n            6.0,\n            0.0,\n            6.0,\n            0.0,\n            16.0,\n            16.0,\n            0.0,\n            17.0,\n            0.0,\n            0.0,\n            4.0,\n            -3.0,\n            11.0,\n            0.0,\n            15.0,\n            0.0,\n            0.0,\n            0.0,\n            11.0,\n            0.0,\n            0.0,\n            3.0,\n            15.0,\n            0.0,\n            0.0,\n            0.0,\n            7.0,\n            9.0,\n            13.0,\n            6.0,\n            0.0,\n            0.0,\n            0.0,\n            6.0,\n            9.0,\n            0.0,\n            0.0,\n            11.0,\n            12.0,\n            0.0,\n            0.0,\n            16.0,\n            0.0,\n            16.0,\n            0.0,\n            8.0,\n            0.0,\n            0.0,\n            0.0,\n            11.0,\n            8.0,\n            18.0,\n            0.0,\n            0.0,\n            7.0,\n            4.0,\n            0.0,\n            7.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            7.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            3.0,\n            0.0\n          ],\n          \"directional_consistency\": 0.9722222222222222,\n          \"exact_sign_flip_p\": 1.4551915228366852e-10,\n          \"mean_confidence_interval\": [\n            3.0875,\n            5.6\n          ],\n          \"mean_confidence_interval_disturbances\": [\n            3.0875,\n            5.6\n          ],\n          \"mean_difference_cycles\": 4.3,\n          \"mean_difference_disturbances\": 4.3,\n          \"median_confidence_interval\": [\n            0.0,\n            4.0\n          ],\n          \"median_confidence_interval_disturbances\": [\n            0.0,\n            4.0\n          ],\n          \"median_difference_cycles\": 0.0,\n          \"median_difference_disturbances\": 0.0,\n          \"negative_count\": 1,\n          \"nonzero_pair_count\": 36,\n          \"paired_difference_count\": 80,\n          \"positive_count\": 35,\n          \"unit\": \"disturbances_survived_before_critical_failure\",\n          \"zero_count\": 44\n        },\n        \"ordinary_summary\": {\n          \"differences\": [\n            9.0,\n            1.0,\n            1.0,\n            0.0,\n            8.0,\n            7.0,\n            0.0,\n            0.0,\n            3.0,\n            0.0,\n            0.0,\n            12.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            16.0,\n            0.0,\n            1.0,\n            3.0,\n            16.0,\n            0.0,\n            2.0,\n            0.0,\n            1.0,\n            7.0,\n            17.0,\n            0.0,\n            5.0,\n            0.0,\n            6.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            11.0,\n            7.0,\n            0.0,\n            0.0,\n            11.0,\n            0.0,\n            0.0,\n            16.0,\n            3.0,\n            -4.0,\n            0.0,\n            0.0,\n            9.0,\n            0.0,\n            16.0,\n            11.0,\n            12.0,\n            0.0,\n            5.0,\n            11.0,\n            0.0,\n            12.0,\n            4.0,\n            0.0,\n            6.0,\n            8.0,\n            2.0,\n            0.0,\n            0.0,\n            17.0,\n            12.0,\n            0.0,\n            2.0,\n            0.0,\n            11.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            0.0,\n            14.0,\n            0.0\n          ],\n          \"directional_consistency\": 0.9743589743589743,\n          \"exact_sign_flip_p\": 2.510205376893282e-10,\n          \"mean_confidence_interval\": [\n            2.7375,\n            5.0875\n          ],\n          \"mean_confidence_interval_disturbances\": [\n            2.7375,\n            5.0875\n          ],\n          \"mean_difference_cycles\": 3.8875,\n          \"mean_difference_disturbances\": 3.8875,\n          \"median_confidence_interval\": [\n            0.0,\n            2.5\n          ],\n          \"median_confidence_interval_disturbances\": [\n            0.0,\n            2.5\n          ],\n          \"median_difference_cycles\": 0.0,\n          \"median_difference_disturbances\": 0.0,\n          \"negative_count\": 1,\n          \"nonzero_pair_count\": 39,\n          \"paired_difference_count\": 80,\n          \"positive_count\": 38,\n          \"unit\": \"disturbances_survived_before_critical_failure\",\n          \"zero_count\": 41\n        },\n        \"verified_capsule\": {\n          \"differences\": [\n            0.0,\n            19.0,\n            0.0,\n            0.0,\n            19.0,\n            0.0,\n            0.0,\n            12.0,\n            18.0,\n            0.0,\n            0.0,\n            0.0,\n            1.0,\n            7.0,\n            16.0,\n            0.0,\n            0.0,\n            19.0,\n            0.0,\n            6.0,\n            13.0,\n            0.0,\n            13.0,\n            0.0,\n            1.0,\n            2.0,\n            0.0,\n            0.0,\n            4.0,\n            0.0,\n            7.0,\n            5.0,\n            4.0,\n            0.0,\n            16.0,\n            0.0,\n            16.0,\n            13.0,\n            0.0,\n            16.0,\n            7.0,\n            8.0,\n            0.0,\n            0.0,\n            8.0,\n            5.0,\n            3.0,\n            10.0,\n            0.0,\n            0.0,\n            16.0,\n            0.0,\n            0.0,\n            16.0,\n            11.0,\n            12.0,\n            13.0,\n            2.0,\n            7.0,\n            1.0,\n            18.0,\n            0.0,\n            6.0,\n            1.0,\n            0.0,\n            11.0,\n            18.0,\n            0.0,\n            0.0,\n            0.0,\n            1.0,\n            0.0,\n            0.0,\n            18.0,\n            2.0,\n            8.0,\n            0.0,\n            13.0,\n            0.0,\n            2.0\n          ],\n          \"directional_consistency\": 1.0,\n          \"exact_sign_flip_p\": 2.842170943040401e-14,\n          \"mean_confidence_interval\": [\n            4.15,\n            7.075\n          ],\n          \"mean_confidence_interval_disturbances\": [\n            4.15,\n            7.075\n          ],\n          \"mean_difference_cycles\": 5.55,\n          \"mean_difference_disturbances\": 5.55,\n          \"median_confidence_interval\": [\n            0.0,\n            6.0\n          ],\n          \"median_confidence_interval_disturbances\": [\n            0.0,\n            6.0\n          ],\n          \"median_difference_cycles\": 2.0,\n          \"median_difference_disturbances\": 2.0,\n          \"negative_count\": 0,\n          \"nonzero_pair_count\": 46,\n          \"paired_difference_count\": 80,\n          \"positive_count\": 46,\n          \"unit\": \"disturbances_survived_before_critical_failure\",\n          \"zero_count\": 34\n        }\n      },\n      \"positive_mode_count\": 3,\n      \"threshold\": 2\n    },\n    \"rate_disabled_null_specificity\": {\n      \"observed\": {\n        \"differences\": [\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          1.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          9.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0,\n          0.0\n        ],\n        \"directional_consistency\": 1.0,\n        \"exact_sign_flip_p\": 0.5,\n        \"mean_confidence_interval\": [\n          0.0,\n          0.125\n        ],\n        \"mean_confidence_interval_disturbances\": [\n          0.0,\n          0.125\n        ],\n        \"mean_difference_cycles\": 0.041666666666666664,\n        \"mean_difference_disturbances\": 0.041666666666666664,\n        \"median_confidence_interval\": [\n          0.0,\n          0.0\n        ],\n        \"median_confidence_interval_disturbances\": [\n          0.0,\n          0.0\n        ],\n        \"median_difference_cycles\": 0.0,\n        \"median_difference_disturbances\": 0.0,\n        \"negative_count\": 0,\n        \"nonzero_pair_count\": 2,\n        \"paired_difference_count\": 240,\n        \"positive_count\": 2,\n        \"unit\": \"disturbances_survived_before_critical_failure\",\n        \"zero_count\": 238\n      },\n      \"passed\": true,\n      \"thresholds\": {\n        \"absolute_mean_max_disturbances\": 0.25,\n        \"confidence_interval_must_include_zero\": true\n      }\n    }\n  },\n  \"heldout_seed_count\": 80,\n  \"mode_schedule_summaries\": {\n    \"rate_disabled_null\": {\n      \"continuous_history\": {\n        \"burst_recovery\": {\n          \"failure_rate\": 0.5875,\n          \"mean_active_context_tokens\": 618.018203125,\n          \"mean_checkpoint_accuracy\": 0.86542968750125,\n          \"mean_critical_omissions\": 0.92421875,\n          \"mean_synthetic_damage_auc\": 138.80085732429876,\n          \"median_disturbances_at_failure\": 16.0,\n          \"median_n_f_ticks\": 125.0,\n          \"peak_instantaneous_rate\": 0.3333333333,\n          \"run_count\": 80\n        },\n        \"slow_drip\": {\n          \"failure_rate\": 0.5875,\n          \"mean_active_context_tokens\": 602.2753125,\n          \"mean_checkpoint_accuracy\": 0.8683593749949999,\n          \"mean_critical_omissions\": 0.89921875,\n          \"mean_synthetic_damage_auc\": 68.78747427789875,\n          \"median_disturbances_at_failure\": 16.0,\n          \"median_n_f_ticks\": 124.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"steady_load\": {\n          \"failure_rate\": 0.5875,\n          \"mean_active_context_tokens\": 602.3045312500001,\n          \"mean_checkpoint_accuracy\": 0.8682291666612499,\n          \"mean_critical_omissions\": 0.90078125,\n          \"mean_synthetic_damage_auc\": 78.599473597195,\n          \"median_disturbances_at_failure\": 16.0,\n          \"median_n_f_ticks\": 128.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"sudden_burst\": {\n          \"failure_rate\": 0.6,\n          \"mean_active_context_tokens\": 602.377578125,\n          \"mean_checkpoint_accuracy\": 0.8662109374975,\n          \"mean_critical_omissions\": 0.9125,\n          \"mean_synthetic_damage_auc\": 608.8653353380012,\n          \"median_disturbances_at_failure\": 15.0,\n          \"median_n_f_ticks\": 119.5,\n          \"peak_instantaneous_rate\": 0.8333333333,\n          \"run_count\": 80\n        }\n      },\n      \"ordinary_summary\": {\n        \"burst_recovery\": {\n          \"failure_rate\": 0.6,\n          \"mean_active_context_tokens\": 375.532265625,\n          \"mean_checkpoint_accuracy\": 0.8506510416599999,\n          \"mean_critical_omissions\": 1.0125,\n          \"mean_synthetic_damage_auc\": 141.91960732429874,\n          \"median_disturbances_at_failure\": 15.5,\n          \"median_n_f_ticks\": 120.0,\n          \"peak_instantaneous_rate\": 0.3333333333,\n          \"run_count\": 80\n        },\n        \"slow_drip\": {\n          \"failure_rate\": 0.6,\n          \"mean_active_context_tokens\": 359.789375,\n          \"mean_checkpoint_accuracy\": 0.8544921874962499,\n          \"mean_critical_omissions\": 0.9796875,\n          \"mean_synthetic_damage_auc\": 71.55309927789875,\n          \"median_disturbances_at_failure\": 15.5,\n          \"median_n_f_ticks\": 120.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"steady_load\": {\n          \"failure_rate\": 0.6,\n          \"mean_active_context_tokens\": 359.81859375,\n          \"mean_checkpoint_accuracy\": 0.8544921874962499,\n          \"mean_critical_omissions\": 0.9796875,\n          \"mean_synthetic_damage_auc\": 81.405723597195,\n          \"median_disturbances_at_failure\": 15.5,\n          \"median_n_f_ticks\": 120.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"sudden_burst\": {\n          \"failure_rate\": 0.6125,\n          \"mean_active_context_tokens\": 359.891640625,\n          \"mean_checkpoint_accuracy\": 0.85234374999625,\n          \"mean_critical_omissions\": 1.00078125,\n          \"mean_synthetic_damage_auc\": 612.0528353380012,\n          \"median_disturbances_at_failure\": 15.5,\n          \"median_n_f_ticks\": 120.0,\n          \"peak_instantaneous_rate\": 0.8333333333,\n          \"run_count\": 80\n        }\n      },\n      \"verified_capsule\": {\n        \"burst_recovery\": {\n          \"failure_rate\": 0.425,\n          \"mean_active_context_tokens\": 390.657265625,\n          \"mean_checkpoint_accuracy\": 0.9712890625,\n          \"mean_critical_omissions\": 0.20703125,\n          \"mean_synthetic_damage_auc\": 113.53523232429875,\n          \"median_disturbances_at_failure\": 21.0,\n          \"median_n_f_ticks\": 161.0,\n          \"peak_instantaneous_rate\": 0.3333333333,\n          \"run_count\": 80\n        },\n        \"slow_drip\": {\n          \"failure_rate\": 0.425,\n          \"mean_active_context_tokens\": 374.914375,\n          \"mean_checkpoint_accuracy\": 0.9745442708325,\n          \"mean_critical_omissions\": 0.18828125,\n          \"mean_synthetic_damage_auc\": 43.57184927789875,\n          \"median_disturbances_at_failure\": 21.0,\n          \"median_n_f_ticks\": 161.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"steady_load\": {\n          \"failure_rate\": 0.425,\n          \"mean_active_context_tokens\": 374.94359375,\n          \"mean_checkpoint_accuracy\": 0.9745442708325,\n          \"mean_critical_omissions\": 0.18828125,\n          \"mean_synthetic_damage_auc\": 53.468223597195006,\n          \"median_disturbances_at_failure\": 21.0,\n          \"median_n_f_ticks\": 161.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"sudden_burst\": {\n          \"failure_rate\": 0.425,\n          \"mean_active_context_tokens\": 375.016640625,\n          \"mean_checkpoint_accuracy\": 0.9751953124974999,\n          \"mean_critical_omissions\": 0.18828125,\n          \"mean_synthetic_damage_auc\": 583.4778353380012,\n          \"median_disturbances_at_failure\": 21.0,\n          \"median_n_f_ticks\": 161.0,\n          \"peak_instantaneous_rate\": 0.8333333333,\n          \"run_count\": 80\n        }\n      }\n    },\n    \"rate_sensitive\": {\n      \"continuous_history\": {\n        \"burst_recovery\": {\n          \"failure_rate\": 0.6375,\n          \"mean_active_context_tokens\": 618.018203125,\n          \"mean_checkpoint_accuracy\": 0.9593750000025001,\n          \"mean_critical_omissions\": 0.27734375,\n          \"mean_synthetic_damage_auc\": 114.63523232429876,\n          \"median_disturbances_at_failure\": 14.0,\n          \"median_n_f_ticks\": 101.0,\n          \"peak_instantaneous_rate\": 0.3333333333,\n          \"run_count\": 80\n        },\n        \"slow_drip\": {\n          \"failure_rate\": 0.6125,\n          \"mean_active_context_tokens\": 602.2753125,\n          \"mean_checkpoint_accuracy\": 0.95813802082875,\n          \"mean_critical_omissions\": 0.2703125,\n          \"mean_synthetic_damage_auc\": 44.840599277898754,\n          \"median_disturbances_at_failure\": 15.5,\n          \"median_n_f_ticks\": 120.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"steady_load\": {\n          \"failure_rate\": 0.6375,\n          \"mean_active_context_tokens\": 602.3045312500001,\n          \"mean_checkpoint_accuracy\": 0.95735677083125,\n          \"mean_critical_omissions\": 0.271875,\n          \"mean_synthetic_damage_auc\": 54.515098597195006,\n          \"median_disturbances_at_failure\": 14.0,\n          \"median_n_f_ticks\": 106.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"sudden_burst\": {\n          \"failure_rate\": 0.8875,\n          \"mean_active_context_tokens\": 602.377578125,\n          \"mean_checkpoint_accuracy\": 0.9419921875,\n          \"mean_critical_omissions\": 0.37734375,\n          \"mean_synthetic_damage_auc\": 589.3278353380013,\n          \"median_disturbances_at_failure\": 8.0,\n          \"median_n_f_ticks\": 60.0,\n          \"peak_instantaneous_rate\": 0.8333333333,\n          \"run_count\": 80\n        }\n      },\n      \"ordinary_summary\": {\n        \"burst_recovery\": {\n          \"failure_rate\": 0.65,\n          \"mean_active_context_tokens\": 375.532265625,\n          \"mean_checkpoint_accuracy\": 0.95885416666375,\n          \"mean_critical_omissions\": 0.26328125,\n          \"mean_synthetic_damage_auc\": 113.61335732429875,\n          \"median_disturbances_at_failure\": 12.0,\n          \"median_n_f_ticks\": 86.0,\n          \"peak_instantaneous_rate\": 0.3333333333,\n          \"run_count\": 80\n        },\n        \"slow_drip\": {\n          \"failure_rate\": 0.6125,\n          \"mean_active_context_tokens\": 359.789375,\n          \"mean_checkpoint_accuracy\": 0.95872395833625,\n          \"mean_critical_omissions\": 0.2609375,\n          \"mean_synthetic_damage_auc\": 44.15622427789875,\n          \"median_disturbances_at_failure\": 13.5,\n          \"median_n_f_ticks\": 104.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"steady_load\": {\n          \"failure_rate\": 0.625,\n          \"mean_active_context_tokens\": 359.81859375,\n          \"mean_checkpoint_accuracy\": 0.95755208333625,\n          \"mean_critical_omissions\": 0.275,\n          \"mean_synthetic_damage_auc\": 54.558848597195,\n          \"median_disturbances_at_failure\": 12.5,\n          \"median_n_f_ticks\": 97.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"sudden_burst\": {\n          \"failure_rate\": 0.9125,\n          \"mean_active_context_tokens\": 359.891640625,\n          \"mean_checkpoint_accuracy\": 0.9440104166650001,\n          \"mean_critical_omissions\": 0.37109375,\n          \"mean_synthetic_damage_auc\": 588.7184603380013,\n          \"median_disturbances_at_failure\": 9.0,\n          \"median_n_f_ticks\": 61.0,\n          \"peak_instantaneous_rate\": 0.8333333333,\n          \"run_count\": 80\n        }\n      },\n      \"verified_capsule\": {\n        \"burst_recovery\": {\n          \"failure_rate\": 0.6375,\n          \"mean_active_context_tokens\": 390.657265625,\n          \"mean_checkpoint_accuracy\": 0.97734374999875,\n          \"mean_critical_omissions\": 0.16484375,\n          \"mean_synthetic_damage_auc\": 110.54460732429875,\n          \"median_disturbances_at_failure\": 14.0,\n          \"median_n_f_ticks\": 101.0,\n          \"peak_instantaneous_rate\": 0.3333333333,\n          \"run_count\": 80\n        },\n        \"slow_drip\": {\n          \"failure_rate\": 0.5875,\n          \"mean_active_context_tokens\": 374.914375,\n          \"mean_checkpoint_accuracy\": 0.97695312499875,\n          \"mean_critical_omissions\": 0.1609375,\n          \"mean_synthetic_damage_auc\": 40.82184927789875,\n          \"median_disturbances_at_failure\": 15.5,\n          \"median_n_f_ticks\": 120.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"steady_load\": {\n          \"failure_rate\": 0.6375,\n          \"mean_active_context_tokens\": 374.94359375,\n          \"mean_checkpoint_accuracy\": 0.9753255208312501,\n          \"mean_critical_omissions\": 0.1734375,\n          \"mean_synthetic_damage_auc\": 51.165098597195,\n          \"median_disturbances_at_failure\": 14.0,\n          \"median_n_f_ticks\": 106.0,\n          \"peak_instantaneous_rate\": 0.1666666667,\n          \"run_count\": 80\n        },\n        \"sudden_burst\": {\n          \"failure_rate\": 0.9375,\n          \"mean_active_context_tokens\": 375.016640625,\n          \"mean_checkpoint_accuracy\": 0.9619791666675,\n          \"mean_critical_omissions\": 0.26484375,\n          \"mean_synthetic_damage_auc\": 585.5215853380012,\n          \"median_disturbances_at_failure\": 5.5,\n          \"median_n_f_ticks\": 40.0,\n          \"peak_instantaneous_rate\": 0.8333333333,\n          \"run_count\": 80\n        }\n      }\n    }\n  },\n  \"null_effect\": {\n    \"differences\": [\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      1.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      9.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0\n    ],\n    \"directional_consistency\": 1.0,\n    \"exact_sign_flip_p\": 0.5,\n    \"mean_confidence_interval\": [\n      0.0,\n      0.125\n    ],\n    \"mean_confidence_interval_disturbances\": [\n      0.0,\n      0.125\n    ],\n    \"mean_difference_cycles\": 0.041666666666666664,\n    \"mean_difference_disturbances\": 0.041666666666666664,\n    \"median_confidence_interval\": [\n      0.0,\n      0.0\n    ],\n    \"median_confidence_interval_disturbances\": [\n      0.0,\n      0.0\n    ],\n    \"median_difference_cycles\": 0.0,\n    \"median_difference_disturbances\": 0.0,\n    \"negative_count\": 0,\n    \"nonzero_pair_count\": 2,\n    \"paired_difference_count\": 240,\n    \"positive_count\": 2,\n    \"unit\": \"disturbances_survived_before_critical_failure\",\n    \"zero_count\": 238\n  },\n  \"passed_gate_count\": 4,\n  \"per_mode_effects\": {\n    \"continuous_history\": {\n      \"differences\": [\n        0.0,\n        11.0,\n        16.0,\n        8.0,\n        2.0,\n        0.0,\n        12.0,\n        6.0,\n        0.0,\n        6.0,\n        0.0,\n        16.0,\n        16.0,\n        0.0,\n        17.0,\n        0.0,\n        0.0,\n        4.0,\n        -3.0,\n        11.0,\n        0.0,\n        15.0,\n        0.0,\n        0.0,\n        0.0,\n        11.0,\n        0.0,\n        0.0,\n        3.0,\n        15.0,\n        0.0,\n        0.0,\n        0.0,\n        7.0,\n        9.0,\n        13.0,\n        6.0,\n        0.0,\n        0.0,\n        0.0,\n        6.0,\n        9.0,\n        0.0,\n        0.0,\n        11.0,\n        12.0,\n        0.0,\n        0.0,\n        16.0,\n        0.0,\n        16.0,\n        0.0,\n        8.0,\n        0.0,\n        0.0,\n        0.0,\n        11.0,\n        8.0,\n        18.0,\n        0.0,\n        0.0,\n        7.0,\n        4.0,\n        0.0,\n        7.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        7.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        3.0,\n        0.0\n      ],\n      \"directional_consistency\": 0.9722222222222222,\n      \"exact_sign_flip_p\": 1.4551915228366852e-10,\n      \"mean_confidence_interval\": [\n        3.0875,\n        5.6\n      ],\n      \"mean_confidence_interval_disturbances\": [\n        3.0875,\n        5.6\n      ],\n      \"mean_difference_cycles\": 4.3,\n      \"mean_difference_disturbances\": 4.3,\n      \"median_confidence_interval\": [\n        0.0,\n        4.0\n      ],\n      \"median_confidence_interval_disturbances\": [\n        0.0,\n        4.0\n      ],\n      \"median_difference_cycles\": 0.0,\n      \"median_difference_disturbances\": 0.0,\n      \"negative_count\": 1,\n      \"nonzero_pair_count\": 36,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 35,\n      \"unit\": \"disturbances_survived_before_critical_failure\",\n      \"zero_count\": 44\n    },\n    \"ordinary_summary\": {\n      \"differences\": [\n        9.0,\n        1.0,\n        1.0,\n        0.0,\n        8.0,\n        7.0,\n        0.0,\n        0.0,\n        3.0,\n        0.0,\n        0.0,\n        12.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        16.0,\n        0.0,\n        1.0,\n        3.0,\n        16.0,\n        0.0,\n        2.0,\n        0.0,\n        1.0,\n        7.0,\n        17.0,\n        0.0,\n        5.0,\n        0.0,\n        6.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        11.0,\n        7.0,\n        0.0,\n        0.0,\n        11.0,\n        0.0,\n        0.0,\n        16.0,\n        3.0,\n        -4.0,\n        0.0,\n        0.0,\n        9.0,\n        0.0,\n        16.0,\n        11.0,\n        12.0,\n        0.0,\n        5.0,\n        11.0,\n        0.0,\n        12.0,\n        4.0,\n        0.0,\n        6.0,\n        8.0,\n        2.0,\n        0.0,\n        0.0,\n        17.0,\n        12.0,\n        0.0,\n        2.0,\n        0.0,\n        11.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        14.0,\n        0.0\n      ],\n      \"directional_consistency\": 0.9743589743589743,\n      \"exact_sign_flip_p\": 2.510205376893282e-10,\n      \"mean_confidence_interval\": [\n        2.7375,\n        5.0875\n      ],\n      \"mean_confidence_interval_disturbances\": [\n        2.7375,\n        5.0875\n      ],\n      \"mean_difference_cycles\": 3.8875,\n      \"mean_difference_disturbances\": 3.8875,\n      \"median_confidence_interval\": [\n        0.0,\n        2.5\n      ],\n      \"median_confidence_interval_disturbances\": [\n        0.0,\n        2.5\n      ],\n      \"median_difference_cycles\": 0.0,\n      \"median_difference_disturbances\": 0.0,\n      \"negative_count\": 1,\n      \"nonzero_pair_count\": 39,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 38,\n      \"unit\": \"disturbances_survived_before_critical_failure\",\n      \"zero_count\": 41\n    },\n    \"verified_capsule\": {\n      \"differences\": [\n        0.0,\n        19.0,\n        0.0,\n        0.0,\n        19.0,\n        0.0,\n        0.0,\n        12.0,\n        18.0,\n        0.0,\n        0.0,\n        0.0,\n        1.0,\n        7.0,\n        16.0,\n        0.0,\n        0.0,\n        19.0,\n        0.0,\n        6.0,\n        13.0,\n        0.0,\n        13.0,\n        0.0,\n        1.0,\n        2.0,\n        0.0,\n        0.0,\n        4.0,\n        0.0,\n        7.0,\n        5.0,\n        4.0,\n        0.0,\n        16.0,\n        0.0,\n        16.0,\n        13.0,\n        0.0,\n        16.0,\n        7.0,\n        8.0,\n        0.0,\n        0.0,\n        8.0,\n        5.0,\n        3.0,\n        10.0,\n        0.0,\n        0.0,\n        16.0,\n        0.0,\n        0.0,\n        16.0,\n        11.0,\n        12.0,\n        13.0,\n        2.0,\n        7.0,\n        1.0,\n        18.0,\n        0.0,\n        6.0,\n        1.0,\n        0.0,\n        11.0,\n        18.0,\n        0.0,\n        0.0,\n        0.0,\n        1.0,\n        0.0,\n        0.0,\n        18.0,\n        2.0,\n        8.0,\n        0.0,\n        13.0,\n        0.0,\n        2.0\n      ],\n      \"directional_consistency\": 1.0,\n      \"exact_sign_flip_p\": 2.842170943040401e-14,\n      \"mean_confidence_interval\": [\n        4.15,\n        7.075\n      ],\n      \"mean_confidence_interval_disturbances\": [\n        4.15,\n        7.075\n      ],\n      \"mean_difference_cycles\": 5.55,\n      \"mean_difference_disturbances\": 5.55,\n      \"median_confidence_interval\": [\n        0.0,\n        6.0\n      ],\n      \"median_confidence_interval_disturbances\": [\n        0.0,\n        6.0\n      ],\n      \"median_difference_cycles\": 2.0,\n      \"median_difference_disturbances\": 2.0,\n      \"negative_count\": 0,\n      \"nonzero_pair_count\": 46,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 46,\n      \"unit\": \"disturbances_survived_before_critical_failure\",\n      \"zero_count\": 34\n    }\n  },\n  \"per_mode_null_effects\": {\n    \"continuous_history\": {\n      \"differences\": [\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        9.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0\n      ],\n      \"directional_consistency\": 1.0,\n      \"exact_sign_flip_p\": 1.0,\n      \"mean_confidence_interval\": [\n        0.0,\n        0.3375\n      ],\n      \"mean_confidence_interval_disturbances\": [\n        0.0,\n        0.3375\n      ],\n      \"mean_difference_cycles\": 0.1125,\n      \"mean_difference_disturbances\": 0.1125,\n      \"median_confidence_interval\": [\n        0.0,\n        0.0\n      ],\n      \"median_confidence_interval_disturbances\": [\n        0.0,\n        0.0\n      ],\n      \"median_difference_cycles\": 0.0,\n      \"median_difference_disturbances\": 0.0,\n      \"negative_count\": 0,\n      \"nonzero_pair_count\": 1,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 1,\n      \"unit\": \"disturbances_survived_before_critical_failure\",\n      \"zero_count\": 79\n    },\n    \"ordinary_summary\": {\n      \"differences\": [\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        1.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0\n      ],\n      \"directional_consistency\": 1.0,\n      \"exact_sign_flip_p\": 1.0,\n      \"mean_confidence_interval\": [\n        0.0,\n        0.0375\n      ],\n      \"mean_confidence_interval_disturbances\": [\n        0.0,\n        0.0375\n      ],\n      \"mean_difference_cycles\": 0.0125,\n      \"mean_difference_disturbances\": 0.0125,\n      \"median_confidence_interval\": [\n        0.0,\n        0.0\n      ],\n      \"median_confidence_interval_disturbances\": [\n        0.0,\n        0.0\n      ],\n      \"median_difference_cycles\": 0.0,\n      \"median_difference_disturbances\": 0.0,\n      \"negative_count\": 0,\n      \"nonzero_pair_count\": 1,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 1,\n      \"unit\": \"disturbances_survived_before_critical_failure\",\n      \"zero_count\": 79\n    },\n    \"verified_capsule\": {\n      \"differences\": [\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0,\n        0.0\n      ],\n      \"directional_consistency\": 0.0,\n      \"exact_sign_flip_p\": 1.0,\n      \"mean_confidence_interval\": [\n        0.0,\n        0.0\n      ],\n      \"mean_confidence_interval_disturbances\": [\n        0.0,\n        0.0\n      ],\n      \"mean_difference_cycles\": 0.0,\n      \"mean_difference_disturbances\": 0.0,\n      \"median_confidence_interval\": [\n        0.0,\n        0.0\n      ],\n      \"median_confidence_interval_disturbances\": [\n        0.0,\n        0.0\n      ],\n      \"median_difference_cycles\": 0.0,\n      \"median_difference_disturbances\": 0.0,\n      \"negative_count\": 0,\n      \"nonzero_pair_count\": 0,\n      \"paired_difference_count\": 80,\n      \"positive_count\": 0,\n      \"unit\": \"disturbances_survived_before_critical_failure\",\n      \"zero_count\": 80\n    }\n  },\n  \"primary_effect\": {\n    \"differences\": [\n      0.0,\n      9.0,\n      0.0,\n      11.0,\n      1.0,\n      19.0,\n      16.0,\n      1.0,\n      0.0,\n      8.0,\n      0.0,\n      0.0,\n      2.0,\n      8.0,\n      19.0,\n      0.0,\n      7.0,\n      0.0,\n      12.0,\n      0.0,\n      0.0,\n      6.0,\n      0.0,\n      12.0,\n      0.0,\n      3.0,\n      18.0,\n      6.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      12.0,\n      0.0,\n      16.0,\n      0.0,\n      1.0,\n      0.0,\n      0.0,\n      7.0,\n      17.0,\n      0.0,\n      16.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      4.0,\n      16.0,\n      19.0,\n      -3.0,\n      0.0,\n      0.0,\n      11.0,\n      1.0,\n      6.0,\n      0.0,\n      3.0,\n      13.0,\n      15.0,\n      16.0,\n      0.0,\n      0.0,\n      0.0,\n      13.0,\n      0.0,\n      2.0,\n      0.0,\n      0.0,\n      0.0,\n      1.0,\n      11.0,\n      1.0,\n      2.0,\n      0.0,\n      7.0,\n      0.0,\n      0.0,\n      17.0,\n      0.0,\n      3.0,\n      0.0,\n      4.0,\n      15.0,\n      5.0,\n      0.0,\n      0.0,\n      0.0,\n      7.0,\n      0.0,\n      6.0,\n      5.0,\n      0.0,\n      0.0,\n      4.0,\n      7.0,\n      0.0,\n      0.0,\n      9.0,\n      0.0,\n      16.0,\n      13.0,\n      0.0,\n      0.0,\n      6.0,\n      11.0,\n      16.0,\n      0.0,\n      7.0,\n      13.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      6.0,\n      11.0,\n      7.0,\n      9.0,\n      0.0,\n      8.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      0.0,\n      11.0,\n      3.0,\n      8.0,\n      12.0,\n      -4.0,\n      5.0,\n      0.0,\n      0.0,\n      3.0,\n      0.0,\n      0.0,\n      10.0,\n      16.0,\n      9.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      16.0,\n      16.0,\n      0.0,\n      11.0,\n      0.0,\n      8.0,\n      12.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      0.0,\n      5.0,\n      11.0,\n      0.0,\n      11.0,\n      12.0,\n      11.0,\n      0.0,\n      13.0,\n      8.0,\n      12.0,\n      2.0,\n      18.0,\n      4.0,\n      7.0,\n      0.0,\n      0.0,\n      1.0,\n      0.0,\n      6.0,\n      18.0,\n      7.0,\n      8.0,\n      0.0,\n      4.0,\n      2.0,\n      6.0,\n      0.0,\n      0.0,\n      1.0,\n      7.0,\n      0.0,\n      0.0,\n      0.0,\n      17.0,\n      11.0,\n      0.0,\n      12.0,\n      18.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      2.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      7.0,\n      11.0,\n      1.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      18.0,\n      0.0,\n      0.0,\n      2.0,\n      0.0,\n      0.0,\n      8.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      13.0,\n      3.0,\n      14.0,\n      0.0,\n      0.0,\n      0.0,\n      2.0\n    ],\n    \"directional_consistency\": 0.9834710743801653,\n    \"exact_sign_flip_p\": 1.0638505993585899e-32,\n    \"mean_confidence_interval\": [\n      3.845833333333333,\n      5.341666666666667\n    ],\n    \"mean_confidence_interval_disturbances\": [\n      3.845833333333333,\n      5.341666666666667\n    ],\n    \"mean_difference_cycles\": 4.579166666666667,\n    \"mean_difference_disturbances\": 4.579166666666667,\n    \"median_confidence_interval\": [\n      0.0,\n      2.0\n    ],\n    \"median_confidence_interval_disturbances\": [\n      0.0,\n      2.0\n    ],\n    \"median_difference_cycles\": 0.0,\n    \"median_difference_disturbances\": 0.0,\n    \"negative_count\": 2,\n    \"nonzero_pair_count\": 121,\n    \"paired_difference_count\": 240,\n    \"positive_count\": 119,\n    \"unit\": \"disturbances_survived_before_critical_failure\",\n    \"zero_count\": 119\n  },\n  \"recovery_effect\": {\n    \"differences\": [\n      18.0,\n      4.0,\n      18.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      0.0,\n      0.0,\n      6.0,\n      0.0,\n      0.0,\n      2.0,\n      8.0,\n      0.0,\n      0.0,\n      7.0,\n      0.0,\n      12.0,\n      0.0,\n      0.0,\n      6.0,\n      0.0,\n      12.0,\n      0.0,\n      3.0,\n      18.0,\n      6.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      12.0,\n      0.0,\n      16.0,\n      0.0,\n      1.0,\n      0.0,\n      0.0,\n      7.0,\n      17.0,\n      0.0,\n      16.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      4.0,\n      16.0,\n      0.0,\n      -3.0,\n      0.0,\n      0.0,\n      11.0,\n      1.0,\n      6.0,\n      0.0,\n      3.0,\n      13.0,\n      1.0,\n      16.0,\n      0.0,\n      0.0,\n      0.0,\n      13.0,\n      0.0,\n      2.0,\n      0.0,\n      0.0,\n      0.0,\n      1.0,\n      11.0,\n      1.0,\n      2.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      17.0,\n      3.0,\n      0.0,\n      0.0,\n      15.0,\n      5.0,\n      0.0,\n      0.0,\n      0.0,\n      7.0,\n      0.0,\n      6.0,\n      5.0,\n      0.0,\n      0.0,\n      4.0,\n      7.0,\n      0.0,\n      0.0,\n      9.0,\n      0.0,\n      9.0,\n      13.0,\n      0.0,\n      0.0,\n      6.0,\n      11.0,\n      16.0,\n      0.0,\n      7.0,\n      13.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      12.0,\n      6.0,\n      11.0,\n      7.0,\n      9.0,\n      15.0,\n      8.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      0.0,\n      16.0,\n      3.0,\n      8.0,\n      0.0,\n      -4.0,\n      4.0,\n      0.0,\n      0.0,\n      3.0,\n      0.0,\n      0.0,\n      10.0,\n      16.0,\n      9.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      4.0,\n      16.0,\n      16.0,\n      0.0,\n      11.0,\n      0.0,\n      8.0,\n      12.0,\n      0.0,\n      0.0,\n      0.0,\n      16.0,\n      0.0,\n      5.0,\n      11.0,\n      0.0,\n      11.0,\n      12.0,\n      11.0,\n      0.0,\n      1.0,\n      8.0,\n      12.0,\n      2.0,\n      18.0,\n      4.0,\n      7.0,\n      0.0,\n      0.0,\n      1.0,\n      0.0,\n      6.0,\n      18.0,\n      0.0,\n      8.0,\n      0.0,\n      4.0,\n      2.0,\n      6.0,\n      0.0,\n      -2.0,\n      1.0,\n      7.0,\n      0.0,\n      0.0,\n      0.0,\n      17.0,\n      11.0,\n      0.0,\n      0.0,\n      18.0,\n      0.0,\n      0.0,\n      0.0,\n      7.0,\n      2.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      7.0,\n      11.0,\n      1.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      18.0,\n      0.0,\n      7.0,\n      4.0,\n      0.0,\n      0.0,\n      8.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      4.0,\n      0.0,\n      0.0,\n      0.0,\n      0.0,\n      2.0\n    ],\n    \"directional_consistency\": 0.9736842105263158,\n    \"exact_sign_flip_p\": 7.223200256424328e-30,\n    \"mean_confidence_interval\": [\n      3.345833333333333,\n      4.783333333333333\n    ],\n    \"mean_confidence_interval_disturbances\": [\n      3.345833333333333,\n      4.783333333333333\n    ],\n    \"mean_difference_cycles\": 4.058333333333334,\n    \"mean_difference_disturbances\": 4.058333333333334,\n    \"median_confidence_interval\": [\n      0.0,\n      1.0\n    ],\n    \"median_confidence_interval_disturbances\": [\n      0.0,\n      1.0\n    ],\n    \"median_difference_cycles\": 0.0,\n    \"median_difference_disturbances\": 0.0,\n    \"negative_count\": 3,\n    \"nonzero_pair_count\": 114,\n    \"paired_difference_count\": 240,\n    \"positive_count\": 111,\n    \"unit\": \"disturbances_survived_before_critical_failure\",\n    \"zero_count\": 126\n  },\n  \"run_count\": 2304,\n  \"schema\": \"openline.load-rate.summary.v2\",\n  \"secondary_synthetic_damage\": {\n    \"continuous_history\": {\n      \"burst_recovery\": 114.63523232429876,\n      \"slow_drip\": 44.840599277898754,\n      \"steady_load\": 54.515098597195006,\n      \"sudden_burst\": 589.3278353380013\n    },\n    \"ordinary_summary\": {\n      \"burst_recovery\": 113.61335732429875,\n      \"slow_drip\": 44.15622427789875,\n      \"steady_load\": 54.558848597195,\n      \"sudden_burst\": 588.7184603380013\n    },\n    \"verified_capsule\": {\n      \"burst_recovery\": 110.54460732429875,\n      \"slow_drip\": 40.82184927789875,\n      \"steady_load\": 51.165098597195,\n      \"sudden_burst\": 585.5215853380012\n    }\n  },\n  \"status\": \"SURVIVES_ALL_EXPLORATORY_LOAD_RATE_GATES\"\n}\n"
+  },
+  "clean_cli_recovery": {
+    "command": [
+      "direct-shell-preflight",
+      "clean_cli_recovery"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "{\n  \"claim_boundary\": \"In this controlled experiment, a compact verified handoff preserved specified state and changed post-intervention performance by the measured amount.\",\n  \"excluded_claims\": [\n    \"epsilon\",\n    \"m\",\n    \"Lambda\",\n    \"coherence recovery\",\n    \"universal cycle-count law\",\n    \"signing makes the runtime smarter\",\n    \"transfer to deployed agents\"\n  ],\n  \"exploratory_by_mode\": {\n    \"continuous_control\": {\n      \"mean_cycles_until_failure\": 107.0,\n      \"mean_packet_bytes\": 0.0,\n      \"mean_packet_tokens\": 0.0,\n      \"mean_post_handoff_decision_accuracy\": 0.0886929460625,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.3399896265560166,\n        \"latency_floor\": 0.3744813278008299,\n        \"memory_horizon\": 0.3565871369294606,\n        \"retry_demand\": 0.28967842323651455,\n        \"risk_tolerance\": 0.32857883817427386,\n        \"token_capacity\": 0.2899377593360996\n      },\n      \"median_cycles_until_failure\": 112.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.0625,\n        \"latency_floor\": 0.0625,\n        \"memory_horizon\": 0.0625,\n        \"retry_demand\": 0.0,\n        \"risk_tolerance\": 0.1875,\n        \"token_capacity\": 0.0625\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 1.0,\n        \"latency_floor\": 1.0,\n        \"memory_horizon\": 1.0,\n        \"retry_demand\": 1.0,\n        \"risk_tolerance\": 1.0,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 16,\n      \"same_failure_return_rate\": 0.875,\n      \"total_policy_violations\": 0\n    },\n    \"empty_reset\": {\n      \"mean_cycles_until_failure\": 80.0,\n      \"mean_packet_bytes\": 45.0,\n      \"mean_packet_tokens\": 17.0,\n      \"mean_post_handoff_decision_accuracy\": 0.0,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.6244813278008299,\n        \"latency_floor\": 0.7048755186721992,\n        \"memory_horizon\": 0.6198132780082988,\n        \"retry_demand\": 0.6434128630705395,\n        \"risk_tolerance\": 0.6561203319502075,\n        \"token_capacity\": 0.6117738589211619\n      },\n      \"median_cycles_until_failure\": 80.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.0,\n        \"latency_floor\": 0.3125,\n        \"memory_horizon\": 0.125,\n        \"retry_demand\": 0.125,\n        \"risk_tolerance\": 0.0625,\n        \"token_capacity\": 0.0625\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 0.0625,\n        \"latency_floor\": 0.25,\n        \"memory_horizon\": 0.1875,\n        \"retry_demand\": 0.0625,\n        \"risk_tolerance\": 0.25,\n        \"token_capacity\": 0.1875\n      },\n      \"run_count\": 16,\n      \"same_failure_return_rate\": 0.875,\n      \"total_policy_violations\": 176\n    },\n    \"full_history_handoff\": {\n      \"mean_cycles_until_failure\": 107.0,\n      \"mean_packet_bytes\": 19876.125,\n      \"mean_packet_tokens\": 4357.5625,\n      \"mean_post_handoff_decision_accuracy\": 0.0886929460625,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.3399896265560166,\n        \"latency_floor\": 0.3744813278008299,\n        \"memory_horizon\": 0.3565871369294606,\n        \"retry_demand\": 0.28967842323651455,\n        \"risk_tolerance\": 0.32857883817427386,\n        \"token_capacity\": 0.2899377593360996\n      },\n      \"median_cycles_until_failure\": 112.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.0625,\n        \"latency_floor\": 0.0625,\n        \"memory_horizon\": 0.0625,\n        \"retry_demand\": 0.0,\n        \"risk_tolerance\": 0.1875,\n        \"token_capacity\": 0.0625\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 1.0,\n        \"latency_floor\": 1.0,\n        \"memory_horizon\": 1.0,\n        \"retry_demand\": 1.0,\n        \"risk_tolerance\": 1.0,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 16,\n      \"same_failure_return_rate\": 0.875,\n      \"total_policy_violations\": 0\n    },\n    \"olp_handoff\": {\n      \"mean_cycles_until_failure\": 166.9375,\n      \"mean_packet_bytes\": 8482.625,\n      \"mean_packet_tokens\": 1843.9375,\n      \"mean_post_handoff_decision_accuracy\": 0.39004149376249997,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.5101141078838174,\n        \"latency_floor\": 0.6828319502074689,\n        \"memory_horizon\": 0.6400414937759336,\n        \"retry_demand\": 0.5803941908713693,\n        \"risk_tolerance\": 0.5892116182572614,\n        \"token_capacity\": 0.6174792531120332\n      },\n      \"median_cycles_until_failure\": 176.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.0,\n        \"latency_floor\": 0.1875,\n        \"memory_horizon\": 0.125,\n        \"retry_demand\": 0.0625,\n        \"risk_tolerance\": 0.125,\n        \"token_capacity\": 0.1875\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 1.0,\n        \"latency_floor\": 1.0,\n        \"memory_horizon\": 1.0,\n        \"retry_demand\": 1.0,\n        \"risk_tolerance\": 1.0,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 16,\n      \"same_failure_return_rate\": 0.875,\n      \"total_policy_violations\": 0\n    },\n    \"unsigned_minimal_handoff\": {\n      \"mean_cycles_until_failure\": 166.9375,\n      \"mean_packet_bytes\": 2199.625,\n      \"mean_packet_tokens\": 600.25,\n      \"mean_post_handoff_decision_accuracy\": 0.39004149376249997,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.5101141078838174,\n        \"latency_floor\": 0.6828319502074689,\n        \"memory_horizon\": 0.6400414937759336,\n        \"retry_demand\": 0.5803941908713693,\n        \"risk_tolerance\": 0.5892116182572614,\n        \"token_capacity\": 0.6174792531120332\n      },\n      \"median_cycles_until_failure\": 176.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.0,\n        \"latency_floor\": 0.1875,\n        \"memory_horizon\": 0.125,\n        \"retry_demand\": 0.0625,\n        \"risk_tolerance\": 0.125,\n        \"token_capacity\": 0.1875\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 1.0,\n        \"latency_floor\": 1.0,\n        \"memory_horizon\": 1.0,\n        \"retry_demand\": 1.0,\n        \"risk_tolerance\": 1.0,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 16,\n      \"same_failure_return_rate\": 0.875,\n      \"total_policy_violations\": 0\n    }\n  },\n  \"freshness_binding\": {\n    \"hostile_controls\": [\n      \"stale_packet_replay\",\n      \"cross_run_packet_copy\",\n      \"generation_rollback\",\n      \"same_packet_replay\"\n    ],\n    \"mechanism\": \"stateful verifier with run_id, parent_hash, and strictly increasing generation_index\",\n    \"rejection_rule_counts\": {\n      \"detached_trusted_witness_signature_invalid\": 1,\n      \"evidence_hash_mismatch:policy_constraints\": 1,\n      \"generation_index_not_advancing\": 3,\n      \"parent_hash_mismatch\": 2,\n      \"receipt_chain_incomplete\": 1,\n      \"receipt_chain_invalid\": 1,\n      \"receipt_claim_coverage_invalid\": 1,\n      \"receipt_order_invalid\": 1,\n      \"report_envelope_binding_mismatch\": 1,\n      \"required_state_incomplete\": 1,\n      \"run_id_mismatch\": 1,\n      \"signature_invalid\": 2\n    },\n    \"seed_status\": \"fresh v0.9.1 seed partition; no v0.9.0 recovery seed reused\",\n    \"signed_omission_supporting_control\": {\n      \"attack_id\": \"signed_required_state_omission\",\n      \"expected\": \"undecidable\",\n      \"observed\": \"undecidable\",\n      \"omitted_field\": \"retry_demand\",\n      \"passed\": true,\n      \"reason_codes\": [\n        \"required_state_incomplete\"\n      ],\n      \"signature_valid\": true\n    },\n    \"verifier_state_updates\": \"caller_applies_proposed_update_only_on_acceptance\"\n  },\n  \"gate_count\": 8,\n  \"gates\": {\n    \"checksum_detects_bit_flip\": {\n      \"mechanism\": \"plain_sha256_unkeyed_with_rewritable_run_parent_generation_fields\",\n      \"passed\": true\n    },\n    \"clean_unsigned_olp_equivalence\": {\n      \"absolute_accuracy_difference\": 0.0,\n      \"passed\": true\n    },\n    \"compact_not_materially_worse_than_full_history\": {\n      \"compact_mean_accuracy\": 0.35020746887375,\n      \"full_history_accuracy\": 0.08563278008875,\n      \"minimum_handoff_field_retention\": 0.9,\n      \"olp_per_field_retention_at_intervention\": {\n        \"handoff_depth\": 0.9875,\n        \"latency_floor\": 0.9875,\n        \"memory_horizon\": 0.9875,\n        \"retry_demand\": 0.9875,\n        \"risk_tolerance\": 0.975,\n        \"token_capacity\": 1.0\n      },\n      \"passed\": true\n    },\n    \"effect_replicates_on_heldout_seeds\": {\n      \"heldout_direction\": 56.76249999999999,\n      \"passed\": true\n    },\n    \"empty_reset_underperforms_state_bearing_handoffs\": {\n      \"empty_mean_nf\": 80.0,\n      \"passed\": true,\n      \"state_bearing_mean_nf\": 136.7625\n    },\n    \"not_a_fixed_failure_postponement\": {\n      \"observed_positive_recurrence_delays\": [\n        4,\n        7,\n        8,\n        9,\n        16,\n        23,\n        25,\n        26,\n        32,\n        35,\n        36,\n        42,\n        44,\n        48,\n        54,\n        64,\n        66,\n        96,\n        112,\n        118,\n        125,\n        128,\n        144,\n        160,\n        172,\n        176,\n        179,\n        192,\n        208,\n        224\n      ],\n      \"passed\": true\n    },\n    \"olp_refuses_corrupted_or_incomplete_state\": {\n      \"controls\": [\n        \"signed_packet_changed_after_signing\",\n        \"evidence_changed_after_hashing\",\n        \"receipt_chain_reordered_or_truncated\"\n      ],\n      \"passed\": true,\n      \"signed_omission_supporting_control_passed\": true\n    },\n    \"unsigned_checksum_cannot_prevent_replay_even_with_identical_fields\": {\n      \"interpretation\": \"Identical freshness fields are present in both tracks; the unsigned attacker rewrites them and recomputes the unkeyed checksum.\",\n      \"olp_outcomes\": {\n        \"cross_run_packet_copy\": \"rejected\",\n        \"generation_rollback\": \"rejected\",\n        \"same_packet_replay\": \"rejected\",\n        \"stale_packet_replay\": \"rejected\"\n      },\n      \"passed\": true,\n      \"unsigned_rebound_outcomes\": {\n        \"cross_run_packet_copy\": \"accepted\",\n        \"generation_rollback\": \"accepted\",\n        \"same_packet_replay\": \"accepted\",\n        \"stale_packet_replay\": \"accepted\"\n      }\n    }\n  },\n  \"heldout_by_mode\": {\n    \"continuous_control\": {\n      \"mean_cycles_until_failure\": 104.2625,\n      \"mean_packet_bytes\": 0.0,\n      \"mean_packet_tokens\": 0.0,\n      \"mean_post_handoff_decision_accuracy\": 0.08563278008875,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.32391078838174275,\n        \"latency_floor\": 0.31364107883817427,\n        \"memory_horizon\": 0.3133817427385892,\n        \"retry_demand\": 0.3197614107883817,\n        \"risk_tolerance\": 0.32349585062240666,\n        \"token_capacity\": 0.28096473029045643\n      },\n      \"median_cycles_until_failure\": 96.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.05,\n        \"latency_floor\": 0.0875,\n        \"memory_horizon\": 0.0125,\n        \"retry_demand\": 0.0375,\n        \"risk_tolerance\": 0.0875,\n        \"token_capacity\": 0.025\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 1.0,\n        \"latency_floor\": 0.9875,\n        \"memory_horizon\": 0.9875,\n        \"retry_demand\": 0.9875,\n        \"risk_tolerance\": 0.975,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 80,\n      \"same_failure_return_rate\": 0.85,\n      \"total_policy_violations\": 0\n    },\n    \"empty_reset\": {\n      \"mean_cycles_until_failure\": 80.0,\n      \"mean_packet_bytes\": 45.0,\n      \"mean_packet_tokens\": 17.0,\n      \"mean_post_handoff_decision_accuracy\": 0.0,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.6116701244813278,\n        \"latency_floor\": 0.6259854771784232,\n        \"memory_horizon\": 0.6462136929460581,\n        \"retry_demand\": 0.6220954356846473,\n        \"risk_tolerance\": 0.6434128630705395,\n        \"token_capacity\": 0.6038381742738589\n      },\n      \"median_cycles_until_failure\": 80.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.1375,\n        \"latency_floor\": 0.1,\n        \"memory_horizon\": 0.075,\n        \"retry_demand\": 0.1375,\n        \"risk_tolerance\": 0.0625,\n        \"token_capacity\": 0.05\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 0.0625,\n        \"latency_floor\": 0.175,\n        \"memory_horizon\": 0.2,\n        \"retry_demand\": 0.1625,\n        \"risk_tolerance\": 0.25,\n        \"token_capacity\": 0.15\n      },\n      \"run_count\": 80,\n      \"same_failure_return_rate\": 0.925,\n      \"total_policy_violations\": 880\n    },\n    \"full_history_handoff\": {\n      \"mean_cycles_until_failure\": 104.2625,\n      \"mean_packet_bytes\": 19874.3375,\n      \"mean_packet_tokens\": 4357.1875,\n      \"mean_post_handoff_decision_accuracy\": 0.08563278008875,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.32391078838174275,\n        \"latency_floor\": 0.31364107883817427,\n        \"memory_horizon\": 0.3133817427385892,\n        \"retry_demand\": 0.3197614107883817,\n        \"risk_tolerance\": 0.32349585062240666,\n        \"token_capacity\": 0.28096473029045643\n      },\n      \"median_cycles_until_failure\": 96.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.05,\n        \"latency_floor\": 0.0875,\n        \"memory_horizon\": 0.0125,\n        \"retry_demand\": 0.0375,\n        \"risk_tolerance\": 0.0875,\n        \"token_capacity\": 0.025\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 1.0,\n        \"latency_floor\": 0.9875,\n        \"memory_horizon\": 0.9875,\n        \"retry_demand\": 0.9875,\n        \"risk_tolerance\": 0.975,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 80,\n      \"same_failure_return_rate\": 0.85,\n      \"total_policy_violations\": 0\n    },\n    \"olp_handoff\": {\n      \"mean_cycles_until_failure\": 153.0125,\n      \"mean_packet_bytes\": 8485.775,\n      \"mean_packet_tokens\": 1839.5875,\n      \"mean_post_handoff_decision_accuracy\": 0.35020746887375,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.5705394190871369,\n        \"latency_floor\": 0.5768153526970954,\n        \"memory_horizon\": 0.6006224066390041,\n        \"retry_demand\": 0.5941908713692946,\n        \"risk_tolerance\": 0.6066390041493775,\n        \"token_capacity\": 0.5525414937759336\n      },\n      \"median_cycles_until_failure\": 160.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.0875,\n        \"latency_floor\": 0.0875,\n        \"memory_horizon\": 0.1,\n        \"retry_demand\": 0.1625,\n        \"risk_tolerance\": 0.0625,\n        \"token_capacity\": 0.05\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 0.9875,\n        \"latency_floor\": 0.9875,\n        \"memory_horizon\": 0.9875,\n        \"retry_demand\": 0.9875,\n        \"risk_tolerance\": 0.975,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 80,\n      \"same_failure_return_rate\": 0.825,\n      \"total_policy_violations\": 0\n    },\n    \"unsigned_minimal_handoff\": {\n      \"mean_cycles_until_failure\": 153.0125,\n      \"mean_packet_bytes\": 2202.775,\n      \"mean_packet_tokens\": 600.575,\n      \"mean_post_handoff_decision_accuracy\": 0.35020746887375,\n      \"mean_post_intervention_retention\": {\n        \"handoff_depth\": 0.5705394190871369,\n        \"latency_floor\": 0.5768153526970954,\n        \"memory_horizon\": 0.6006224066390041,\n        \"retry_demand\": 0.5941908713692946,\n        \"risk_tolerance\": 0.6066390041493775,\n        \"token_capacity\": 0.5525414937759336\n      },\n      \"median_cycles_until_failure\": 160.0,\n      \"rejection_counts\": {\n        \"rejected\": 0,\n        \"undecidable\": 0\n      },\n      \"required_state_retention\": {\n        \"handoff_depth\": 0.0875,\n        \"latency_floor\": 0.0875,\n        \"memory_horizon\": 0.1,\n        \"retry_demand\": 0.1625,\n        \"risk_tolerance\": 0.0625,\n        \"token_capacity\": 0.05\n      },\n      \"retention_at_intervention\": {\n        \"handoff_depth\": 0.9875,\n        \"latency_floor\": 0.9875,\n        \"memory_horizon\": 0.9875,\n        \"retry_demand\": 0.9875,\n        \"risk_tolerance\": 0.975,\n        \"token_capacity\": 1.0\n      },\n      \"run_count\": 80,\n      \"same_failure_return_rate\": 0.825,\n      \"total_policy_violations\": 0\n    }\n  },\n  \"passed_gate_count\": 8,\n  \"release\": \"0.9.1\",\n  \"schema\": \"openline.endurance.recovery-summary.v2\",\n  \"secondary_fractography_diagnostic\": {\n    \"by_mode\": {\n      \"continuous_control\": {\n        \"crack_initiation_rate\": 1.0,\n        \"mean_crack_burden\": 432.4875,\n        \"median_empirical_repair_half_life\": 4.0,\n        \"median_initiation_cycle\": 93.0,\n        \"median_max_crack_load\": 6.0,\n        \"run_count\": 80\n      },\n      \"empty_reset\": {\n        \"crack_initiation_rate\": 1.0,\n        \"mean_crack_burden\": 218.4,\n        \"median_empirical_repair_half_life\": 3.0,\n        \"median_initiation_cycle\": 88.0,\n        \"median_max_crack_load\": 5.0,\n        \"run_count\": 80\n      },\n      \"full_history_handoff\": {\n        \"crack_initiation_rate\": 1.0,\n        \"mean_crack_burden\": 432.4875,\n        \"median_empirical_repair_half_life\": 4.0,\n        \"median_initiation_cycle\": 93.0,\n        \"median_max_crack_load\": 6.0,\n        \"run_count\": 80\n      },\n      \"olp_handoff\": {\n        \"crack_initiation_rate\": 1.0,\n        \"mean_crack_burden\": 242.4375,\n        \"median_empirical_repair_half_life\": 4.0,\n        \"median_initiation_cycle\": 156.5,\n        \"median_max_crack_load\": 5.0,\n        \"run_count\": 80\n      },\n      \"unsigned_minimal_handoff\": {\n        \"crack_initiation_rate\": 1.0,\n        \"mean_crack_burden\": 242.4375,\n        \"median_empirical_repair_half_life\": 4.0,\n        \"median_initiation_cycle\": 156.5,\n        \"median_max_crack_load\": 5.0,\n        \"run_count\": 80\n      }\n    },\n    \"definition\": \"A crack is an observed connected burden of unresolved dependencies, invariant failures, new contradictions, or unsafe attempts. It is a diagnostic proxy, not a physical fracture.\",\n    \"dominant_crack_cluster\": {\n      \"node_count\": 9,\n      \"nodes\": [\n        \"dependency:handoff_depth\",\n        \"dependency:latency_floor\",\n        \"dependency:memory_horizon\",\n        \"dependency:retry_demand\",\n        \"dependency:risk_tolerance\",\n        \"dependency:token_capacity\",\n        \"invariant:evidence_fits_token_budget\",\n        \"signal:new_contradiction\",\n        \"signal:unsafe_attempt\"\n      ],\n      \"weighted_occurrence_count\": 149686\n    },\n    \"heldout_run_count\": 400,\n    \"run_count\": 480,\n    \"schema\": \"openline.endurance.fractography.v1\",\n    \"top_crack_nodes\": [\n      {\n        \"node\": \"dependency:token_capacity\",\n        \"occurrences\": 20536\n      },\n      {\n        \"node\": \"dependency:retry_demand\",\n        \"occurrences\": 19358\n      },\n      {\n        \"node\": \"signal:new_contradiction\",\n        \"occurrences\": 19272\n      },\n      {\n        \"node\": \"dependency:handoff_depth\",\n        \"occurrences\": 18687\n      },\n      {\n        \"node\": \"dependency:risk_tolerance\",\n        \"occurrences\": 18342\n      },\n      {\n        \"node\": \"dependency:latency_floor\",\n        \"occurrences\": 18219\n      },\n      {\n        \"node\": \"dependency:memory_horizon\",\n        \"occurrences\": 17802\n      },\n      {\n        \"node\": \"invariant:evidence_fits_token_budget\",\n        \"occurrences\": 16414\n      },\n      {\n        \"node\": \"signal:unsafe_attempt\",\n        \"occurrences\": 1056\n      }\n    ]\n  },\n  \"seed_sets\": {\n    \"heldout\": [\n      9225,\n      9226,\n      9227,\n      9228,\n      9229,\n      9230,\n      9231,\n      9232,\n      9233,\n      9234,\n      9235,\n      9236,\n      9237,\n      9238,\n      9239,\n      9240,\n      9241,\n      9242,\n      9243,\n      9244,\n      9245,\n      9246,\n      9247,\n      9248,\n      9249,\n      9250,\n      9251,\n      9252,\n      9253,\n      9254,\n      9255,\n      9256,\n      9257,\n      9258,\n      9259,\n      9260,\n      9261,\n      9262,\n      9263,\n      9264,\n      9265,\n      9266,\n      9267,\n      9268,\n      9269,\n      9270,\n      9271,\n      9272,\n      9273,\n      9274,\n      9275,\n      9276,\n      9277,\n      9278,\n      9279,\n      9280,\n      9281,\n      9282,\n      9283,\n      9284,\n      9285,\n      9286,\n      9287,\n      9288,\n      9289,\n      9290,\n      9291,\n      9292,\n      9293,\n      9294,\n      9295,\n      9296,\n      9297,\n      9298,\n      9299,\n      9300,\n      9301,\n      9302,\n      9303,\n      9304\n    ],\n    \"training\": [\n      9201,\n      9202,\n      9203,\n      9204,\n      9205,\n      9206,\n      9207,\n      9208\n    ],\n    \"validation\": [\n      9217,\n      9218,\n      9219,\n      9220,\n      9221,\n      9222,\n      9223,\n      9224\n    ]\n  },\n  \"status\": \"PASSES_ALL_PREREGISTERED_V091_RECOVERY_GATES\",\n  \"timing_observations\": {\n    \"by_mode\": {\n      \"continuous_control\": {\n        \"handoff_cpu_ns\": {\n          \"maximum\": 33159,\n          \"median\": 3446,\n          \"minimum\": 2724\n        },\n        \"handoff_wall_ns\": {\n          \"maximum\": 34581,\n          \"median\": 4867,\n          \"minimum\": 3575\n        },\n        \"verification_cpu_ns\": {\n          \"maximum\": 0,\n          \"median\": 0,\n          \"minimum\": 0\n        },\n        \"verification_wall_ns\": {\n          \"maximum\": 0,\n          \"median\": 0,\n          \"minimum\": 0\n        }\n      },\n      \"empty_reset\": {\n        \"handoff_cpu_ns\": {\n          \"maximum\": 79959,\n          \"median\": 37986,\n          \"minimum\": 32779\n        },\n        \"handoff_wall_ns\": {\n          \"maximum\": 81972,\n          \"median\": 39328,\n          \"minimum\": 33669\n        },\n        \"verification_cpu_ns\": {\n          \"maximum\": 0,\n          \"median\": 0,\n          \"minimum\": 0\n        },\n        \"verification_wall_ns\": {\n          \"maximum\": 0,\n          \"median\": 0,\n          \"minimum\": 0\n        }\n      },\n      \"full_history_handoff\": {\n        \"handoff_cpu_ns\": {\n          \"maximum\": 5677559,\n          \"median\": 1327366,\n          \"minimum\": 1251053\n        },\n        \"handoff_wall_ns\": {\n          \"maximum\": 5677298,\n          \"median\": 1327408,\n          \"minimum\": 1251185\n        },\n        \"verification_cpu_ns\": {\n          \"maximum\": 0,\n          \"median\": 0,\n          \"minimum\": 0\n        },\n        \"verification_wall_ns\": {\n          \"maximum\": 0,\n          \"median\": 0,\n          \"minimum\": 0\n        }\n      },\n      \"olp_handoff\": {\n        \"handoff_cpu_ns\": {\n          \"maximum\": 3672429,\n          \"median\": 1393614,\n          \"minimum\": 1308148\n        },\n        \"handoff_wall_ns\": {\n          \"maximum\": 3673076,\n          \"median\": 1394798,\n          \"minimum\": 1309091\n        },\n        \"verification_cpu_ns\": {\n          \"maximum\": 562333,\n          \"median\": 359353,\n          \"minimum\": 348426\n        },\n        \"verification_wall_ns\": {\n          \"maximum\": 562243,\n          \"median\": 359563,\n          \"minimum\": 348577\n        }\n      },\n      \"unsigned_minimal_handoff\": {\n        \"handoff_cpu_ns\": {\n          \"maximum\": 1021823,\n          \"median\": 511858,\n          \"minimum\": 483576\n        },\n        \"handoff_wall_ns\": {\n          \"maximum\": 1023027,\n          \"median\": 513562,\n          \"minimum\": 484819\n        },\n        \"verification_cpu_ns\": {\n          \"maximum\": 121349,\n          \"median\": 62523,\n          \"minimum\": 58036\n        },\n        \"verification_wall_ns\": {\n          \"maximum\": 120879,\n          \"median\": 62412,\n          \"minimum\": 58046\n        }\n      }\n    },\n    \"status\": \"ENVIRONMENT_SENSITIVE_EXCLUDED_FROM_REPRODUCIBILITY_CLAIMS\",\n    \"units\": \"nanoseconds\"\n  }\n}\n"
+  },
   "clean_cli_spacing": {
     "command": [
       "direct-shell-preflight",
@@ -42,7 +60,7 @@
     ],
     "returncode": 0,
     "stderr": "",
-    "stdout": "/mnt/data/olg_v070_clean_preflight/repo\n"
+    "stdout": ""
   },
   "clean_fast_verify": {
     "command": [
@@ -51,7 +69,7 @@
     ],
     "returncode": 0,
     "stderr": "",
-    "stdout": "{\n  \"artifact_binding_valid\": true,\n  \"chain\": {\n    \"chain_digest\": \"def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae\",\n    \"completeness_verified\": true,\n    \"count\": 737,\n    \"errors\": [],\n    \"integrity_valid\": true,\n    \"tail_hash\": \"8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5\",\n    \"valid\": true\n  },\n  \"errors\": [],\n  \"lineage_binding_valid\": true,\n  \"release_attestation\": {\n    \"errors\": [],\n    \"skipped\": true,\n    \"valid\": true\n  },\n  \"release_attestation_valid\": true,\n  \"semantic_recomputation_valid\": true,\n  \"valid\": true\n}\n"
+    "stdout": "{\n  \"artifact_binding_valid\": true,\n  \"chain\": {\n    \"chain_digest\": \"7357b53eda1314d47d39729234f3be7c37ee519114d19657650ba5f6ece4c632\",\n    \"completeness_verified\": true,\n    \"count\": 741,\n    \"errors\": [],\n    \"integrity_valid\": true,\n    \"tail_hash\": \"8006c48dfaca704bb4788858c4515785d585c2d32d41767aa40840a969958a19\",\n    \"valid\": true\n  },\n  \"errors\": [],\n  \"lineage_binding_valid\": true,\n  \"release_attestation\": {\n    \"errors\": [],\n    \"skipped\": true,\n    \"valid\": true\n  },\n  \"release_attestation_valid\": true,\n  \"semantic_recomputation_valid\": true,\n  \"valid\": true\n}\n"
   },
   "clean_import": {
     "command": [
@@ -60,7 +78,7 @@
     ],
     "returncode": 0,
     "stderr": "",
-    "stdout": "0.7.0\n/mnt/data/olg_v070_clean_preflight/site/openline_endurance_gate/__init__.py\n"
+    "stdout": "0.9.1\n/tmp/openline-endurance-clean.Z7HVCm/site/openline_endurance_gate/__init__.py\n"
   },
   "clean_install": {
     "command": [
@@ -68,8 +86,8 @@
       "clean_install"
     ],
     "returncode": 0,
-    "stderr": "WARNING: The directory '/home/oai/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\n",
-    "stdout": "Looking in indexes: https://reader:****@packages.applied-caas-gateway1.internal.api.openai.org/artifactory/api/pypi/pypi-public/simple\nProcessing /mnt/data/olg_v070_clean_preflight/repo\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: openline-endurance-gate\n  Building wheel for openline-endurance-gate (pyproject.toml): started\n  Building wheel for openline-endurance-gate (pyproject.toml): finished with status 'done'\n  Created wheel for openline-endurance-gate: filename=openline_endurance_gate-0.7.0-py3-none-any.whl size=100182 sha256=8efcde7cef02516151476413c6f350f665c428b1c8f8fc28ba86cd7b1a91a454\n  Stored in directory: /tmp/pip-ephem-wheel-cache-3m68jxpi/wheels/7f/be/71/7e51762bdd64521ad90643ccf8ef88e2514f0a15c4238c65f3\nSuccessfully built openline-endurance-gate\nInstalling collected packages: openline-endurance-gate\nSuccessfully installed openline-endurance-gate-0.7.0\n"
+    "stderr": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n",
+    "stdout": "Processing /tmp/openline-endurance-clean.Z7HVCm/repo\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: openline-endurance-gate\n  Building wheel for openline-endurance-gate (pyproject.toml): started\n  Building wheel for openline-endurance-gate (pyproject.toml): finished with status 'done'\n  Created wheel for openline-endurance-gate: filename=openline_endurance_gate-0.9.1-py3-none-any.whl size=142998 sha256=2c417e962bc50c82ee7cb0f32ae395dc515db46ef728edf924f4a1761cbd9995\n  Stored in directory: /tmp/pip-ephem-wheel-cache-yuskeaft/wheels/5e/81/a5/ebb36427945bd478b85227d2910f96137c5b62e830befc360f\nSuccessfully built openline-endurance-gate\nInstalling collected packages: openline-endurance-gate\nSuccessfully installed openline-endurance-gate-0.9.1\n"
   },
   "clean_target_create": {
     "command": [
@@ -84,20 +102,22 @@
   "pytest": {
     "commands": [
       [
-        "/opt/pyvenv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pytest",
         "-q",
         "tests/test_collision_spacing.py",
         "tests/test_damage.py",
         "tests/test_generational.py",
+        "tests/test_load_rate.py",
+        "tests/test_recovery.py",
         "tests/test_integrity.py",
         "tests/test_outputs.py",
         "-k",
         "not test_fast_custody_verifier_passes_default_artifacts and not test_detached_release_attestation_binds_post_run_reports"
       ],
       [
-        "/opt/pyvenv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pytest",
         "-q",
@@ -108,7 +128,7 @@
         "not test_fast_custody_verifier_passes_default_artifacts and not test_detached_release_attestation_binds_post_run_reports"
       ],
       [
-        "/opt/pyvenv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pytest",
         "-q",
@@ -124,18 +144,20 @@
     "group_count": 3,
     "returncode": 0,
     "stderr": "\n\n",
-    "stdout": "....................                                                     [100%]\n\n...............                                                          [100%]\n\n..............                                                           [100%]\n"
+    "stdout": "..................................                                       [100%]\n\n...............                                                          [100%]\n\n..............                                                           [100%]\n"
   },
   "pytest_groups": [
     {
       "command": [
-        "/opt/pyvenv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pytest",
         "-q",
         "tests/test_collision_spacing.py",
         "tests/test_damage.py",
         "tests/test_generational.py",
+        "tests/test_load_rate.py",
+        "tests/test_recovery.py",
         "tests/test_integrity.py",
         "tests/test_outputs.py",
         "-k",
@@ -143,11 +165,11 @@
       ],
       "returncode": 0,
       "stderr": "",
-      "stdout": "....................                                                     [100%]\n"
+      "stdout": "..................................                                       [100%]\n"
     },
     {
       "command": [
-        "/opt/pyvenv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pytest",
         "-q",
@@ -163,7 +185,7 @@
     },
     {
       "command": [
-        "/opt/pyvenv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pytest",
         "-q",
@@ -179,16 +201,16 @@
       "stdout": "..............                                                           [100%]\n"
     }
   ],
-  "schema": "openline.endurance.release-report.v7",
+  "schema": "openline.endurance.release-report.v10",
   "semantic_verification": {
     "artifact_binding_valid": true,
     "chain": {
-      "chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+      "chain_digest": "7357b53eda1314d47d39729234f3be7c37ee519114d19657650ba5f6ece4c632",
       "completeness_verified": true,
-      "count": 737,
+      "count": 741,
       "errors": [],
       "integrity_valid": true,
-      "tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+      "tail_hash": "8006c48dfaca704bb4788858c4515785d585c2d32d41767aa40840a969958a19",
       "valid": true
     },
     "errors": [],
@@ -202,220 +224,316 @@
     "semantic_recomputation_valid": true,
     "semantic_shards": [
       {
-        "cycle_artifact": "state_restoration_cycles.part-000.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-000.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "14d181cb6a1c4a624a441c4c033d40b62555f00bb75eaa35d9c27f2bd11f9715",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "52796de64c378514ae8b445c212c41a6349e94ab1271bc66f892c67d46c0b280",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8101,
-          8102,
-          8103,
-          8104,
-          8105,
-          8106,
-          8107,
-          8108,
-          8109,
-          8110,
-          8111,
-          8112
+          9201,
+          9202,
+          9203,
+          9204,
+          9205,
+          9206,
+          9207,
+          9208
         ],
         "shard_index": 0,
-        "stored_cycle_sha256": "14d181cb6a1c4a624a441c4c033d40b62555f00bb75eaa35d9c27f2bd11f9715"
+        "stored_cycle_sha256": "52796de64c378514ae8b445c212c41a6349e94ab1271bc66f892c67d46c0b280",
+        "timing_fields_recomputed_but_excluded": true
       },
       {
-        "cycle_artifact": "state_restoration_cycles.part-001.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-001.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "95211e23226f4cf5a12f54cc42789526a251673f7a3c1478e873424e20053fc5",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "59b874fb0796d61dc43b4ef7fd2bc0303848ba8ea1b3b941a1e3e7b2b0008741",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8113,
-          8114,
-          8115,
-          8116,
-          8117,
-          8118,
-          8119,
-          8120,
-          8121,
-          8122,
-          8123,
-          8124
+          9217,
+          9218,
+          9219,
+          9220,
+          9221,
+          9222,
+          9223,
+          9224
         ],
         "shard_index": 1,
-        "stored_cycle_sha256": "95211e23226f4cf5a12f54cc42789526a251673f7a3c1478e873424e20053fc5"
+        "stored_cycle_sha256": "59b874fb0796d61dc43b4ef7fd2bc0303848ba8ea1b3b941a1e3e7b2b0008741",
+        "timing_fields_recomputed_but_excluded": true
       },
       {
-        "cycle_artifact": "state_restoration_cycles.part-002.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-002.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "ab257e76025eaf4a055aec80b75d4c98d9879fb8ab117dfb5aea76ce84a5aee6",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "b693ad6cdf25ce6a04c3595f2cc931da0c65eabc4c6564db37489f531f3a6bba",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8125,
-          8126,
-          8127,
-          8128,
-          8129,
-          8130,
-          8131,
-          8132,
-          8133,
-          8134,
-          8135,
-          8136
+          9225,
+          9226,
+          9227,
+          9228,
+          9229,
+          9230,
+          9231,
+          9232
         ],
         "shard_index": 2,
-        "stored_cycle_sha256": "ab257e76025eaf4a055aec80b75d4c98d9879fb8ab117dfb5aea76ce84a5aee6"
+        "stored_cycle_sha256": "b693ad6cdf25ce6a04c3595f2cc931da0c65eabc4c6564db37489f531f3a6bba",
+        "timing_fields_recomputed_but_excluded": true
       },
       {
-        "cycle_artifact": "state_restoration_cycles.part-003.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-003.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "f3eca408d26aa863f8f6cf4bafd4f4da3720c4d2c528a0dfbe0a0be13efdee47",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "ed045ccd59165c2ef7d3877818fa269889b69411de2d53fb5004835ab8a2c0ca",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8137,
-          8138,
-          8139,
-          8140,
-          8141,
-          8142,
-          8143,
-          8144,
-          8145,
-          8146,
-          8147,
-          8148
+          9233,
+          9234,
+          9235,
+          9236,
+          9237,
+          9238,
+          9239,
+          9240
         ],
         "shard_index": 3,
-        "stored_cycle_sha256": "f3eca408d26aa863f8f6cf4bafd4f4da3720c4d2c528a0dfbe0a0be13efdee47"
+        "stored_cycle_sha256": "ed045ccd59165c2ef7d3877818fa269889b69411de2d53fb5004835ab8a2c0ca",
+        "timing_fields_recomputed_but_excluded": true
       },
       {
-        "cycle_artifact": "state_restoration_cycles.part-004.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-004.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "00b53ac220cfa0f7dd84ff63cefd5ffbbf185670c26c258e031fd221413bb508",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "634fa02f5b5810ab4c318b2c6e22f6626eefa2476269b7c00b6b2f4c085455de",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8149,
-          8150,
-          8151,
-          8152,
-          8153,
-          8154,
-          8155,
-          8156,
-          8157,
-          8158,
-          8159,
-          8160
+          9241,
+          9242,
+          9243,
+          9244,
+          9245,
+          9246,
+          9247,
+          9248
         ],
         "shard_index": 4,
-        "stored_cycle_sha256": "00b53ac220cfa0f7dd84ff63cefd5ffbbf185670c26c258e031fd221413bb508"
+        "stored_cycle_sha256": "634fa02f5b5810ab4c318b2c6e22f6626eefa2476269b7c00b6b2f4c085455de",
+        "timing_fields_recomputed_but_excluded": true
       },
       {
-        "cycle_artifact": "state_restoration_cycles.part-005.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-005.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "2ea08d2937f13fa7b84a05a56bd3c93ceac64829cf7db97b625766cd209ac449",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "30bc94519e76b534cdc6864c808d6c705beca1863fe86ea62b212cc77218fd7f",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8161,
-          8162,
-          8163,
-          8164,
-          8165,
-          8166,
-          8167,
-          8168,
-          8169,
-          8170,
-          8171,
-          8172
+          9249,
+          9250,
+          9251,
+          9252,
+          9253,
+          9254,
+          9255,
+          9256
         ],
         "shard_index": 5,
-        "stored_cycle_sha256": "2ea08d2937f13fa7b84a05a56bd3c93ceac64829cf7db97b625766cd209ac449"
+        "stored_cycle_sha256": "30bc94519e76b534cdc6864c808d6c705beca1863fe86ea62b212cc77218fd7f",
+        "timing_fields_recomputed_but_excluded": true
       },
       {
-        "cycle_artifact": "state_restoration_cycles.part-006.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-006.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "fa573b2f163dbdb40f3f9aaa45527cf14f1d05af62a6d959c9594b8c7a071e69",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "6466535cdc07560cba316838103bd68a11daac33780005285f822489fd1c8386",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8173,
-          8174,
-          8175,
-          8176,
-          8177,
-          8178,
-          8179,
-          8180,
-          8181,
-          8182,
-          8183,
-          8184
+          9257,
+          9258,
+          9259,
+          9260,
+          9261,
+          9262,
+          9263,
+          9264
         ],
         "shard_index": 6,
-        "stored_cycle_sha256": "fa573b2f163dbdb40f3f9aaa45527cf14f1d05af62a6d959c9594b8c7a071e69"
+        "stored_cycle_sha256": "6466535cdc07560cba316838103bd68a11daac33780005285f822489fd1c8386",
+        "timing_fields_recomputed_but_excluded": true
       },
       {
-        "cycle_artifact": "state_restoration_cycles.part-007.csv.gz",
+        "cycle_artifact": "recovery_cycles.part-007.csv.gz",
         "cycle_bytes_match": true,
-        "cycle_count": 34560,
-        "fresh_cycle_sha256": "39786091e3ac33452f4cf018c5d96d61c6481d6f09cb1ea106cafdf94b4e008f",
-        "leaf_count": 34560,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "2a73992f354e58d1462d891802ac599a3562c6f8f7d55908291ac4de888eae1a",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
         "passed": true,
-        "run_count": 108,
+        "run_count": 40,
         "run_metrics_match": true,
-        "schema": "openline.state-restoration.semantic-shard.v1",
+        "schema": "openline.recovery.semantic-shard.v1",
         "seeds": [
-          8185,
-          8186,
-          8187,
-          8188,
-          8189,
-          8190,
-          8191,
-          8192,
-          8193,
-          8194,
-          8195,
-          8196
+          9265,
+          9266,
+          9267,
+          9268,
+          9269,
+          9270,
+          9271,
+          9272
         ],
         "shard_index": 7,
-        "stored_cycle_sha256": "39786091e3ac33452f4cf018c5d96d61c6481d6f09cb1ea106cafdf94b4e008f"
+        "stored_cycle_sha256": "2a73992f354e58d1462d891802ac599a3562c6f8f7d55908291ac4de888eae1a",
+        "timing_fields_recomputed_but_excluded": true
+      },
+      {
+        "cycle_artifact": "recovery_cycles.part-008.csv.gz",
+        "cycle_bytes_match": true,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "b76276d8daf774003348842b8290a69cf0bccf72cd06513fc72773ce91247cbc",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
+        "passed": true,
+        "run_count": 40,
+        "run_metrics_match": true,
+        "schema": "openline.recovery.semantic-shard.v1",
+        "seeds": [
+          9273,
+          9274,
+          9275,
+          9276,
+          9277,
+          9278,
+          9279,
+          9280
+        ],
+        "shard_index": 8,
+        "stored_cycle_sha256": "b76276d8daf774003348842b8290a69cf0bccf72cd06513fc72773ce91247cbc",
+        "timing_fields_recomputed_but_excluded": true
+      },
+      {
+        "cycle_artifact": "recovery_cycles.part-009.csv.gz",
+        "cycle_bytes_match": true,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "a215325c555e75f0f29db279dfca89e4f3a07e305c27f61311d0ab31fb80062e",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
+        "passed": true,
+        "run_count": 40,
+        "run_metrics_match": true,
+        "schema": "openline.recovery.semantic-shard.v1",
+        "seeds": [
+          9281,
+          9282,
+          9283,
+          9284,
+          9285,
+          9286,
+          9287,
+          9288
+        ],
+        "shard_index": 9,
+        "stored_cycle_sha256": "a215325c555e75f0f29db279dfca89e4f3a07e305c27f61311d0ab31fb80062e",
+        "timing_fields_recomputed_but_excluded": true
+      },
+      {
+        "cycle_artifact": "recovery_cycles.part-010.csv.gz",
+        "cycle_bytes_match": true,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "b7e0957eaf61e396bd1465dea1bdf8049cb644c7a4097b42c4d2e653122202ef",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
+        "passed": true,
+        "run_count": 40,
+        "run_metrics_match": true,
+        "schema": "openline.recovery.semantic-shard.v1",
+        "seeds": [
+          9289,
+          9290,
+          9291,
+          9292,
+          9293,
+          9294,
+          9295,
+          9296
+        ],
+        "shard_index": 10,
+        "stored_cycle_sha256": "b7e0957eaf61e396bd1465dea1bdf8049cb644c7a4097b42c4d2e653122202ef",
+        "timing_fields_recomputed_but_excluded": true
+      },
+      {
+        "cycle_artifact": "recovery_cycles.part-011.csv.gz",
+        "cycle_bytes_match": true,
+        "cycle_count": 12800,
+        "fresh_cycle_sha256": "ba7d5d3b63adfc3db77ece48c58c3ad6100596cdf65d1834ee88911457098ced",
+        "handoff_count": 40,
+        "handoff_semantics_match": true,
+        "leaf_count": 12800,
+        "passed": true,
+        "run_count": 40,
+        "run_metrics_match": true,
+        "schema": "openline.recovery.semantic-shard.v1",
+        "seeds": [
+          9297,
+          9298,
+          9299,
+          9300,
+          9301,
+          9302,
+          9303,
+          9304
+        ],
+        "shard_index": 11,
+        "stored_cycle_sha256": "ba7d5d3b63adfc3db77ece48c58c3ad6100596cdf65d1834ee88911457098ced",
+        "timing_fields_recomputed_but_excluded": true
       }
     ],
     "valid": true
@@ -424,18 +542,207 @@
     "execution": "isolated top-level attacks via scripts/tamper_check.sh",
     "report": {
       "attacks": {
+        "recovery_cross_run_packet_copy": {
+          "attack": "execute frozen recovery hostile control cross_run_packet_copy",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "cross_run_packet_copy",
+            "expected": "rejected",
+            "observed": "rejected",
+            "passed": true,
+            "reason_codes": [
+              "run_id_mismatch"
+            ],
+            "second_genuine_run_packet_sha256": "cf583e1003aebe4cf19e067487727a949431da06dc524ae21e17c62a327e79f4",
+            "signature_valid": true,
+            "unsigned_rebound_observed": "accepted"
+          }
+        },
+        "recovery_evidence_hash_mutation": {
+          "attack": "execute frozen recovery hostile control evidence_changed_after_hashing",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "evidence_changed_after_hashing",
+            "expected": "undecidable",
+            "observed": "undecidable",
+            "passed": true,
+            "reason_codes": [
+              "evidence_hash_mismatch:policy_constraints"
+            ]
+          }
+        },
+        "recovery_generation_rollback": {
+          "attack": "execute frozen recovery hostile control generation_rollback",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "generation_rollback",
+            "expected": "rejected",
+            "observed": "rejected",
+            "passed": true,
+            "reason_codes": [
+              "generation_index_not_advancing"
+            ],
+            "signature_valid": true,
+            "unsigned_rebound_observed": "accepted"
+          }
+        },
+        "recovery_receipt_chain_mutation": {
+          "attack": "execute frozen recovery hostile control receipt_chain_reordered_or_truncated",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "receipt_chain_reordered_or_truncated",
+            "expected": "rejected",
+            "observed": "rejected",
+            "passed": true,
+            "reason_codes": [
+              "receipt_chain_incomplete",
+              "receipt_chain_invalid",
+              "receipt_claim_coverage_invalid",
+              "receipt_order_invalid",
+              "signature_invalid"
+            ]
+          }
+        },
+        "recovery_report_forgery": {
+          "attack": "execute frozen recovery hostile control forged_recovery_report",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "forged_recovery_report",
+            "expected": "rejected",
+            "observed": "rejected",
+            "passed": true,
+            "reason_codes": [
+              "report_envelope_binding_mismatch"
+            ]
+          }
+        },
+        "recovery_same_packet_replay": {
+          "attack": "execute frozen recovery hostile control same_packet_replay",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "same_packet_replay",
+            "expected": "rejected",
+            "observed": "rejected",
+            "passed": true,
+            "reason_codes": [
+              "generation_index_not_advancing",
+              "parent_hash_mismatch"
+            ],
+            "signature_valid": true,
+            "unsigned_rebound_observed": "accepted"
+          }
+        },
+        "recovery_signed_packet_mutation": {
+          "attack": "execute frozen recovery hostile control signed_packet_changed_after_signing",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "signed_packet_changed_after_signing",
+            "expected": "rejected",
+            "observed": "rejected",
+            "passed": true,
+            "reason_codes": [
+              "signature_invalid"
+            ],
+            "unsigned_checksum_control_passed": true
+          }
+        },
+        "recovery_stale_packet_replay": {
+          "attack": "execute frozen recovery hostile control stale_packet_replay",
+          "detected": true,
+          "hostile_control": {
+            "attack_id": "stale_packet_replay",
+            "expected": "rejected",
+            "observed": "rejected",
+            "passed": true,
+            "reason_codes": [
+              "generation_index_not_advancing",
+              "parent_hash_mismatch"
+            ],
+            "signature_valid": true,
+            "unsigned_rebound_observed": "accepted"
+          }
+        },
+        "recovery_summary_reseal": {
+          "attack": "alter recovery summary, patch module gate and manifest, replace keypair, and reseal",
+          "detected": true,
+          "verifier": {
+            "artifact_binding_valid": true,
+            "chain": {
+              "chain_digest": "8e017718390972041b04aa5d1ea03d2e733ba8f65e1f02f92bb0c061181feb6e",
+              "completeness_verified": true,
+              "count": 741,
+              "errors": [],
+              "integrity_valid": true,
+              "tail_hash": "e82251e5197580047a611635b21a249b04d8d451fe4615a04776994d1319da17",
+              "valid": true
+            },
+            "errors": [
+              "release_attestation_version_mismatch",
+              "release_attestation_experiment_chain_digest_mismatch",
+              "release_attestation_experiment_tail_mismatch",
+              "release_attestation_public_witness_mismatch",
+              "release_attestation_source_tree_mismatch",
+              "release_attestation_preregistration_mismatch",
+              "release_attestation_reported_chain_digest_mismatch",
+              "release_attestation_reported_chain_tail_mismatch",
+              "release_attestation_tamper_version_mismatch",
+              "recovery_summary_recompute_mismatch"
+            ],
+            "lineage_binding_valid": true,
+            "release_attestation": {
+              "chain": {
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
+                "completeness_verified": true,
+                "count": 1,
+                "errors": [],
+                "integrity_valid": true,
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
+                "valid": true
+              },
+              "errors": [
+                "release_attestation_version_mismatch",
+                "release_attestation_experiment_chain_digest_mismatch",
+                "release_attestation_experiment_tail_mismatch",
+                "release_attestation_public_witness_mismatch",
+                "release_attestation_source_tree_mismatch",
+                "release_attestation_preregistration_mismatch",
+                "release_attestation_reported_chain_digest_mismatch",
+                "release_attestation_reported_chain_tail_mismatch",
+                "release_attestation_tamper_version_mismatch"
+              ],
+              "payload": {
+                "artifact_hashes": {
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
+                },
+                "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
+                "schema": "openline.endurance.release-attestation.v1",
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
+              },
+              "valid": false
+            },
+            "release_attestation_valid": false,
+            "semantic_recomputation_valid": false,
+            "valid": false
+          }
+        },
         "release_report_mutation": {
           "attack": "establish a valid provisional detached release receipt in an isolated clone, then edit the final release verdict without touching scientific artifacts",
           "detected": true,
           "verifier": {
             "artifact_binding_valid": true,
             "chain": {
-              "chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+              "chain_digest": "7357b53eda1314d47d39729234f3be7c37ee519114d19657650ba5f6ece4c632",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+              "tail_hash": "8006c48dfaca704bb4788858c4515785d585c2d32d41767aa40840a969958a19",
               "valid": true
             },
             "errors": [
@@ -445,12 +752,12 @@
             "lineage_binding_valid": true,
             "release_attestation": {
               "chain": {
-                "chain_digest": "c34c398d276b84ff3a707059c40749595ae18b8f6e2bc2d9aa56df4479e89f22",
+                "chain_digest": "b691d52cb3a0cec52101bfe771f7a293da0d73c3dd11f4f5fe330ec077e4b173",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "134f7b4b7627bdc2bc92dec4c714dcd993e9043cb4c361cbe0c1d4373232376f",
+                "tail_hash": "fc5d2a926518e1b9e3d534b9755fdc96d03a9944a9f5bbcedc00e0e964bc9988",
                 "valid": true
               },
               "errors": [
@@ -459,17 +766,17 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "373d9e22b468c885b63d3577e40188b5f7e0bb5e41b0d0421490265453644131",
-                  "TAMPER_REPORT.json": "5bff22c9534611c45f5eb9e86f8fe9b2d75a45c2586662afc43bb5cfbed121e1"
+                  "RUN_REPORT.json": "c99f7ef0b65cb410672048816d5b2211e1eb9122a2505425236487fbce7ba607",
+                  "TAMPER_REPORT.json": "1ab8f3123f3813588d0637d327890c162b7d98c195665713d4dbf3e96576b977"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
-                "experiment_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
-                "preregistration_sha256": "628003aded4e819f290a07e204ceaf43820fea25bf7c38677fdb237bab8637c8",
-                "public_witness_digest": "656bae932db18f28cfa85b78fb9f767136112299a23a60be904807be8d7af6f6",
-                "release_version": "0.7.0",
+                "experiment_chain_digest": "7357b53eda1314d47d39729234f3be7c37ee519114d19657650ba5f6ece4c632",
+                "experiment_tail_hash": "8006c48dfaca704bb4788858c4515785d585c2d32d41767aa40840a969958a19",
+                "preregistration_sha256": "873c422416515739fee288ca0e10184ccce91acabeb36954f70fd2de5914a78d",
+                "public_witness_digest": "41b51875eabff0185f25422b15bc582da06f652bf537381387ea136fc29002cb",
+                "release_version": "0.9.1",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "ad2604f526cc35f509bb634e9494d8a0ba2c5c2f0441ebeb89457f03b78f69c2"
+                "source_tree_digest": "c93fa2c3059f9400d0d7062723f8ec11f091ad3ca6a1341c5a034d6a3b8456c5"
               },
               "valid": false
             },
@@ -484,16 +791,16 @@
           "verifier": {
             "artifact_binding_valid": false,
             "chain": {
-              "chain_digest": "1284cf4183e92717093f4b8ce6ee99168dd1dceb2f20dd12993a208691526a1c",
+              "chain_digest": "414e21e5e12215d819a069940ba4e996fa4f7e367628fb10c56333bbc6497408",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "9292afcf05a53ce65bd8487f0d57f2f63c2cbf33439a92934ced91d6936e53e5",
+              "tail_hash": "810a1a198d52eb0efae4749d39c5bc286046180ae5c037ecf7a8467ed68ba574",
               "valid": true
             },
             "errors": [
-              "v060_lineage_hash_mismatch:results/collision_spacing_events.csv",
+              "v070_lineage_hash_mismatch:results/collision_spacing_events.csv",
               "release_attestation_version_mismatch",
               "release_attestation_experiment_chain_digest_mismatch",
               "release_attestation_experiment_tail_mismatch",
@@ -507,12 +814,12 @@
             "lineage_binding_valid": false,
             "release_attestation": {
               "chain": {
-                "chain_digest": "db584ca01a1ac07cd8ec7de1289dc084ad726b595f5500b6c508cb1d9a15c38f",
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "ee2ff5add088af4bda91bd1eed5fe0b568e35aa177428cd98102f7578d6ff4de",
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
                 "valid": true
               },
               "errors": [
@@ -528,17 +835,17 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "06fc184fbe50dee77f8273dbaea36a837c18a76a8b157ac7c2862a95c75d7506",
-                  "TAMPER_REPORT.json": "bc9bd1e008abc4864e5866c67ced64c6e2e49f048727f695d008473c3f5de784"
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "ee7dfc19b4ac0dc80c1c7633cc95d0920130600f5ad002828a64a431a3f7436a",
-                "experiment_tail_hash": "4962cc625efb667a6d3df2fb1ae49bb2a850322a0221d9e959295ed0616b05b4",
-                "preregistration_sha256": "3bcefe77460ebd2bddb25a1d3af496244d74da3dc32b8d9c132aae0cab8578e6",
-                "public_witness_digest": "5f8010458517b1fe39db0bce483362ea9be27494a4cb8755c7d48f40a5748395",
-                "release_version": "0.6.0",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "b68324d84831d25e90210aeffd724207f6dfa3f7585335a872ea1d717678b1a6"
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
               },
               "valid": false
             },
@@ -553,16 +860,16 @@
           "verifier": {
             "artifact_binding_valid": false,
             "chain": {
-              "chain_digest": "c4d08344e8f23f6951b002c21d17c596f1b5808d1ddd2e334b1fcb7814e743d7",
+              "chain_digest": "9bd9f5e8e1b29e519b97d39cb7c26743ee44e0e6f8321540b92d35567bb17b8c",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "79173ed8669c7955b72152495fc94488e8fe20304ad715654b4084e095daeb7d",
+              "tail_hash": "885f3935a263e0b733a26274b9837bfa4ba78b9a76a7afaa3497b11842a885b4",
               "valid": true
             },
             "errors": [
-              "v060_lineage_hash_mismatch:results/tip_capture_cycles.csv",
+              "v070_lineage_hash_mismatch:results/tip_capture_cycles.csv",
               "release_attestation_version_mismatch",
               "release_attestation_experiment_chain_digest_mismatch",
               "release_attestation_experiment_tail_mismatch",
@@ -576,12 +883,12 @@
             "lineage_binding_valid": false,
             "release_attestation": {
               "chain": {
-                "chain_digest": "db584ca01a1ac07cd8ec7de1289dc084ad726b595f5500b6c508cb1d9a15c38f",
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "ee2ff5add088af4bda91bd1eed5fe0b568e35aa177428cd98102f7578d6ff4de",
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
                 "valid": true
               },
               "errors": [
@@ -597,17 +904,17 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "06fc184fbe50dee77f8273dbaea36a837c18a76a8b157ac7c2862a95c75d7506",
-                  "TAMPER_REPORT.json": "bc9bd1e008abc4864e5866c67ced64c6e2e49f048727f695d008473c3f5de784"
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "ee7dfc19b4ac0dc80c1c7633cc95d0920130600f5ad002828a64a431a3f7436a",
-                "experiment_tail_hash": "4962cc625efb667a6d3df2fb1ae49bb2a850322a0221d9e959295ed0616b05b4",
-                "preregistration_sha256": "3bcefe77460ebd2bddb25a1d3af496244d74da3dc32b8d9c132aae0cab8578e6",
-                "public_witness_digest": "5f8010458517b1fe39db0bce483362ea9be27494a4cb8755c7d48f40a5748395",
-                "release_version": "0.6.0",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "b68324d84831d25e90210aeffd724207f6dfa3f7585335a872ea1d717678b1a6"
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
               },
               "valid": false
             },
@@ -622,16 +929,16 @@
           "verifier": {
             "artifact_binding_valid": false,
             "chain": {
-              "chain_digest": "8406d7c35bd214f462956ab1c14b5a23bf0b6efa10724335b7ecab386cf03bbe",
+              "chain_digest": "28de0781b573bc2b5d7318c5e3954a0aed43ce6668ae08f239704aea078cab89",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "28d4f67254dc53189616309ee93a3b6d6c99310d789e0d2c0d4af3ea78bca866",
+              "tail_hash": "baf4658d0b827736a1eae91619b6add62dbd7eb4bb47cc8f646cefee6d2206d4",
               "valid": true
             },
             "errors": [
-              "v060_lineage_hash_mismatch:results/generational_cycles.csv",
+              "v070_lineage_hash_mismatch:results/generational_cycles.csv",
               "release_attestation_version_mismatch",
               "release_attestation_experiment_chain_digest_mismatch",
               "release_attestation_experiment_tail_mismatch",
@@ -645,12 +952,12 @@
             "lineage_binding_valid": false,
             "release_attestation": {
               "chain": {
-                "chain_digest": "db584ca01a1ac07cd8ec7de1289dc084ad726b595f5500b6c508cb1d9a15c38f",
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "ee2ff5add088af4bda91bd1eed5fe0b568e35aa177428cd98102f7578d6ff4de",
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
                 "valid": true
               },
               "errors": [
@@ -666,17 +973,108 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "06fc184fbe50dee77f8273dbaea36a837c18a76a8b157ac7c2862a95c75d7506",
-                  "TAMPER_REPORT.json": "bc9bd1e008abc4864e5866c67ced64c6e2e49f048727f695d008473c3f5de784"
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "ee7dfc19b4ac0dc80c1c7633cc95d0920130600f5ad002828a64a431a3f7436a",
-                "experiment_tail_hash": "4962cc625efb667a6d3df2fb1ae49bb2a850322a0221d9e959295ed0616b05b4",
-                "preregistration_sha256": "3bcefe77460ebd2bddb25a1d3af496244d74da3dc32b8d9c132aae0cab8578e6",
-                "public_witness_digest": "5f8010458517b1fe39db0bce483362ea9be27494a4cb8755c7d48f40a5748395",
-                "release_version": "0.6.0",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "b68324d84831d25e90210aeffd724207f6dfa3f7585335a872ea1d717678b1a6"
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
+              },
+              "valid": false
+            },
+            "release_attestation_valid": false,
+            "semantic_recomputation_valid": true,
+            "valid": false
+          }
+        },
+        "resealed_load_rate_cycle_forgery": {
+          "attack": "mutate one v0.8 load-rate cycle value, patch the manifest and evidence hashes, replace the keypair, and resign the complete chain",
+          "detected": true,
+          "semantic_shard": {
+            "cycle_artifact": "load_rate_cycles.part-000.csv.gz",
+            "cycle_bytes_match": false,
+            "cycle_count": 30720,
+            "fresh_cycle_sha256": "6f337518639e0a81358ce6d16b5a02f68fb00cea2373061f6d97c892aa3bec2b",
+            "leaf_count": 30720,
+            "passed": false,
+            "run_count": 192,
+            "run_metrics_match": true,
+            "schema": "openline.load-rate.semantic-shard.v1",
+            "seeds": [
+              8201,
+              8202,
+              8203,
+              8204,
+              8205,
+              8206,
+              8207,
+              8208
+            ],
+            "shard_index": 0,
+            "stored_cycle_sha256": "6d3555e424d692645dd540e4a92d084b7ae61f01b1f99c36195ac82f3f25d7df"
+          },
+          "verifier": {
+            "artifact_binding_valid": true,
+            "chain": {
+              "chain_digest": "e69256d15cb26ef55461aed5db1935b2324781fa3c0422f08390ae6660c3c387",
+              "completeness_verified": true,
+              "count": 741,
+              "errors": [],
+              "integrity_valid": true,
+              "tail_hash": "073cdd831b88aa00ef5e374eabfd2a93ee180d51c2736998855c65c4bdb3fed5",
+              "valid": true
+            },
+            "errors": [
+              "release_attestation_version_mismatch",
+              "release_attestation_experiment_chain_digest_mismatch",
+              "release_attestation_experiment_tail_mismatch",
+              "release_attestation_public_witness_mismatch",
+              "release_attestation_source_tree_mismatch",
+              "release_attestation_preregistration_mismatch",
+              "release_attestation_reported_chain_digest_mismatch",
+              "release_attestation_reported_chain_tail_mismatch",
+              "release_attestation_tamper_version_mismatch"
+            ],
+            "lineage_binding_valid": true,
+            "release_attestation": {
+              "chain": {
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
+                "completeness_verified": true,
+                "count": 1,
+                "errors": [],
+                "integrity_valid": true,
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
+                "valid": true
+              },
+              "errors": [
+                "release_attestation_version_mismatch",
+                "release_attestation_experiment_chain_digest_mismatch",
+                "release_attestation_experiment_tail_mismatch",
+                "release_attestation_public_witness_mismatch",
+                "release_attestation_source_tree_mismatch",
+                "release_attestation_preregistration_mismatch",
+                "release_attestation_reported_chain_digest_mismatch",
+                "release_attestation_reported_chain_tail_mismatch",
+                "release_attestation_tamper_version_mismatch"
+              ],
+              "payload": {
+                "artifact_hashes": {
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
+                },
+                "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
+                "schema": "openline.endurance.release-attestation.v1",
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
               },
               "valid": false
             },
@@ -691,16 +1089,16 @@
           "verifier": {
             "artifact_binding_valid": false,
             "chain": {
-              "chain_digest": "067432b14c0a45452a7c0498e3c3408ceb5dff5c807180d9a2aa5d34d37689b9",
+              "chain_digest": "260e73acfece7ab8003f4bd3f8fb6d658030686c46b163ba3155c35c0eaa3785",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "fdb75780dc7a689facb69ab2ae5e3944d0d641326177235cfe3fc09c77c0ebd9",
+              "tail_hash": "d06e4088635a9aca10e554abac055a74cd2878fbe702740ccbe81d78e9c22de3",
               "valid": true
             },
             "errors": [
-              "v060_lineage_hash_mismatch:results/cycles.csv",
+              "v070_lineage_hash_mismatch:results/cycles.csv",
               "release_attestation_version_mismatch",
               "release_attestation_experiment_chain_digest_mismatch",
               "release_attestation_experiment_tail_mismatch",
@@ -714,12 +1112,12 @@
             "lineage_binding_valid": false,
             "release_attestation": {
               "chain": {
-                "chain_digest": "db584ca01a1ac07cd8ec7de1289dc084ad726b595f5500b6c508cb1d9a15c38f",
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "ee2ff5add088af4bda91bd1eed5fe0b568e35aa177428cd98102f7578d6ff4de",
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
                 "valid": true
               },
               "errors": [
@@ -735,17 +1133,17 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "06fc184fbe50dee77f8273dbaea36a837c18a76a8b157ac7c2862a95c75d7506",
-                  "TAMPER_REPORT.json": "bc9bd1e008abc4864e5866c67ced64c6e2e49f048727f695d008473c3f5de784"
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "ee7dfc19b4ac0dc80c1c7633cc95d0920130600f5ad002828a64a431a3f7436a",
-                "experiment_tail_hash": "4962cc625efb667a6d3df2fb1ae49bb2a850322a0221d9e959295ed0616b05b4",
-                "preregistration_sha256": "3bcefe77460ebd2bddb25a1d3af496244d74da3dc32b8d9c132aae0cab8578e6",
-                "public_witness_digest": "5f8010458517b1fe39db0bce483362ea9be27494a4cb8755c7d48f40a5748395",
-                "release_version": "0.6.0",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "b68324d84831d25e90210aeffd724207f6dfa3f7585335a872ea1d717678b1a6"
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
               },
               "valid": false
             },
@@ -785,17 +1183,18 @@
             "stored_cycle_sha256": "b352df3b5168974b7e9c5c3a705e52e1c27fbaa65b85c8db2a8abb4194828a76"
           },
           "verifier": {
-            "artifact_binding_valid": true,
+            "artifact_binding_valid": false,
             "chain": {
-              "chain_digest": "6feaa47cc52e361de6eea4d2cfa7f27c9c773c1e20f029256fe21caa569728e2",
+              "chain_digest": "12b0668b78870281d2bc4e81db6921bbe9036976d0dea267782e0583ba30401b",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "8574306262da40b10d39b00756a1964c93085073f1d6b9761f08fddd8a6ada11",
+              "tail_hash": "6d7930b28bd8f0f176cf74194097f30a61063dbcff978d87f87a5c1f059463f1",
               "valid": true
             },
             "errors": [
+              "v070_lineage_hash_mismatch:results/state_restoration_cycles.part-000.csv.gz",
               "release_attestation_version_mismatch",
               "release_attestation_experiment_chain_digest_mismatch",
               "release_attestation_experiment_tail_mismatch",
@@ -806,15 +1205,15 @@
               "release_attestation_reported_chain_tail_mismatch",
               "release_attestation_tamper_version_mismatch"
             ],
-            "lineage_binding_valid": true,
+            "lineage_binding_valid": false,
             "release_attestation": {
               "chain": {
-                "chain_digest": "db584ca01a1ac07cd8ec7de1289dc084ad726b595f5500b6c508cb1d9a15c38f",
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "ee2ff5add088af4bda91bd1eed5fe0b568e35aa177428cd98102f7578d6ff4de",
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
                 "valid": true
               },
               "errors": [
@@ -830,17 +1229,17 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "06fc184fbe50dee77f8273dbaea36a837c18a76a8b157ac7c2862a95c75d7506",
-                  "TAMPER_REPORT.json": "bc9bd1e008abc4864e5866c67ced64c6e2e49f048727f695d008473c3f5de784"
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "ee7dfc19b4ac0dc80c1c7633cc95d0920130600f5ad002828a64a431a3f7436a",
-                "experiment_tail_hash": "4962cc625efb667a6d3df2fb1ae49bb2a850322a0221d9e959295ed0616b05b4",
-                "preregistration_sha256": "3bcefe77460ebd2bddb25a1d3af496244d74da3dc32b8d9c132aae0cab8578e6",
-                "public_witness_digest": "5f8010458517b1fe39db0bce483362ea9be27494a4cb8755c7d48f40a5748395",
-                "release_version": "0.6.0",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "b68324d84831d25e90210aeffd724207f6dfa3f7585335a872ea1d717678b1a6"
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
               },
               "valid": false
             },
@@ -855,12 +1254,12 @@
           "verifier": {
             "artifact_binding_valid": true,
             "chain": {
-              "chain_digest": "5980b9d8c3c3affac6334bbb9e8f67015e8ba9e70162af83556aefed8d7120d4",
+              "chain_digest": "45de40e9705f9e22ca79a594f30b52995b285a6b5f7937703e5c77165bc5842b",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "ecc48fbe9a8886f59e9effa659d754ce60390fdf22b3da637ae6eb952142f51b",
+              "tail_hash": "58a1d7ea2ebb759c2a373779a4f547312a2aa478764bdf529a4b3da502a979f0",
               "valid": true
             },
             "errors": [
@@ -878,12 +1277,12 @@
             "lineage_binding_valid": true,
             "release_attestation": {
               "chain": {
-                "chain_digest": "db584ca01a1ac07cd8ec7de1289dc084ad726b595f5500b6c508cb1d9a15c38f",
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "ee2ff5add088af4bda91bd1eed5fe0b568e35aa177428cd98102f7578d6ff4de",
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
                 "valid": true
               },
               "errors": [
@@ -899,17 +1298,17 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "06fc184fbe50dee77f8273dbaea36a837c18a76a8b157ac7c2862a95c75d7506",
-                  "TAMPER_REPORT.json": "bc9bd1e008abc4864e5866c67ced64c6e2e49f048727f695d008473c3f5de784"
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "ee7dfc19b4ac0dc80c1c7633cc95d0920130600f5ad002828a64a431a3f7436a",
-                "experiment_tail_hash": "4962cc625efb667a6d3df2fb1ae49bb2a850322a0221d9e959295ed0616b05b4",
-                "preregistration_sha256": "3bcefe77460ebd2bddb25a1d3af496244d74da3dc32b8d9c132aae0cab8578e6",
-                "public_witness_digest": "5f8010458517b1fe39db0bce483362ea9be27494a4cb8755c7d48f40a5748395",
-                "release_version": "0.6.0",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "b68324d84831d25e90210aeffd724207f6dfa3f7585335a872ea1d717678b1a6"
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
               },
               "valid": false
             },
@@ -921,16 +1320,16 @@
         "tail_truncation": {
           "detected": true,
           "verifier": {
-            "chain_digest": "e866ebfc784da6335be0e23b5fac8881d0dbc480b65be0fc49ea5527d770b4d2",
+            "chain_digest": "f4e27ce14bbfefa92d14659e5ceb659511c3e7a4653955792ecc62d5c59a4b83",
             "completeness_verified": false,
-            "count": 736,
+            "count": 740,
             "errors": [
               "completeness_count_mismatch",
               "completeness_tail_mismatch",
               "completeness_digest_mismatch"
             ],
             "integrity_valid": false,
-            "tail_hash": "882ee5f83d093892739bac07e5d0a4a2ed54e9eb236c224e8e38a42e4e6e1229",
+            "tail_hash": "3597bbac9d96e1df9e5c7163925762c880156cf100f09b6ca1950e2f9c518ef4",
             "valid": false
           }
         },
@@ -939,18 +1338,17 @@
           "verifier": {
             "artifact_binding_valid": false,
             "chain": {
-              "chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
+              "chain_digest": "7357b53eda1314d47d39729234f3be7c37ee519114d19657650ba5f6ece4c632",
               "completeness_verified": true,
-              "count": 737,
+              "count": 741,
               "errors": [],
               "integrity_valid": true,
-              "tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+              "tail_hash": "8006c48dfaca704bb4788858c4515785d585c2d32d41767aa40840a969958a19",
               "valid": true
             },
             "errors": [
-              "manifest_hash_mismatch:src/openline_endurance_gate/generational.py",
-              "preregistration_mechanism_hash_mismatch:src/openline_endurance_gate/generational.py",
-              "v060_lineage_hash_mismatch:src/openline_endurance_gate/generational.py",
+              "manifest_hash_mismatch:src/openline_endurance_gate/recovery.py",
+              "preregistration_mechanism_hash_mismatch:src/openline_endurance_gate/recovery.py",
               "release_attestation_version_mismatch",
               "release_attestation_experiment_chain_digest_mismatch",
               "release_attestation_experiment_tail_mismatch",
@@ -961,15 +1359,15 @@
               "release_attestation_reported_chain_tail_mismatch",
               "release_attestation_tamper_version_mismatch"
             ],
-            "lineage_binding_valid": false,
+            "lineage_binding_valid": true,
             "release_attestation": {
               "chain": {
-                "chain_digest": "db584ca01a1ac07cd8ec7de1289dc084ad726b595f5500b6c508cb1d9a15c38f",
+                "chain_digest": "e70cb04d4a0ecd2d9bc5cb816a2875a1639e3906894b5e7e19bedd73d2320b3e",
                 "completeness_verified": true,
                 "count": 1,
                 "errors": [],
                 "integrity_valid": true,
-                "tail_hash": "ee2ff5add088af4bda91bd1eed5fe0b568e35aa177428cd98102f7578d6ff4de",
+                "tail_hash": "c1c49529b07f451340c7cf1cb5408bb36504f01f2ab0a4f29dbcf95520f2f0f1",
                 "valid": true
               },
               "errors": [
@@ -985,17 +1383,17 @@
               ],
               "payload": {
                 "artifact_hashes": {
-                  "RUN_REPORT.json": "06fc184fbe50dee77f8273dbaea36a837c18a76a8b157ac7c2862a95c75d7506",
-                  "TAMPER_REPORT.json": "bc9bd1e008abc4864e5866c67ced64c6e2e49f048727f695d008473c3f5de784"
+                  "RUN_REPORT.json": "b9c74c8993c01dcd3ebeff24de7f423547792ad14a4fc73bcae58cefd6ccbd4d",
+                  "TAMPER_REPORT.json": "7bcb720430c46bec97b2c034ee0bfcce6c8b864957331a595fb7858411975257"
                 },
                 "claim_boundary": "This outer receipt detects later release-report edits under the pinned release key. Independent publication of its anchor hash is still required to resist whole-repository replacement.",
-                "experiment_chain_digest": "ee7dfc19b4ac0dc80c1c7633cc95d0920130600f5ad002828a64a431a3f7436a",
-                "experiment_tail_hash": "4962cc625efb667a6d3df2fb1ae49bb2a850322a0221d9e959295ed0616b05b4",
-                "preregistration_sha256": "3bcefe77460ebd2bddb25a1d3af496244d74da3dc32b8d9c132aae0cab8578e6",
-                "public_witness_digest": "5f8010458517b1fe39db0bce483362ea9be27494a4cb8755c7d48f40a5748395",
-                "release_version": "0.6.0",
+                "experiment_chain_digest": "f29a9a2163895eae96696ce627338cc95ae28004c88913e9afa0f2dd033b8b31",
+                "experiment_tail_hash": "193b51a6cbea2740f66f9514e74585a39cfa5337c17d69520c4b159ba0386614",
+                "preregistration_sha256": "d22a9f5ec029763bc641d0cb4524274b03649ecdde79c9183e45b0eaf1c52f4a",
+                "public_witness_digest": "91a171d2170a700cce5e29bd72eaddfe01de54d904c2a306de99d49540aba459",
+                "release_version": "0.9.0",
                 "schema": "openline.endurance.release-attestation.v1",
-                "source_tree_digest": "b68324d84831d25e90210aeffd724207f6dfa3f7585335a872ea1d717678b1a6"
+                "source_tree_digest": "502c43f46f61fc2a9710db47dc7d922cedaa11b1432eb4f217e0a8dc97cacf54"
               },
               "valid": false
             },
@@ -1007,9 +1405,9 @@
       },
       "execution_boundary": "Each complete hostile attack, including its semantic verifier, ran as a separate top-level Python process under a low-memory shell orchestrator.",
       "passed": true,
-      "release_version": "0.7.0",
+      "release_version": "0.9.1",
       "report_role": "RELEASE_ATTESTATION_INPUT",
-      "schema": "openline.endurance.tamper-report.v6",
+      "schema": "openline.endurance.tamper-report.v10",
       "trust_boundary": {
         "reason": "A full-write attacker can replace source, artifacts, keypair, anchor, and local witness. Publish results/public_witness.json or its digest outside the repository.",
         "whole_repository_replacement": "OUT_OF_SCOPE_WITHOUT_EXTERNAL_WITNESS"

@@ -35,6 +35,8 @@ PYTEST_GROUPS = [
         "tests/test_collision_spacing.py",
         "tests/test_damage.py",
         "tests/test_generational.py",
+        "tests/test_load_rate.py",
+        "tests/test_recovery.py",
         "tests/test_integrity.py",
         "tests/test_outputs.py",
     ],
@@ -59,7 +61,8 @@ STALE_ATTESTATION_FILTER = (
 
 def _source_env() -> dict[str, str]:
     env = dict(os.environ)
-    env["PYTHONPATH"] = str(ROOT / "src")
+    inherited = env.get("PYTHONPATH")
+    env["PYTHONPATH"] = str(ROOT / "src") + (os.pathsep + inherited if inherited else "")
     env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
     return env
 
@@ -115,6 +118,10 @@ def preflight_clean() -> int:
                 ".release_semantic.json",
                 ".state_restoration_semantic",
                 ".state_restoration_work",
+                ".load_rate_semantic",
+                ".load_rate_work",
+                ".recovery_semantic",
+                ".recovery_work",
                 "*.zip",
                 "*.sha256",
             ),
@@ -166,6 +173,16 @@ def preflight_clean() -> int:
             clean,
             clean_env,
         )
+        report["clean_cli_load_rate"] = run(
+            [sys.executable, "-m", "openline_endurance_gate", "load-rate", "--root", "."],
+            clean,
+            clean_env,
+        )
+        report["clean_cli_recovery"] = run(
+            [sys.executable, "-m", "openline_endurance_gate", "recovery", "--root", "."],
+            clean,
+            clean_env,
+        )
 
     (PREFLIGHT_PARTS / "clean.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -176,7 +193,7 @@ def preflight_clean() -> int:
 
 
 def preflight_finalize() -> int:
-    report: dict[str, object] = {"schema": "openline.endurance.release-report.v7"}
+    report: dict[str, object] = {"schema": "openline.endurance.release-report.v10"}
     pytest_results: list[dict[str, object]] = []
     for index in range(len(PYTEST_GROUPS)):
         path = PREFLIGHT_PARTS / f"pytest-{index}.json"
@@ -212,6 +229,8 @@ def preflight_finalize() -> int:
             "clean_cli_spacing",
             "clean_cli_generational",
             "clean_cli_state_restoration",
+            "clean_cli_load_rate",
+            "clean_cli_recovery",
         )
     )
     print(json.dumps({"preflight_passed": passed}, indent=2))
@@ -249,7 +268,7 @@ def _read_raw_step(name: str, command: list[str]) -> dict[str, object]:
 
 
 def preflight_finalize_raw() -> int:
-    report: dict[str, object] = {"schema": "openline.endurance.release-report.v7"}
+    report: dict[str, object] = {"schema": "openline.endurance.release-report.v10"}
     pytest_results = [
         _read_raw_step(
             f"pytest-{index}",
@@ -276,6 +295,8 @@ def preflight_finalize_raw() -> int:
         "clean_cli_spacing",
         "clean_cli_generational",
         "clean_cli_state_restoration",
+        "clean_cli_load_rate",
+        "clean_cli_recovery",
     )
     for name in clean_names:
         report[name] = _read_raw_step(name, ["direct-shell-preflight", name])
@@ -308,6 +329,72 @@ def semantic_finalize() -> int:
     passed = bool(report["semantic_verification"]["valid"])
     print(json.dumps({"semantic_verification_passed": passed}, indent=2))
     return 0 if passed else 1
+
+
+
+def semantic_v8_shard(index: int) -> int:
+    from openline_endurance_gate.rate_semantic import verify_load_rate_shard
+
+    report = verify_load_rate_shard(ROOT, index)
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["passed"] else 1
+
+
+def semantic_v8_finalize() -> int:
+    from openline_endurance_gate.rate_semantic import finalize_load_rate_semantics
+
+    if not PREFLIGHT.exists():
+        raise RuntimeError(f"missing release preflight: {PREFLIGHT}")
+    report = json.loads(PREFLIGHT.read_text(encoding="utf-8"))
+    report["semantic_verification"] = finalize_load_rate_semantics(ROOT)
+    SEMANTIC.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    passed = bool(report["semantic_verification"]["valid"])
+    print(json.dumps({"semantic_verification_passed": passed}, indent=2))
+    return 0 if passed else 1
+
+
+def semantic_v8() -> int:
+    # Compatibility path for ordinary runners. Hosted release CI uses the
+    # explicit shard phases so no coordinator must outlive the process cap.
+    for index in range(12):
+        if semantic_v8_shard(index) != 0:
+            return 1
+    return semantic_v8_finalize()
+
+
+def semantic_v9_shard(index: int) -> int:
+    from openline_endurance_gate.recovery_semantic import verify_recovery_shard
+
+    report = verify_recovery_shard(ROOT, index)
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["passed"] else 1
+
+
+def semantic_v9_finalize() -> int:
+    from openline_endurance_gate.recovery_semantic import finalize_recovery_semantics
+
+    if not PREFLIGHT.exists():
+        raise RuntimeError(f"missing release preflight: {PREFLIGHT}")
+    report = json.loads(PREFLIGHT.read_text(encoding="utf-8"))
+    report["semantic_verification"] = finalize_recovery_semantics(ROOT)
+    SEMANTIC.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    passed = bool(report["semantic_verification"]["valid"])
+    print(json.dumps({"semantic_verification_passed": passed}, indent=2))
+    return 0 if passed else 1
+
+
+def semantic_v9() -> int:
+    for index in range(6):
+        if semantic_v9_shard(index) != 0:
+            return 1
+    return semantic_v9_finalize()
+
+
+# v0.9.1 keeps the v0.9 recovery shard format. These aliases make the active
+# release pass explicit while retaining the v9 names for compatible runners.
+semantic_v91_shard = semantic_v9_shard
+semantic_v91_finalize = semantic_v9_finalize
+semantic_v91 = semantic_v9
 
 
 def semantic_only() -> int:
@@ -346,6 +433,8 @@ def finalize_existing() -> int:
         report["clean_cli_spacing"]["returncode"] == 0,
         report["clean_cli_generational"]["returncode"] == 0,
         report["clean_cli_state_restoration"]["returncode"] == 0,
+        report["clean_cli_load_rate"]["returncode"] == 0,
+        report["clean_cli_recovery"]["returncode"] == 0,
         report["semantic_verification"]["valid"],
         report["tamper_suite"]["returncode"] == 0,
         bool(report["tamper_suite"].get("report", {}).get("passed")),
@@ -383,6 +472,15 @@ def main() -> int:
     parser.add_argument("--semantic-only", action="store_true")
     parser.add_argument("--semantic-shard", type=int)
     parser.add_argument("--semantic-finalize", action="store_true")
+    parser.add_argument("--semantic-v8", action="store_true")
+    parser.add_argument("--semantic-v8-shard", type=int)
+    parser.add_argument("--semantic-v8-finalize", action="store_true")
+    parser.add_argument("--semantic-v9", action="store_true")
+    parser.add_argument("--semantic-v9-shard", type=int)
+    parser.add_argument("--semantic-v9-finalize", action="store_true")
+    parser.add_argument("--semantic-v91", action="store_true")
+    parser.add_argument("--semantic-v91-shard", type=int)
+    parser.add_argument("--semantic-v91-finalize", action="store_true")
     parser.add_argument("--finalize-existing", action="store_true")
     args = parser.parse_args()
     if args.preflight_only:
@@ -399,6 +497,24 @@ def main() -> int:
         return semantic_shard(args.semantic_shard)
     if args.semantic_finalize:
         return semantic_finalize()
+    if args.semantic_v8_shard is not None:
+        return semantic_v8_shard(args.semantic_v8_shard)
+    if args.semantic_v8_finalize:
+        return semantic_v8_finalize()
+    if args.semantic_v8:
+        return semantic_v8()
+    if args.semantic_v9_shard is not None:
+        return semantic_v9_shard(args.semantic_v9_shard)
+    if args.semantic_v9_finalize:
+        return semantic_v9_finalize()
+    if args.semantic_v9:
+        return semantic_v9()
+    if args.semantic_v91_shard is not None:
+        return semantic_v91_shard(args.semantic_v91_shard)
+    if args.semantic_v91_finalize:
+        return semantic_v91_finalize()
+    if args.semantic_v91:
+        return semantic_v91()
     if args.semantic_only:
         return semantic_only()
     if args.finalize_existing:

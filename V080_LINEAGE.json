@@ -1,0 +1,40 @@
+{
+  "claim_boundary": "The v0.8.0 mixed 3/4 result is pinned byte-for-byte. v0.8.1 changes the load-rate mechanism only to remove the discovered ordinary-work context-retention confound and reruns on fresh seeds; it does not rewrite the original result.",
+  "inherited_artifact_hashes": {},
+  "release": "v0.8.0",
+  "schema": "openline.endurance.lineage.v5",
+  "snapshot_hashes": {
+    "lineage/v0.8.0/MANIFEST.json": "f8dda8b800d29b3c64b000e67e73c976d44410b31bc2893e9174214e51204e60",
+    "lineage/v0.8.0/PREREGISTRATION.json": "2336aab3bfca11976a649c287cb0bc7608750fe0823549a79364f1ac8d28131a",
+    "lineage/v0.8.0/RUN_REPORT.json": "42cd64ce72307007e311ef3ec8ecbb19475ea365d0ca21074badceb0be66435b",
+    "lineage/v0.8.0/TAMPER_REPORT.json": "57191ed467058656b0105127da16ff469c64ea5633a825049dbd3d2a842f3ece",
+    "lineage/v0.8.0/experiment.json": "accbd626ee98d4cb28fc6efeba3f0d8a354f7c4fbe7be0133a95892d59e1aa9c",
+    "lineage/v0.8.0/receipts/experiment.anchor.json": "dc0e31b203f92884a9adbd1e29f844618b1b968b111f3155a2bd153b76ad4ee1",
+    "lineage/v0.8.0/receipts/experiment.jsonl": "c39ccf477e137debee408d0f6756fcf3f63b5e68e20ecafe9356342173c1b5a8",
+    "lineage/v0.8.0/receipts/release.anchor.json": "98e10b5ebbb6414f051a6b1f962db3df63de71b15287789923e043e9103e013d",
+    "lineage/v0.8.0/receipts/release.jsonl": "0670d86bfae8b82f6c06855f15a3f0aaf0c1609673e5aaadb0a95ccdc23765e6",
+    "lineage/v0.8.0/results/cycle_roots.json": "c0f05961491694a9b9da63cb92b7e63c1b58c6944d0a592cb5badf9214495fe2",
+    "lineage/v0.8.0/results/heldout_witness.json": "0b587b58a51d87d48ea0d263171c4ba0aaed02cb03cea07972b62609afbf5e55",
+    "lineage/v0.8.0/results/load_rate_design_witness.json": "9c10e50e543d63d935261f0634911ea9c55ad8f39aeefd41996df77a5baa4f4c",
+    "lineage/v0.8.0/results/load_rate_summary.json": "def9e0eb96f2b6c12013f9a4694bb13ba2586154f5c0925808ecaab9d3387a5c",
+    "lineage/v0.8.0/results/load_rate_summary.md": "46f2370a0153738db44697ec693deb05ffe42b25f67bc9f1bbedd27349c40cf8",
+    "lineage/v0.8.0/results/public_witness.json": "de54da158f88c8db7192e7de829939e87c71adcfbc4a602b8a63ac3b1f0a52c7",
+    "lineage/v0.8.0/results/summary.json": "492fc09044f2a786921c5ff0c42998f2b6902cc0a9aa56e4f8f8f9288dc72832",
+    "lineage/v0.8.0/results/summary.md": "716868d5c0c3ebcb0845c506f181fc75757de5d8277553756ec02211932532da"
+  },
+  "source_zip_sha256": "79bc528cb45ce24ad0231614e0e7e27ae44518efa9af7fba557c9ff87e772394",
+  "unchanged_mechanism_hashes": {
+    "src/openline_endurance_gate/amplitude.py": "8d42124eb30cc428968531739d39bf2ea79cfc7eb406826c07b2a12d268d047b",
+    "src/openline_endurance_gate/collision_spacing.py": "5343df4aff9224ab2d8979814fba7ad8bb736434ec8c6b6c42f728d57cec824a",
+    "src/openline_endurance_gate/damage.py": "8b9b90ef4cddfd0ec6f5e5f40252f0cd65de9f39bac881e69d0b119f8cb7c668",
+    "src/openline_endurance_gate/fractography.py": "0142d8051bf3ae9132ad0c8717f9ba8b514e6475da30cfd056704192940e344c",
+    "src/openline_endurance_gate/generational.py": "1301690bcf1a49af4d29d9754cb5de09818aed3935f180c0a71cad35e39efc15",
+    "src/openline_endurance_gate/restoration_stream.py": "e14fe2bb6622bf8adf92336cf207976d3d6d4d28ce46d55cd67781967c09c1a4",
+    "src/openline_endurance_gate/restoration_worker.py": "a2d03165645309b815c8f5b91ebdf3d7def849431a1740a9de29788700df10d2",
+    "src/openline_endurance_gate/sim.py": "0f84cb1ba9142b62b2142b9fbb976246d957b7e39c0a6437fff08164d8807e3d",
+    "src/openline_endurance_gate/state_restoration.py": "6ed7c2eac35a518d607107f3eb729f3b37fdbe54b66d4248602fcb6026e6a16a",
+    "src/openline_endurance_gate/statistics.py": "026ace9d859f6be2ba7d390750eea101272335cd0cdfc308d56f92e0cf10073a",
+    "src/openline_endurance_gate/tip_capture.py": "c198afa4a460600a54d636db194e527b9b75232158182201d06fc2b92aac77d0",
+    "src/openline_endurance_gate/world.py": "7436efaf81ab8d900e3895e461ed5e1c79586a1e9bf6d6aac9a8f2c82b9419cb"
+  }
+}

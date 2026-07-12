@@ -1,9 +1,9 @@
 {
-  "anchor_hash": "ac6dd2c5e72cdae94192e4538e0d974ba650743f90f19e989631a85b89522fdc",
-  "chain_digest": "def4e3a4ecab24e4c1fa674fe1c9f29d9c165c926d28533207c52a3473de67ae",
-  "expected_count": 737,
-  "expected_tail_hash": "8b7fc6397c67b693208b28055954806a8596e857367640b8127df2858f4a8cf5",
+  "anchor_hash": "105c77a60993320e456d07375460be07f8ff1245c89ce583c812cdac07fb9f6e",
+  "chain_digest": "7357b53eda1314d47d39729234f3be7c37ee519114d19657650ba5f6ece4c632",
+  "expected_count": 741,
+  "expected_tail_hash": "8006c48dfaca704bb4788858c4515785d585c2d32d41767aa40840a969958a19",
   "schema": "openline.endurance.anchor.v1",
-  "signature": "3MCzG269Yev85YnusEa9RY+5BgD1FYT0TAHg4F2cTuhB7sM8IDLmgGrflDoAWsV0qXkr58Oxr6Gvgr/YdIh9Bg==",
-  "signer_public_key": "RFce9FxLQNdZiW4iXR8J3v58LzJBgdsoUoLpytxhOuY="
+  "signature": "YPpcpoufoZGNV2DCx5bMQbQWKLBj1AXA0DjWt1nxO37Wf6ns1OToltTaeJm60pYcL63RuLrIueHomPrMlnKfCw==",
+  "signer_public_key": "EooxLFF4EQStz2l5n8BSvDE0hNwfvvV1TIYlzt6TYp0="
 }

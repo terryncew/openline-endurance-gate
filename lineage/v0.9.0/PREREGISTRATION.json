@@ -1,0 +1,38 @@
+{
+  "allowed_statuses": [
+    "PASSES_ALL_PREREGISTERED_V090_RECOVERY_GATES",
+    "MIXED_V090_RECOVERY_RESULT"
+  ],
+  "analysis_boundary": "The five conditions, fair SHA-256 comparator, cycle-80 intervention, 320-cycle horizon, seven separate gates, training seeds 9101-9108, validation seeds 9117-9124, and held-out seeds 9125-9156 were frozen before held-out execution.",
+  "claim_boundary": "In this controlled experiment, a compact verified handoff preserved specified state and changed post-intervention performance by the measured amount.",
+  "experiment_sha256": "119f95ec86ae49767755d89f26a76ece652307a81f2160f2b8a27aac87c4478b",
+  "external_anchor_status": "UNPUBLISHED_LOCAL_WITNESS",
+  "lineage_file": "V090_LINEAGE.json",
+  "lineage_sha256": "0bd565ffc386d6cef39a41a3c5790ee9754d54297d38651f2519f8980f173905",
+  "locked_design": {
+    "claim_label": "POWERED_SYNTHETIC_ENDURANCE_PHASE_CONTROLLED_LOAD_RATE_AND_RECOVERY_INTERVENTION",
+    "release_version": "0.9.0"
+  },
+  "mechanism_hashes": {
+    "src/openline_endurance_gate/damage.py": "8b9b90ef4cddfd0ec6f5e5f40252f0cd65de9f39bac881e69d0b119f8cb7c668",
+    "src/openline_endurance_gate/fractography.py": "0142d8051bf3ae9132ad0c8717f9ba8b514e6475da30cfd056704192940e344c",
+    "src/openline_endurance_gate/recovery.py": "5b1c73fc93f7f59efaf270b1e5535c38c93aa89bde60831dac0212c2455ea1d4",
+    "src/openline_endurance_gate/recovery_semantic.py": "499c1b5c580a3bfaea1ab21ac33e32709e637ac694831bacd1626a022d2fcd52",
+    "src/openline_endurance_gate/recovery_streaming.py": "93892034145e4367ec7babbeb10dd30a47864106abe6ff93239226b8c7d97f6b",
+    "src/openline_endurance_gate/recovery_worker.py": "cc4dfa186605e464c3076500b1fce9200dc6539cc14cdccd8afa9621c61cf118",
+    "src/openline_endurance_gate/world.py": "7436efaf81ab8d900e3895e461ed5e1c79586a1e9bf6d6aac9a8f2c82b9419cb"
+  },
+  "pass": 1,
+  "post_open_execution_amendment": null,
+  "release_version": "0.9.0",
+  "schema": "openline.endurance.preregistration.v6",
+  "v0.9.1_deferred": {
+    "fresh_seeds_required": true,
+    "hostile_controls": [
+      "stale_packet_replay",
+      "cross_run_packet_copy",
+      "signed_required_state_omission"
+    ],
+    "mechanism": ["run_id", "parent_hash", "generation_index", "verifier_held_state"]
+  }
+}

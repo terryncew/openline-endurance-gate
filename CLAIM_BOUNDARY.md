@@ -1,32 +1,27 @@
 # Claim Boundary
 
-## Supported inside this seeded synthetic world
+## Permitted v0.9.1 claim
 
-- The combined restoration stack met the preregistered absolute 160- and 320-cycle survival gates.
-- It preserved checkpoint accuracy relative to the verified-capsule baseline.
-- Survival at 320 was 82.5% for the stack and 43.75% for baseline.
-- The paired median stack-minus-baseline life difference was 0 cycles because 44 of 80 pairs tied.
-- Scheduled pruning, fixed retirement, adaptive retirement, and ECC each failed their preregistered material median-life gates.
-- A sham restart that preserved defects produced no material median benefit.
-- The pressure-disabled null showed no positive median advantage, while 18 of 80 seeds still favored the stack.
+> In this controlled experiment, a compact verified handoff preserved specified state and changed post-intervention performance by the measured amount.
 
-## Unsupported
+The measured amount is reported by condition and field in `results/recovery_summary.json`. There is no Recovery Score.
 
-- 160 cycles is an exact physical Coherence Dynamics boundary.
-- The synthetic `rolling_noise_epsilon`, `coherence_margin_proxy`, or `stability_lambda_proxy` identifies a deployed model's physical state.
-- Restarting a process purges semantic damage by itself.
-- The combined stack materially increases median lifetime; the preregistered paired median was zero.
-- The v0.7 policies generalize to any model, task, context window, or agent framework.
-- Reaching 320 synthetic cycles predicts a production service life.
+## What v0.9.1 tests
 
-## Telemetry boundary
+The experiment compares uninterrupted execution, empty reset, unverified full history, unsigned compact state with a plain SHA-256 checksum, and the same compact state protected by Ed25519, evidence hashes, eight chained receipts, and explicit coverage. All conditions receive event-bound common random draws over 320 cycles with one intervention at cycle 80.
 
-The three telemetry values are declared observables inside the simulator. They test whether a trigger policy can use rolling state pressure. Their names preserve the theoretical mapping, while the release makes no claim that the simulator has measured COLE Core variables in a real model.
+The checksum is a fair corruption comparator. Both compact tracks carry and check identical freshness fields, and clean behavior must remain equal. An attacker can rewrite those fields and recompute the unsigned checksum; the OLP signature prevents the same rebinding. The permitted Pass-2 mechanism claim is that this stateful binding rejects stale replay, cross-run copy, and counter rollback in the controlled verifier session while checksum-only binding does not.
 
-## Custody boundary
+## Excluded
 
-The experiment chain protects scientific artifacts relative to its local anchor. The detached release chain protects `RUN_REPORT.json` and `TAMPER_REPORT.json`. A full-write attacker can replace both chains, their keypairs, source, evidence, and anchors. An externally published witness digest is required to detect whole-repository replacement.
+This release does not claim ε, m, Λ, “coherence recovery,” a universal cycle-count law, that signing makes a runtime smarter, operational key security, or transfer to deployed agents. Damage and fractography values are secondary synthetic diagnostics. CPU and wall timing are environment-sensitive observations.
 
-## Lineage boundary
+Signatures alone do not establish completeness. A correctly signed packet missing required state remains `undecidable`; a definite freshness mismatch is `rejected`. The experiment uses synthetic alternate histories for replay tests and retains one real intervention at cycle 80.
 
-v0.7 independently recomputes the state-restoration extension. Prior v0.6 scientific artifacts are pinned byte-for-byte through `V060_LINEAGE.json`; the v0.7 gate does not rerun the inherited endurance, first-contact, collision-spacing, or generational worlds.
+## Inherited result
+
+The v0.9.0 Pass-1 recovery result remains byte-pinned in `lineage/v0.9.0`. v0.9.1 does not rewrite it.
+
+## Trust boundary
+
+Signatures establish integrity and origin relative to a declared key; they do not prove scientific truth. An attacker with full repository write access can replace source, artifacts, keys, and local anchors. External publication of the public witness or release anchor digest is required to detect whole-repository replacement.

@@ -1,0 +1,30 @@
+{
+  "common_random_design": "Event identity, order, amplitude, target, delta, and correction draw are condition-independent.",
+  "conditions": {
+    "continuous_control": "No handoff and no integrity mechanism.",
+    "empty_reset": "Fresh runtime without state.",
+    "full_history_handoff": "Fresh runtime receives unverified full history.",
+    "olp_handoff": "Compact packet with Ed25519, evidence hashes, chain integrity, and coverage.",
+    "unsigned_minimal_handoff": "Compact packet with plain unkeyed SHA-256 and no run binding."
+  },
+  "critical_pair_payload_equivalence": "Unsigned and OLP restore the same compact semantic payload in clean runs.",
+  "damage_status": "SECONDARY_DIAGNOSTIC_REUSING_EXISTING_SUBSTRATE_NOT_PHYSICAL_IDENTIFICATION",
+  "freshness_status": "DEFERRED_TO_V0.9.1_BY_PREREGISTERED_TWO_PASS_PLAN",
+  "hidden_truth_exposure": "evaluator_only_never_in_handoff_payload",
+  "horizon_cycles": 320,
+  "intervention_cycle": 80,
+  "question": "Can a fresh runtime continue from compact state, and does verification do work beyond compression?",
+  "release": "0.9.0",
+  "schema": "openline.endurance.recovery-design.v1",
+  "timing_status": "ENVIRONMENT_SENSITIVE_MEASURED_SEPARATELY_NOT_REPRODUCIBILITY_CLAIM",
+  "v091_reserved_controls": [
+    "stale_packet_replay",
+    "cross_run_packet_copy",
+    "signed_required_state_omission"
+  ],
+  "v091_reserved_fields": [
+    "run_id",
+    "generation_index",
+    "parent_hash"
+  ]
+}

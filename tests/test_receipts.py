@@ -28,10 +28,14 @@ def test_default_receipt_chain_is_signed_and_complete():
     amplitude_runs = len((ROOT / "results/amplitude_runs.csv").read_text().splitlines()) - 1
     assert result["valid"]
     assert result["completeness_verified"]
-    assert len(chain) == 2 + runs + amplitude_runs + 7
+    assert len(chain) == 2 + runs + amplitude_runs + 11
     assert sum(receipt["kind"] == "collision_aware_spacing" for receipt in chain) == 1
     assert sum(receipt["kind"] == "generational_endurance" for receipt in chain) == 1
     assert sum(receipt["kind"] == "state_restoration" for receipt in chain) == 1
+    assert sum(receipt["kind"] == "load_rate_transition" for receipt in chain) == 1
+    assert sum(receipt["kind"] == "load_rate_phase_controlled_replication" for receipt in chain) == 1
+    assert sum(receipt["kind"] == "recovery_intervention" for receipt in chain) == 1
+    assert sum(receipt["kind"] == "recovery_freshness_binding" for receipt in chain) == 1
 
 
 def test_detached_release_attestation_binds_post_run_reports():

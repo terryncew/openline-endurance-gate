@@ -1,0 +1,43 @@
+{
+  "claim_boundary": "The v0.8.1 phase-controlled evidence is pinned byte-for-byte. v0.9.0 adds only the preregistered Pass-1 recovery intervention; freshness/replay binding is deferred to v0.9.1 with fresh seeds.",
+  "inherited_artifact_hashes": {},
+  "release": "v0.8.1",
+  "schema": "openline.endurance.lineage.v6",
+  "snapshot_hashes": {
+    "lineage/v0.8.1/MANIFEST.json": "b6af5e6c7e7af7c8911953657aa7ebd5c3b3fd277d192ffe7ca8a16405cc7a1b",
+    "lineage/v0.8.1/PREREGISTRATION.json": "95b7b97b3493a1c1543957a5090358b6e292476728197f5e34a8c3eec40a3eca",
+    "lineage/v0.8.1/RUN_REPORT.json": "03239c3052af8c4ee6f3bc75dff305821c76d9016878f384c7bdafc0f540dd94",
+    "lineage/v0.8.1/TAMPER_REPORT.json": "1e93edcfaf34c6c992af31e36cf946075865363201cf58901f715ab39dd021e8",
+    "lineage/v0.8.1/experiment.json": "786b9e81bd4125c149988d00d472de90fc2e9be7288126485610c98812780925",
+    "lineage/v0.8.1/receipts/experiment.anchor.json": "fd395fe6492b1fb7b0c2065bae770f8ff76e8ad658405829dd5ee9c3f2ef90b8",
+    "lineage/v0.8.1/receipts/experiment.jsonl": "81e21f781550852cea0d3ffad2d459d5989155254a307598bd4d62e75d61eea0",
+    "lineage/v0.8.1/receipts/release.anchor.json": "8d5456345ff758a73098195bbcb6a009c62a4773d413f1055027bdb67223131d",
+    "lineage/v0.8.1/receipts/release.jsonl": "13d7542f89adfb73043cc53792d47105010c2492d2d5bc3f30d0c5c34ab911b2",
+    "lineage/v0.8.1/results/cycle_roots.json": "67c5cd7fb8c76f55f8ae54b5b09a27be5d5cfbbdfd65961ff379740fb8625f36",
+    "lineage/v0.8.1/results/heldout_witness.json": "545e661ff563af5059b0e88f1538a2d1b2a7a49adeeced0032f61b305a184b36",
+    "lineage/v0.8.1/results/load_rate_design_witness.json": "5cc362d784158a56491e4b1601e15032674c53e83e943eaa3a4506c9508c894f",
+    "lineage/v0.8.1/results/load_rate_summary.json": "2d244b8938d94ffe4a685e1946c342a5f760044bd8e4e2965968a024732d22f3",
+    "lineage/v0.8.1/results/load_rate_summary.md": "42be50c01719b4669848fc704c2108b3f83f5bcc6fc1d8a04079a46dcacafb94",
+    "lineage/v0.8.1/results/public_witness.json": "01d39d06bfbd7d278d9aac295f123a7cc9d39ed967c6ed77d0531eb05a3b1f0f",
+    "lineage/v0.8.1/results/summary.json": "2293f3001f1ac9c2c23f86078a1f3f0edfabe4fd2128a79b588cf8cb03b967db",
+    "lineage/v0.8.1/results/summary.md": "81d1ff01e75ebe596df21e9a5a43e117a6d497b7ad43fe1d038c0eedcb1e9adc"
+  },
+  "source_zip_sha256": "5755a09191b9d244d7343e3f22b816ca4906c588897bf0e194303440f96dd74a",
+  "unchanged_mechanism_hashes": {
+    "src/openline_endurance_gate/amplitude.py": "8d42124eb30cc428968531739d39bf2ea79cfc7eb406826c07b2a12d268d047b",
+    "src/openline_endurance_gate/collision_spacing.py": "5343df4aff9224ab2d8979814fba7ad8bb736434ec8c6b6c42f728d57cec824a",
+    "src/openline_endurance_gate/damage.py": "8b9b90ef4cddfd0ec6f5e5f40252f0cd65de9f39bac881e69d0b119f8cb7c668",
+    "src/openline_endurance_gate/fractography.py": "0142d8051bf3ae9132ad0c8717f9ba8b514e6475da30cfd056704192940e344c",
+    "src/openline_endurance_gate/generational.py": "1301690bcf1a49af4d29d9754cb5de09818aed3935f180c0a71cad35e39efc15",
+    "src/openline_endurance_gate/load_rate.py": "44aa1c3a3ed943c3a7dfe8ba79127adfc2019914c638d94307b199c946dc4bf9",
+    "src/openline_endurance_gate/rate_streaming.py": "a49b99c0fc15fbbd9c3275d273541e2517129dc0f5602060cc5770b24f8829bd",
+    "src/openline_endurance_gate/rate_worker.py": "5ccc48c3ead402f4e47cd6c742f5d3e716f2d827d0bb0261097b115bef939e78",
+    "src/openline_endurance_gate/restoration_stream.py": "e14fe2bb6622bf8adf92336cf207976d3d6d4d28ce46d55cd67781967c09c1a4",
+    "src/openline_endurance_gate/restoration_worker.py": "a2d03165645309b815c8f5b91ebdf3d7def849431a1740a9de29788700df10d2",
+    "src/openline_endurance_gate/sim.py": "0f84cb1ba9142b62b2142b9fbb976246d957b7e39c0a6437fff08164d8807e3d",
+    "src/openline_endurance_gate/state_restoration.py": "6ed7c2eac35a518d607107f3eb729f3b37fdbe54b66d4248602fcb6026e6a16a",
+    "src/openline_endurance_gate/statistics.py": "026ace9d859f6be2ba7d390750eea101272335cd0cdfc308d56f92e0cf10073a",
+    "src/openline_endurance_gate/tip_capture.py": "c198afa4a460600a54d636db194e527b9b75232158182201d06fc2b92aac77d0",
+    "src/openline_endurance_gate/world.py": "7436efaf81ab8d900e3895e461ed5e1c79586a1e9bf6d6aac9a8f2c82b9419cb"
+  }
+}

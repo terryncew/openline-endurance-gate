@@ -22,19 +22,26 @@ from .damage import (
 )
 from .experiment import (
     BASE_SEMANTIC_ARTIFACTS, V6_SEMANTIC_ARTIFACTS, V7_SEMANTIC_ARTIFACTS,
+    V8_SEMANTIC_ARTIFACTS, V9_SEMANTIC_ARTIFACTS, V91_SEMANTIC_ARTIFACTS,
     _design_witness, combine_summaries, load_experiment,
 )
 from .fractography import analyze_fractography
 from .generational import (
     analyze_generational_endurance, generational_design_witness, simulate_generational_endurance,
 )
+from .load_rate import analyze_load_rate, load_rate_design_witness, read_gzip_csv
+from .rate_streaming import CountedRows, load_rate_shard_names, stream_load_rate
+from .recovery import analyze_recovery, recovery_design_witness, run_hostile_controls
+from .recovery_streaming import recovery_shard_names, stream_recovery
+from .recovery_worker import semantic_handoff
 from .state_restoration import (
     analyze_state_restoration, state_restoration_design_witness,
 )
 from .restoration_stream import cycle_shard_names, stream_state_restoration
 from .integrity import (
-    build_public_witness, merkle_root, verify_preregistration,
-    verify_v040_lineage, verify_v050_lineage, verify_v060_lineage,
+    _artifact_normalize, build_public_witness, merkle_root, verify_preregistration,
+    verify_v040_lineage, verify_v050_lineage, verify_v060_lineage, verify_v070_lineage,
+    verify_v080_lineage, verify_v090_lineage, verify_v091_lineage,
 )
 from .receipts import read_chain, verify_chain
 from .release_attestation import verify_release_attestation
@@ -78,6 +85,24 @@ INT_FIELDS = {
     "capsule_boundary", "restoration_triggered", "restored_requirement_count", "pruned_tokens",
     "ecc_corrections", "critical_omission_count", "total_restorations", "total_pruned_tokens",
     "total_ecc_corrections", "restorations",
+    "packet_present", "packet_accepted", "packet_rejected", "checksum_valid", "signature_valid",
+    "signer_bound", "session_bound", "sequence_bound", "parent_bound", "coverage_complete",
+    "unsafe_packet_accepted", "recovery_attempted", "recovery_succeeded", "continuity_failed",
+    "payload_bytes", "wire_bytes", "first_failure_this_boundary", "failed_by_boundary",
+    "handoffs", "attacked_handoffs", "packets_accepted", "packets_rejected",
+    "attack_packets_rejected", "unsafe_packets_accepted", "recoveries_attempted",
+    "recoveries_succeeded", "continuity_failures",
+    "tick", "block", "disturbance_index", "ordinary_index", "trailing_disturbance_count",
+    "ordinary_repair_attempt", "ordinary_repair_success", "failed_by_tick", "disturbances_seen",
+    "disturbances_at_failure", "total_token_work", "horizon_ticks", "n_f_ticks",
+    "final_disturbances_seen", "critical_omission_events", "peak_critical_omissions",
+    "first_failure_tick",
+    "intervention_cycle", "same_failure_returned", "same_failure_return_cycle",
+    "cycles_until_same_failure_returns", "correct_decisions_post_handoff",
+    "decision_opportunities_post_handoff", "policy_violations", "retained_retry_demand",
+    "retained_latency_floor", "retained_risk_tolerance", "retained_memory_horizon",
+    "retained_handoff_depth", "retained_token_capacity", "packet_bytes", "packet_tokens",
+    "evidence_reads", "accepted_handoffs", "rejected_handoffs", "undecidable_handoffs",
 }
 FLOAT_FIELDS = {
     "difficulty", "config_accuracy", "requirement_accuracy", "context_pressure", "handoff_loss", "kappa",
@@ -99,6 +124,15 @@ FLOAT_FIELDS = {
     "critical_omission_rate_320", "rolling_noise_epsilon", "structural_defect",
     "coherence_margin_proxy", "stability_lambda_proxy", "mean_epsilon_160", "mean_epsilon_320",
     "minimum_margin_160", "minimum_margin_320",
+    "mean_requirement_accuracy",
+    "critical_omission_rate",
+    "mean_payload_bytes",
+    "mean_wire_bytes",
+    "mean_active_context_tokens",
+    "instantaneous_rate", "rolling_rate_burden", "peak_rate_so_far", "checkpoint_accuracy",
+    "synthetic_damage", "mean_critical_omissions", "peak_instantaneous_rate",
+    "peak_rolling_rate_burden", "synthetic_damage_auc", "minimum_checkpoint_accuracy",
+    "post_handoff_decision_accuracy",
 }
 
 
@@ -358,7 +392,7 @@ def _verify_v6_semantics(root: Path, experiment: dict[str, Any], manifest: dict[
         semantic_errors.append("generational_cycles_recompute_mismatch")
     if fresh_run_root != stored_run_root:
         semantic_errors.append("generational_runs_recompute_mismatch")
-    if not _close(runs, stored_runs, 1e-7):
+    if not _close(_artifact_normalize(runs), stored_runs, 1e-7):
         semantic_errors.append("generational_run_metrics_recompute_mismatch")
 
     generational_summary = analyze_generational_endurance(runs, experiment)
@@ -451,7 +485,7 @@ def _verify_v7_semantics_from_streamed(
     fresh_run_root = streamed["run_merkle_root"]
     if fresh_run_root != stored_run_root:
         semantic_errors.append("state_restoration_runs_recompute_mismatch")
-    if not _close(runs, stored_runs, 1e-7):
+    if not _close(_artifact_normalize(runs), stored_runs, 1e-7):
         semantic_errors.append("state_restoration_run_metrics_recompute_mismatch")
 
     restoration_summary = analyze_state_restoration(runs, experiment)
@@ -524,6 +558,292 @@ def _verify_v7_semantics(root: Path, experiment: dict[str, Any], manifest: dict[
             root, experiment, manifest, evidence, streamed, shard_errors
         )
 
+
+def _v8_expected_summary(root: Path, experiment: dict[str, Any], rate_summary: dict[str, Any]) -> dict[str, Any]:
+    is_v081 = str(experiment.get("release_version")) == "0.8.1"
+    lineage_root = root / ("lineage/v0.8.0" if is_v081 else "lineage/v0.7.0")
+    old_summary = json.loads((lineage_root / "results/summary.json").read_text(encoding="utf-8"))
+    summary = dict(old_summary)
+    summary["claim_label"] = "POWERED_SYNTHETIC_ENDURANCE_AND_PHASE_CONTROLLED_LOAD_RATE_REPLICATION" if is_v081 else "POWERED_SYNTHETIC_ENDURANCE_AND_LOAD_RATE_TRANSITION"
+    if is_v081:
+        summary["load_rate_v080_result_preserved"] = old_summary.get("load_rate")
+    summary["load_rate"] = rate_summary
+    summary["legacy_v070_result_preserved"] = {
+        "theory_status": old_summary["theory_status"],
+        "passed_gate_count": old_summary["passed_gate_count"],
+        "gate_count": old_summary["gate_count"],
+        "state_restoration_status": old_summary.get("state_restoration", {}).get("status"),
+        "state_restoration_passed_gate_count": old_summary.get("state_restoration", {}).get("passed_gate_count"),
+        "state_restoration_gate_count": old_summary.get("state_restoration", {}).get("gate_count"),
+    }
+    return summary
+
+
+def _verify_v8_semantics_from_streamed(
+    root: Path,
+    experiment: dict[str, Any],
+    manifest: dict[str, Any],
+    evidence: dict[str, Any],
+    streamed_rate: dict[str, Any],
+    shard_errors: list[str] | None = None,
+) -> list[str]:
+    semantic_errors: list[str] = list(shard_errors or [])
+    config = experiment["load_rate"]
+    stored_run_root, stored_run_count = _csv_merkle_root(root / "results/load_rate_runs.csv")
+    stored_runs = _coerce(read_csv(root / "results/load_rate_runs.csv"))
+    expected_runs = len(config["seeds"]) * len(config["worlds"]) * len(config["modes"]) * len(config["schedules"])
+    expected_cycles = expected_runs * int(config["horizon_ticks"])
+    if stored_run_count != expected_runs:
+        semantic_errors.append(f"load_rate_run_count:{stored_run_count}:{expected_runs}")
+
+    runs = streamed_rate["runs"]
+    fresh_roots = {
+        "load_rate_cycle_merkle_root": streamed_rate["cycle_merkle_root"],
+        "load_rate_cycle_count": streamed_rate["cycle_count"],
+        "load_rate_run_merkle_root": streamed_rate["run_merkle_root"],
+        "load_rate_run_count": streamed_rate["run_count"],
+    }
+    if fresh_roots["load_rate_cycle_count"] != expected_cycles:
+        semantic_errors.append(f"load_rate_cycle_count:{fresh_roots['load_rate_cycle_count']}:{expected_cycles}")
+    if fresh_roots["load_rate_run_count"] != expected_runs:
+        semantic_errors.append(f"load_rate_fresh_run_count:{fresh_roots['load_rate_run_count']}:{expected_runs}")
+    if fresh_roots["load_rate_run_merkle_root"] != stored_run_root:
+        semantic_errors.append("load_rate_runs_recompute_mismatch")
+    if not _close(_artifact_normalize(runs), stored_runs, 1e-7):
+        semantic_errors.append("load_rate_run_metrics_recompute_mismatch")
+
+    rate_summary = analyze_load_rate(CountedRows(fresh_roots["load_rate_cycle_count"]), runs, experiment)
+    stored_rate_summary = json.loads((root / "results/load_rate_summary.json").read_text(encoding="utf-8"))
+    if not _close(rate_summary, stored_rate_summary, 1e-7):
+        semantic_errors.append("load_rate_summary_recompute_mismatch")
+    design = load_rate_design_witness(experiment)
+    stored_design = json.loads((root / "results/load_rate_design_witness.json").read_text(encoding="utf-8"))
+    if not _close(design, stored_design):
+        semantic_errors.append("load_rate_design_witness_recompute_mismatch")
+
+    summary = _v8_expected_summary(root, experiment, rate_summary)
+    stored_summary = json.loads((root / "results/summary.json").read_text(encoding="utf-8"))
+    if not _close(summary, stored_summary, 1e-7):
+        semantic_errors.append("summary_semantic_recompute_mismatch")
+
+    is_v081 = str(experiment.get("release_version")) == "0.8.1"
+    lineage_root = root / ("lineage/v0.8.0" if is_v081 else "lineage/v0.7.0")
+    roots = json.loads((lineage_root / "results/cycle_roots.json").read_text(encoding="utf-8"))
+    roots = dict(roots)
+    roots["schema"] = "openline.endurance.cycle-roots.v6" if is_v081 else "openline.endurance.cycle-roots.v5"
+    if is_v081:
+        roots["load_rate_v080_cycle_merkle_root"] = roots.get("load_rate_cycle_merkle_root")
+        roots["load_rate_v080_cycle_count"] = roots.get("load_rate_cycle_count")
+        roots["load_rate_v080_run_merkle_root"] = roots.get("load_rate_run_merkle_root")
+        roots["load_rate_v080_run_count"] = roots.get("load_rate_run_count")
+    roots.update(fresh_roots)
+    stored_roots = json.loads((root / "results/cycle_roots.json").read_text(encoding="utf-8"))
+    if not _close(roots, stored_roots):
+        semantic_errors.append("cycle_merkle_root_recompute_mismatch")
+    for key, value in roots.items():
+        if key.endswith("_merkle_root") and evidence.get(key) != value:
+            semantic_errors.append(f"evidence_{key}_mismatch")
+
+    additional_roots = {
+        key: value for key, value in roots.items()
+        if key.endswith("_merkle_root") and key not in {"primary_cycle_merkle_root", "amplitude_cycle_merkle_root"}
+    }
+    public_witness = build_public_witness(
+        root, experiment, summary, manifest["source_tree_digest"],
+        roots["primary_cycle_merkle_root"], roots["amplitude_cycle_merkle_root"],
+        additional_roots, list(V8_SEMANTIC_ARTIFACTS),
+    )
+    stored_public_witness = json.loads((root / "results/public_witness.json").read_text(encoding="utf-8"))
+    if not _close(public_witness, stored_public_witness):
+        semantic_errors.append("public_witness_recompute_mismatch")
+    if evidence.get("public_witness_digest") != public_witness["witness_digest"]:
+        semantic_errors.append("evidence_public_witness_digest_mismatch")
+    return semantic_errors
+
+
+def _verify_v8_semantics(root: Path, experiment: dict[str, Any], manifest: dict[str, Any], evidence: dict[str, Any]) -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="openline-v8-rate-verify-") as temp_dir:
+        temp_root = Path(temp_dir)
+        streamed_rate = stream_load_rate(experiment, temp_root)
+        shard_errors = []
+        for name in load_rate_shard_names(experiment):
+            stored = root / "results" / name
+            fresh = temp_root / "results" / name
+            if not stored.exists() or sha256_file(stored) != sha256_file(fresh):
+                shard_errors.append(f"load_rate_cycle_shard_recompute_mismatch:{name}")
+        return _verify_v8_semantics_from_streamed(
+            root, experiment, manifest, evidence, streamed_rate, shard_errors
+        )
+
+
+def _v9_expected_summary(
+    root: Path, recovery_summary: dict[str, Any], experiment: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    experiment = experiment or json.loads((root / "experiment.json").read_text(encoding="utf-8"))
+    is_v091 = experiment.get("schema") == "openline.endurance.experiment.v10"
+    lineage_root = root / ("lineage/v0.9.0" if is_v091 else "lineage/v0.8.1")
+    old = json.loads((lineage_root / "results/summary.json").read_text(encoding="utf-8"))
+    summary = dict(old)
+    summary["claim_label"] = (
+        "POWERED_SYNTHETIC_ENDURANCE_AND_STATEFUL_FRESHNESS_BOUND_RECOVERY"
+        if is_v091 else "POWERED_SYNTHETIC_ENDURANCE_PHASE_CONTROLLED_LOAD_RATE_AND_RECOVERY_INTERVENTION"
+    )
+    if is_v091:
+        summary["recovery_v090_result_preserved"] = old.get("recovery")
+    summary["recovery"] = recovery_summary
+    if is_v091:
+        summary["legacy_v090_result_preserved"] = {
+            "recovery_status": old.get("recovery", {}).get("status"),
+            "recovery_passed_gate_count": old.get("recovery", {}).get("passed_gate_count"),
+            "recovery_gate_count": old.get("recovery", {}).get("gate_count"),
+        }
+    else:
+        summary["legacy_v081_result_preserved"] = {
+            "load_rate": old.get("load_rate"), "theory_status": old.get("theory_status"),
+            "passed_gate_count": old.get("passed_gate_count"), "gate_count": old.get("gate_count"),
+        }
+    return summary
+
+
+def _timing_valid(summary: dict[str, Any]) -> bool:
+    timing = summary.get("timing_observations", {})
+    if timing.get("status") != "ENVIRONMENT_SENSITIVE_EXCLUDED_FROM_REPRODUCIBILITY_CLAIMS":
+        return False
+    for fields in timing.get("by_mode", {}).values():
+        for values in fields.values():
+            for key in ("median", "minimum", "maximum"):
+                value = values.get(key)
+                if value is not None and (not isinstance(value, int) or value < 0):
+                    return False
+    return True
+
+
+def _verify_v9_semantics_from_streamed(
+    root: Path, experiment: dict[str, Any], manifest: dict[str, Any], evidence: dict[str, Any],
+    streamed: dict[str, Any], shard_errors: list[str] | None = None,
+) -> list[str]:
+    errors: list[str] = list(shard_errors or [])
+    config = experiment["recovery"]
+    expected_runs = len(config["seeds"]) * len(config["modes"])
+    expected_cycles = expected_runs * int(config["horizon_cycles"])
+    stored_run_root, stored_run_count = _csv_merkle_root(root / "results/recovery_runs.csv")
+    stored_runs = _coerce(read_csv(root / "results/recovery_runs.csv"))
+    if stored_run_count != expected_runs:
+        errors.append(f"recovery_run_count:{stored_run_count}:{expected_runs}")
+    if int(streamed["cycle_count"]) != expected_cycles:
+        errors.append(f"recovery_cycle_count:{streamed['cycle_count']}:{expected_cycles}")
+    if int(streamed["run_count"]) != expected_runs:
+        errors.append(f"recovery_fresh_run_count:{streamed['run_count']}:{expected_runs}")
+    if streamed["run_merkle_root"] != stored_run_root:
+        errors.append("recovery_runs_recompute_mismatch")
+    if not _close(_artifact_normalize(streamed["runs"]), stored_runs, 1e-7):
+        errors.append("recovery_run_metrics_recompute_mismatch")
+
+    stored_handoffs = [
+        json.loads(line) for line in (root / "results/recovery_handoffs.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    stored_handoff_root = merkle_root([semantic_handoff(row) for row in stored_handoffs])
+    if len(stored_handoffs) != expected_runs:
+        errors.append(f"recovery_handoff_count:{len(stored_handoffs)}:{expected_runs}")
+    if streamed["handoff_semantic_merkle_root"] != stored_handoff_root:
+        errors.append("recovery_handoff_semantics_recompute_mismatch")
+
+    hostile = run_hostile_controls()
+    stored_hostile = json.loads((root / "results/recovery_hostile_controls.json").read_text(encoding="utf-8"))
+    if not _close(hostile, stored_hostile):
+        errors.append("recovery_hostile_controls_recompute_mismatch")
+    cycles: list[dict[str, Any]] = []
+    for name in recovery_shard_names(experiment):
+        cycles.extend(read_gzip_csv(root / "results" / name))
+    fresh_recovery = analyze_recovery(cycles, streamed["runs"], experiment, hostile)
+    stored_recovery = json.loads((root / "results/recovery_summary.json").read_text(encoding="utf-8"))
+    timing = stored_recovery.get("timing_observations")
+    comparable_stored = {key: value for key, value in stored_recovery.items() if key != "timing_observations"}
+    if not _close(fresh_recovery, comparable_stored, 1e-7):
+        errors.append("recovery_summary_recompute_mismatch")
+    if timing is None or not _timing_valid(stored_recovery):
+        errors.append("recovery_timing_observations_invalid")
+    recovery_with_timing = {**fresh_recovery, "timing_observations": timing}
+
+    design = recovery_design_witness(experiment)
+    stored_design = json.loads((root / "results/recovery_design_witness.json").read_text(encoding="utf-8"))
+    if not _close(design, stored_design):
+        errors.append("recovery_design_witness_recompute_mismatch")
+    summary = _v9_expected_summary(root, recovery_with_timing, experiment)
+    stored_summary = json.loads((root / "results/summary.json").read_text(encoding="utf-8"))
+    if not _close(summary, stored_summary, 1e-7):
+        errors.append("summary_semantic_recompute_mismatch")
+
+    is_v091 = experiment.get("schema") == "openline.endurance.experiment.v10"
+    lineage_root = root / ("lineage/v0.9.0" if is_v091 else "lineage/v0.8.1")
+    roots = dict(json.loads((lineage_root / "results/cycle_roots.json").read_text(encoding="utf-8")))
+    roots["schema"] = "openline.endurance.cycle-roots.v8" if is_v091 else "openline.endurance.cycle-roots.v7"
+    if is_v091:
+        roots.update({
+            "recovery_v090_cycle_merkle_root": roots.get("recovery_cycle_merkle_root"),
+            "recovery_v090_cycle_count": roots.get("recovery_cycle_count"),
+            "recovery_v090_run_merkle_root": roots.get("recovery_run_merkle_root"),
+            "recovery_v090_run_count": roots.get("recovery_run_count"),
+            "recovery_v090_handoff_semantic_merkle_root": roots.get("recovery_handoff_semantic_merkle_root"),
+            "recovery_v090_handoff_count": roots.get("recovery_handoff_count"),
+        })
+    roots.update({
+        "recovery_cycle_merkle_root": streamed["cycle_merkle_root"],
+        "recovery_cycle_count": streamed["cycle_count"],
+        "recovery_run_merkle_root": streamed["run_merkle_root"],
+        "recovery_run_count": streamed["run_count"],
+        "recovery_handoff_semantic_merkle_root": streamed["handoff_semantic_merkle_root"],
+        "recovery_handoff_count": streamed["handoff_count"],
+    })
+    stored_roots = json.loads((root / "results/cycle_roots.json").read_text(encoding="utf-8"))
+    if not _close(roots, stored_roots):
+        errors.append("cycle_merkle_root_recompute_mismatch")
+    for key, value in roots.items():
+        if key.endswith("_merkle_root") and evidence.get(key) != value:
+            errors.append(f"evidence_{key}_mismatch")
+
+    module_gate = json.loads((root / "RECOVERY_RELEASE_GATE.json").read_text(encoding="utf-8"))
+    for relative, expected in module_gate.get("artifact_hashes", {}).items():
+        candidate = root / relative
+        if not candidate.exists() or sha256_file(candidate) != expected:
+            errors.append(f"recovery_release_gate_hash_mismatch:{relative}")
+    if not module_gate.get("passed"):
+        errors.append("recovery_release_gate_not_passed")
+
+    additional_roots = {
+        key: value for key, value in roots.items()
+        if key.endswith("_merkle_root") and key not in {"primary_cycle_merkle_root", "amplitude_cycle_merkle_root"}
+    }
+    public = build_public_witness(
+        root, experiment, summary, manifest["source_tree_digest"],
+        roots["primary_cycle_merkle_root"], roots["amplitude_cycle_merkle_root"],
+        additional_roots, list(V91_SEMANTIC_ARTIFACTS if is_v091 else V9_SEMANTIC_ARTIFACTS),
+    )
+    stored_public = json.loads((root / "results/public_witness.json").read_text(encoding="utf-8"))
+    if not _close(public, stored_public):
+        errors.append("public_witness_recompute_mismatch")
+    if evidence.get("public_witness_digest") != public["witness_digest"]:
+        errors.append("evidence_public_witness_digest_mismatch")
+    return errors
+
+
+def _verify_v9_semantics(
+    root: Path, experiment: dict[str, Any], manifest: dict[str, Any], evidence: dict[str, Any],
+) -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="openline-v9-recovery-verify-") as temp_dir:
+        temp_root = Path(temp_dir)
+        streamed = stream_recovery(experiment, temp_root)
+        shard_errors: list[str] = []
+        for name in recovery_shard_names(experiment):
+            stored, fresh = root / "results" / name, temp_root / "results" / name
+            if not stored.exists() or sha256_file(stored) != sha256_file(fresh):
+                shard_errors.append(f"recovery_cycle_shard_recompute_mismatch:{name}")
+        return _verify_v9_semantics_from_streamed(
+            root, experiment, manifest, evidence, streamed, shard_errors,
+        )
+
+
 def verify_evidence(
     root: Path,
     source_root: Path | None = None,
@@ -555,6 +875,83 @@ def verify_evidence(
         errors.append("evidence_source_digest_mismatch")
 
     experiment_for_branch = load_experiment(root / "experiment.json")
+
+    if experiment_for_branch.get("schema") in {"openline.endurance.experiment.v9", "openline.endurance.experiment.v10"}:
+        is_v091 = experiment_for_branch.get("schema") == "openline.endurance.experiment.v10"
+        errors.extend(verify_v070_lineage(root))
+        errors.extend(verify_v080_lineage(root))
+        errors.extend(verify_v090_lineage(root))
+        if is_v091:
+            errors.extend(verify_v091_lineage(root))
+        semantic_errors = _verify_v9_semantics(root, experiment_for_branch, manifest, evidence) if full_semantic else []
+        errors.extend(semantic_errors)
+        release_result = (
+            verify_release_attestation(root)
+            if verify_release else {"valid": True, "skipped": True, "errors": []}
+        )
+        if verify_release:
+            errors.extend(release_result["errors"])
+        return {
+            "valid": not errors, "chain": chain_result,
+            "artifact_binding_valid": not any(
+                error == "evidence_receipt_count_mismatch"
+                or error.startswith("evidence_missing:")
+                or error.startswith("evidence_hash_mismatch:")
+                or error == "evidence_source_digest_mismatch"
+                or error.startswith("manifest_")
+                or error.startswith("preregistration_")
+                or error.startswith("v090_lineage_")
+                or error.startswith("v070_lineage_")
+                or error.startswith("v080_lineage_")
+                or error.startswith("v091_lineage_")
+                or error == "source_tree_digest_mismatch"
+                for error in errors
+            ),
+            "semantic_recomputation_valid": not semantic_errors,
+            "lineage_binding_valid": not any(
+                error.startswith(("v070_lineage_", "v080_lineage_", "v090_lineage_", "v091_lineage_"))
+                for error in errors
+            ),
+            "release_attestation_valid": bool(release_result["valid"]),
+            "release_attestation": release_result, "errors": errors,
+        }
+    if experiment_for_branch.get("schema") == "openline.endurance.experiment.v8":
+        is_v081 = str(experiment_for_branch.get("release_version")) == "0.8.1"
+        if is_v081:
+            errors.extend(verify_v070_lineage(root))
+            errors.extend(verify_v080_lineage(root))
+        else:
+            errors.extend(verify_v070_lineage(root))
+        semantic_errors = _verify_v8_semantics(root, experiment_for_branch, manifest, evidence) if full_semantic else []
+        errors.extend(semantic_errors)
+        release_result = (
+            verify_release_attestation(root)
+            if verify_release
+            else {"valid": True, "skipped": True, "errors": []}
+        )
+        if verify_release:
+            errors.extend(release_result["errors"])
+        return {
+            "valid": not errors,
+            "chain": chain_result,
+            "artifact_binding_valid": not any(
+                error == "evidence_receipt_count_mismatch"
+                or error.startswith("evidence_missing:")
+                or error.startswith("evidence_hash_mismatch:")
+                or error == "evidence_source_digest_mismatch"
+                or error.startswith("manifest_")
+                or error.startswith("preregistration_")
+                or error.startswith("v070_lineage_")
+                or error.startswith("v080_lineage_")
+                or error == "source_tree_digest_mismatch"
+                for error in errors
+            ),
+            "semantic_recomputation_valid": not semantic_errors,
+            "lineage_binding_valid": not any(error.startswith("v070_lineage_") for error in errors),
+            "release_attestation_valid": bool(release_result["valid"]),
+            "release_attestation": release_result,
+            "errors": errors,
+        }
     if experiment_for_branch.get("schema") == "openline.endurance.experiment.v7":
         errors.extend(verify_v060_lineage(root))
         semantic_errors = _verify_v7_semantics(root, experiment_for_branch, manifest, evidence) if full_semantic else []

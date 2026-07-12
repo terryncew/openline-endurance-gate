@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from openline_endurance_gate.integrity import verify_preregistration
+from openline_endurance_gate.integrity import verify_preregistration, verify_v091_lineage
 from openline_endurance_gate.util import sha256_file
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,14 +10,18 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_preregistration_locks_experiment_and_mechanisms():
     assert verify_preregistration(ROOT) == []
     prereg = json.loads((ROOT / "PREREGISTRATION.json").read_text())
-    assert prereg["schema"] == "openline.endurance.preregistration.v4"
+    assert prereg["schema"] == "openline.endurance.preregistration.v7"
     assert prereg["experiment_sha256"] == sha256_file(ROOT / "experiment.json")
-    assert prereg["locked_design"]["randomness_coupling"] == "EVENT_BOUND_COMMON_RANDOM_NUMBERS"
-    assert prereg["locked_design"]["tip_capture"]["analysis_plan"]["heldout_seed_count"] == 80
-    assert prereg["locked_design"]["generational_endurance"]["analysis_plan"]["minimum_pairs"] == 80
-    assert prereg["locked_design"]["state_restoration"]["analysis_plan"]["minimum_pairs"] == 80
-    assert prereg["locked_design"]["state_restoration"]["fixed_retirement_interval_cycles"] == 85
-    assert prereg["lineage_file"] == "V060_LINEAGE.json"
+    assert prereg["locked_design"]["release_version"] == "0.9.1"
+    assert prereg["lineage_file"] == "V091_LINEAGE.json"
+    assert prereg["pass"] == 2
+    assert prereg["freshness_binding"]["verifier_state_updates"] == "caller_applies_proposed_update_only_on_acceptance"
+    assert prereg["freshness_binding"]["hostile_controls"] == [
+        "stale_packet_replay", "cross_run_packet_copy", "generation_rollback", "same_packet_replay",
+    ]
+    assert prereg["fresh_seed_status"] == "NO_V0.9.0_RECOVERY_SEED_REUSED"
+    assert "src/openline_endurance_gate/recovery.py" in prereg["mechanism_hashes"]
+    assert verify_v091_lineage(ROOT) == []
 
 
 def test_public_witness_is_compact_and_self_scoped():

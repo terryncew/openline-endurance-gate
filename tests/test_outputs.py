@@ -40,6 +40,16 @@ def test_default_run_has_expected_powered_artifacts_and_heldout_split():
             cycle_count += sum(1 for _ in csv.DictReader(handle))
     assert cycle_count == len(restoration["seeds"]) * 9 * restoration["max_horizon_cycles"]
 
+    rate = experiment["load_rate"]
+    assert len(read_csv(ROOT / "results/load_rate_runs.csv")) == len(rate["seeds"]) * len(rate["worlds"]) * len(rate["modes"]) * len(rate["schedules"])
+    rate_cycle_count = 0
+    rate_shards = sorted((ROOT / "results").glob("load_rate_cycles.part-*.csv.gz"))
+    assert len(rate_shards) == 12
+    for shard in rate_shards:
+        with gzip.open(shard, "rt", newline="", encoding="utf-8") as handle:
+            rate_cycle_count += sum(1 for _ in csv.DictReader(handle))
+    assert rate_cycle_count == len(rate["seeds"]) * len(rate["worlds"]) * len(rate["modes"]) * len(rate["schedules"]) * rate["horizon_ticks"]
+
 
 def test_summary_exposes_every_gate_and_power_boundary():
     summary = json.loads((ROOT / "results/summary.json").read_text())
@@ -82,6 +92,33 @@ def test_design_and_fractography_witnesses_are_present():
     assert restoration_design["fixed_retirement_interval_cycles"] == 85
     assert restoration_design["telemetry_status"] == "SYNTHETIC_PROXY_NOT_PHYSICAL_IDENTIFICATION"
     assert restoration_summary["gate_count"] == 9
+
+    rate_design = json.loads((ROOT / "results/load_rate_design_witness.json").read_text())
+    rate_summary = json.loads((ROOT / "results/load_rate_summary.json").read_text())
+    assert rate_design["all_matching_checks_pass"]
+    assert rate_design["matching_checks"]["recovery_windows_contain_ordinary_work"]
+    assert rate_design["matching_checks"]["same_persistent_context_growth_by_disturbance_index"]
+    assert rate_summary["heldout_seed_count"] == 80
+    assert rate_summary["gate_count"] == 4
+    assert rate_summary["passed_gate_count"] == 4
+    assert "per_mode_null_effects" in rate_summary
+    assert rate_summary["primary_effect"]["unit"] == "disturbances_survived_before_critical_failure"
+
+    recovery = json.loads((ROOT / "experiment.json").read_text())["recovery"]
+    recovery_runs = read_csv(ROOT / "results/recovery_runs.csv")
+    assert len(recovery_runs) == len(recovery["seeds"]) * len(recovery["modes"])
+    recovery_cycle_count = 0
+    recovery_shards = sorted((ROOT / "results").glob("recovery_cycles.part-*.csv.gz"))
+    assert len(recovery_shards) == (len(recovery["seeds"]) + 7) // 8
+    for shard in recovery_shards:
+        with gzip.open(shard, "rt", newline="", encoding="utf-8") as handle:
+            recovery_cycle_count += sum(1 for _ in csv.DictReader(handle))
+    assert recovery_cycle_count == len(recovery["seeds"]) * len(recovery["modes"]) * recovery["horizon_cycles"]
+    recovery_summary = json.loads((ROOT / "results/recovery_summary.json").read_text())
+    assert recovery_summary["gate_count"] == 8
+    assert recovery_summary["freshness_binding"]["verifier_state_updates"] == "caller_applies_proposed_update_only_on_acceptance"
+    assert recovery_summary["freshness_binding"]["seed_status"].startswith("fresh v0.9.1")
+    assert recovery_summary["gates"]["unsigned_checksum_cannot_prevent_replay_even_with_identical_fields"]["passed"]
 
 
 def test_fast_custody_verifier_passes_default_artifacts():

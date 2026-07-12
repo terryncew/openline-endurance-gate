@@ -136,3 +136,116 @@ rolling_noise_epsilon, coherence_margin_proxy, and stability_lambda_proxy are de
 
 This seeded toy world tests whether pruning, verified reconstruction, telemetry-triggered retirement, and digest repair extend continuity beyond an inherited capsule baseline. It does not establish an exact 160-cycle law in deployed models.
 
+# OpenLine Load-Rate Transition — Same Disturbance, Different Speed
+
+**Status:** `MIXED_EXPLORATORY_LOAD_RATE_RESULT`
+**Exploratory gates:** 3/4 passed
+**Held-out seeds:** 80
+**Cycle observations:** 368640
+
+## Primary contrast
+
+- Same perturbations, same order, same total load, same ordinary work, same horizon, and the same context cap.
+- Slow minus sudden-burst mean disturbances survived: 3.258333; 95% interval=[2.5166666666666666, 4.0625]; p=6.37738e-17
+- Recovery-window minus continuous-burst mean disturbances survived: 2.450000; 95% interval=[1.8083333333333333, 3.1083333333333334]; p=1.16257e-14
+- Rate-disabled null mean difference: -0.258333; 95% interval=[-0.4375, -0.0625]
+
+## Exploratory gate results
+
+- `burst_causes_earlier_critical_failure`: **PASS**
+- `rate_direction_replicates_across_modes`: **PASS**
+- `ordinary_work_recovery_windows_reduce_burst_harm`: **PASS**
+- `rate_disabled_null_specificity`: **FAIL**
+
+## Boundary
+
+This seeded synthetic experiment tests whether disturbance spacing changes critical-failure life when disturbance identities, order, total load, ordinary work, horizon, random draws, and context cap are matched. It does not claim that AI agents obey fluid mechanics, identify a universal rate threshold, or establish a deployed-agent retirement policy.
+
+Synthetic damage is reported as a secondary diagnostic. It does not decide the primary rate gate.
+
+# OpenLine Load-Rate Transition — Same Disturbance, Different Speed
+
+**Status:** `SURVIVES_ALL_EXPLORATORY_LOAD_RATE_GATES`
+**Exploratory gates:** 4/4 passed
+**Held-out seeds:** 80
+**Cycle observations:** 368640
+
+## Primary contrast
+
+- Same perturbations, same order, same total load, same ordinary work, same horizon, and the same context cap.
+- Slow minus sudden-burst mean disturbances survived: 4.579167; 95% interval=[3.845833333333333, 5.341666666666667]; p=1.06385e-32
+- Recovery-window minus continuous-burst mean disturbances survived: 4.058333; 95% interval=[3.345833333333333, 4.783333333333333]; p=7.2232e-30
+- Rate-disabled null mean difference: 0.041667; 95% interval=[0.0, 0.125]
+- Mode-specific null differences: continuous_history=0.112500, ordinary_summary=0.012500, verified_capsule=0.000000
+
+## Exploratory gate results
+
+- `burst_causes_earlier_critical_failure`: **PASS**
+- `rate_direction_replicates_across_modes`: **PASS**
+- `ordinary_work_recovery_windows_reduce_burst_harm`: **PASS**
+- `rate_disabled_null_specificity`: **PASS**
+
+## Boundary
+
+This seeded synthetic experiment tests whether disturbance spacing changes critical-failure life when disturbance identities, order, total load, ordinary work, horizon, random draws, and context cap are matched. Ordinary task scratch context is released after each task so retained-context growth is matched by disturbance index. It does not claim that AI agents obey fluid mechanics, identify a universal rate threshold, or establish a deployed-agent retirement policy.
+
+Synthetic damage is reported as a secondary diagnostic. It does not decide the primary rate gate.
+
+# OpenLine Recovery Intervention — Pass 1
+
+**Status:** `PASSES_ALL_PREREGISTERED_V090_RECOVERY_GATES`
+**Preregistered v0.9.0 gates:** 7/7 passed
+
+## Held-out condition measurements
+
+- `continuous_control`: mean n_f=101.000; post-handoff accuracy=0.075856; policy violations=0; mean packet bytes=0.0
+- `empty_reset`: mean n_f=80.000; post-handoff accuracy=0.000000; policy violations=352; mean packet bytes=45.0
+- `full_history_handoff`: mean n_f=101.500; post-handoff accuracy=0.077412; policy violations=0; mean packet bytes=19880.1
+- `unsigned_minimal_handoff`: mean n_f=153.031; post-handoff accuracy=0.345176; policy violations=0; mean packet bytes=1951.6
+- `olp_handoff`: mean n_f=153.031; post-handoff accuracy=0.345176; policy violations=0; mean packet bytes=7279.6
+
+## Gates
+
+- `empty_reset_underperforms_state_bearing_handoffs`: **PASS**
+- `compact_not_materially_worse_than_full_history`: **PASS**
+- `olp_refuses_corrupted_or_incomplete_state`: **PASS**
+- `effect_replicates_on_heldout_seeds`: **PASS**
+- `not_a_fixed_failure_postponement`: **PASS**
+- `clean_unsigned_olp_equivalence`: **PASS**
+- `checksum_detects_bit_flip`: **PASS**
+
+## Boundary
+
+In this controlled experiment, a compact verified handoff preserved specified state and changed post-intervention performance by the measured amount.
+
+Freshness/replay state, cross-run binding, and signed omission testing are deferred to v0.9.1 with fresh seeds.
+
+# OpenLine Recovery Intervention — Pass 1
+
+**Status:** `PASSES_ALL_PREREGISTERED_V091_RECOVERY_GATES`
+**Preregistered 0.9.1 gates:** 8/8 passed
+
+## Held-out condition measurements
+
+- `continuous_control`: mean n_f=104.263; post-handoff accuracy=0.085633; policy violations=0; mean packet bytes=0.0
+- `empty_reset`: mean n_f=80.000; post-handoff accuracy=0.000000; policy violations=880; mean packet bytes=45.0
+- `full_history_handoff`: mean n_f=104.263; post-handoff accuracy=0.085633; policy violations=0; mean packet bytes=19874.3
+- `unsigned_minimal_handoff`: mean n_f=153.012; post-handoff accuracy=0.350207; policy violations=0; mean packet bytes=2202.8
+- `olp_handoff`: mean n_f=153.012; post-handoff accuracy=0.350207; policy violations=0; mean packet bytes=8485.8
+
+## Gates
+
+- `empty_reset_underperforms_state_bearing_handoffs`: **PASS**
+- `compact_not_materially_worse_than_full_history`: **PASS**
+- `olp_refuses_corrupted_or_incomplete_state`: **PASS**
+- `effect_replicates_on_heldout_seeds`: **PASS**
+- `not_a_fixed_failure_postponement`: **PASS**
+- `clean_unsigned_olp_equivalence`: **PASS**
+- `checksum_detects_bit_flip`: **PASS**
+- `unsigned_checksum_cannot_prevent_replay_even_with_identical_fields`: **PASS**
+
+## Boundary
+
+In this controlled experiment, a compact verified handoff preserved specified state and changed post-intervention performance by the measured amount.
+
+Stateful run, parent, and generation freshness binding is active. Stale replay, cross-run copy, and correctly signed omission were tested on fresh seeds.
