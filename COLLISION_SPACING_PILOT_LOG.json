@@ -1,0 +1,20 @@
+{
+  "analysis_opened_only_after_freeze": true,
+  "analysis_seeds": "6201-6296",
+  "changes_after_pilot": [
+    "Frozen the simulator parameters used in the pilot.",
+    "Set material thresholds from the pilot scale before opening seeds 6201-6296.",
+    "Expanded the random-sparse null tolerance to 0.08 collision units because independent permutations varied by roughly 0.03 in the excluded pilot; the null still requires p > 0.10.",
+    "No Ulam-favoring mechanism or outcome-dependent schedule rule was added."
+  ],
+  "pilot_observation": {
+    "clustered_vs_random_collision_median": 1.65814112895,
+    "conflict_aware_vs_random_collision_median": 0.19657521385,
+    "ulam_vs_random_collision_median": -0.02723394715,
+    "ulam_vs_random_damage_auc_median": -0.5609889739
+  },
+  "purpose": "Check scale, deterministic matching, and whether the synthetic timing mechanism had nonzero dynamic range before freezing fresh analysis seeds.",
+  "schema": "openline.collision-spacing.pilot-log.v1",
+  "seeds": "6001-6016",
+  "status": "EXCLUDED_IMPLEMENTATION_PILOT"
+}

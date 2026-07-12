@@ -2,11 +2,32 @@
 
 **Digital fractography for AI-agent handoffs, built to lose honestly.**
 
-This repository now runs two synthetic mechanism tests on the same dependency substrate.
+This repository now runs two powered synthetic mechanism tests plus one explicitly exploratory spacing test on the same dependency substrate.
 
 The endurance test asks whether individually subcritical changes can consume residual coherence capacity across handoffs, and whether reordering the same event multiset changes cycles-to-first-failure. The proposed damage variable `D` is an observer. It never generates failure. Its parameters begin unfit, are selected on declared training and validation seeds, and are judged on untouched held-out seeds.
 
 The execution tip-capture test asks whether the shape of an unresolved dependency frontier predicts where later disturbances attach, whether that geometry adds information beyond ordinary counts and age, and whether equal-budget tip-targeted repair beats random repair. The v0.4.0 treatment launches an explicit lattice random walker and attaches at first contact. The selector never reads the reported exposure score or capture history; `uniform_null` remains the genuine no-geometry specificity control.
+
+
+## v0.5.0: Collision-Aware Spacing
+
+The v0.4.0 endurance and first-contact results are frozen and preserved at **8 of 10 gates passed**. v0.5.0 adds a separate exploratory timing experiment; its gates do not change that denominator.
+
+Each of 96 fresh seeds receives the same 20 events in the same order. `ulam_spaced`, two random-sparse controls, and `conflict_aware` all use the same 19-gap multiset and the same 69-tick span. Event outcome draws exclude the schedule label. `clustered` is a density positive control.
+
+```text
+5 spacing conditions
+96 fresh seeds: 8 train, 8 validation, 80 held out
+20 events per run
+= 480 runs
+= 9,600 event observations
+```
+
+The first twenty Ulam positions are `1, 2, 3, 4, 6, 8, 11, 13, 16, 18, 26, 28, 36, 38, 47, 48, 53, 57, 62, 69`. The random-sparse conditions permute the exact same gaps. The conflict-aware condition also permutes those gaps, assigning the largest gaps to interfaces with the highest graph-derived interference score. It uses declared requirement-to-field overlap and cannot see failures.
+
+The exploratory result is **mixed: 5 of 7 spacing gates passed**. Ulam spacing did not beat matched random spacing: random-minus-Ulam median collision burden was −0.02015, and random-minus-Ulam damage AUC was −0.79805. In plain language, Ulam was slightly worse on collision and worse on accumulated synthetic damage. Failure count showed no reliable Ulam advantage.
+
+Conflict-aware spacing did beat matched random spacing: median collision reduction was 0.18767 and median damage-AUC reduction was 1.24447, both with held-out sign-flip p below 0.00001. This is evidence for the conflict graph inside this synthetic world, not evidence that Ulam numbers carry semantic structure.
 
 ## v0.4.0: Independent First-Contact Tip Capture
 
@@ -46,7 +67,7 @@ The v0.3.1 run remains the failed baseline: its uniform-among-tips selector miss
 
 ## Current bound result
 
-The v0.4.0 powered result is **mixed: 8 of 10 pre-registered gates passed**.
+The preserved v0.4.0 powered result is **mixed: 8 of 10 pre-registered gates passed**. The v0.5.0 spacing experiment is reported separately at 5 of 7 exploratory gates.
 
 The endurance test passed fresh subcritical calibration, the matched amplitude gradient, held-out prediction from fitted `D`, and receipt-handoff advantage. Load-order noncommutativity did not pass.
 
@@ -112,19 +133,17 @@ pre-registration and mechanism hashes
 Ed25519 signatures and parent continuity
 anchored receipt count, tail, and chain digest
 manifest and evidence-bundle hashes
-run metrics recomputed from raw cycles
-fresh calibration and damage-parameter reselection
-D-series and held-out model-comparison recomputation
-bootstrap and sign-flip summaries
-fractography and tip-capture recomputation
-canonical cycle/candidate/probe Merkle roots
-public witness digest
-retired pilot and v0.4.0 implementation-pilot disclosure binding
+pinned byte-for-byte lineage for the released v0.4.0 mechanisms and evidence
+independent regeneration of every v0.5 collision-spacing event and run
+collision-spacing bootstrap and sign-flip summaries
+canonical v0.5 event/run Merkle roots
+combined summary and public witness digest
+retired pilot and implementation-pilot disclosure binding
 ```
 
-Large graph CSVs are streamed into canonical Merkle roots before regeneration, keeping verifier memory bounded without replacing semantic recomputation with trust in stored summaries.
+v0.5 does not rerun the inherited v0.4 first-contact simulator during release verification. It binds that released evidence and mechanism tree through `V040_LINEAGE.json`, then independently recomputes the new spacing experiment. This keeps the extension testable without pretending an expensive inherited rerun occurred.
 
-The mandatory tamper suite tests tail deletion, a resealed summary forgery, a resealed raw `damage_D` forgery, and source drift. Each hostile semantic attack runs in a fresh process so verifier memory is released between witnesses. Metric forgeries remain detectable even when an attacker updates artifact hashes, replaces the local keypair, and resigns the chain.
+The mandatory tamper suite runs six attacks: tail deletion, source drift, resealed summary forgery, resealed inherited endurance-cycle forgery, resealed inherited first-contact forgery, and resealed v0.5 collision-spacing forgery. Each hostile semantic attack runs in a fresh process so verifier memory is released between witnesses. Inherited-artifact attacks are rejected by the pinned v0.4 lineage; v0.5 forgeries are rejected by independent semantic recomputation. Metric forgeries remain detectable even when an attacker updates artifact hashes, replaces the local keypair, and resigns the chain.
 
 The local public key and witness are self-declared. A full-write attacker can replace the entire repository and create a new internally consistent history. Publish `results/public_witness.json` or its digest outside the repository to make that replacement detectable.
 
@@ -140,6 +159,7 @@ python scripts/release_check.py
 openline-endurance witness --root .
 openline-endurance fracture --root .
 openline-endurance tip-capture --root .
+openline-endurance collision-spacing --root .
 ```
 
 ## Main artifacts
@@ -148,12 +168,16 @@ openline-endurance tip-capture --root .
 PREREGISTRATION.json
 TIP_CAPTURE_PILOT_LOG.json
 TIP_CAPTURE_V040_PILOT_LOG.json
+COLLISION_SPACING_PILOT_LOG.json
 experiment.json
 results/cycles.csv
 results/amplitude_cycles.csv
 results/tip_capture_cycles.csv
 results/tip_capture_candidates.csv
 results/tip_capture_probes.csv
+results/collision_spacing_events.csv
+results/collision_spacing_runs.csv
+results/collision_spacing_summary.json
 results/damage_fit.json
 results/model_comparison.json
 results/fractography_summary.json

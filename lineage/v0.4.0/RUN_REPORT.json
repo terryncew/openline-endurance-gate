@@ -1,0 +1,95 @@
+{
+  "schema": "openline.endurance.release-report.v7",
+  "release_version": "0.4.0",
+  "release_label": "FINAL",
+  "passed": true,
+  "scientific_result": {
+    "status": "MIXED_SYNTHETIC_RESULT",
+    "passed_gate_count": 8,
+    "gate_count": 10,
+    "failed_gates": [
+      "endurance/load_order_noncommutativity",
+      "tip_capture/tip_targeted_repair_yield"
+    ]
+  },
+  "first_contact_result": {
+    "frontier_capture_lift": 0.25367103948378233,
+    "uniform_null_frontier_capture_lift": -0.00422076770901858,
+    "walker_fallback_rate": 0.000955718381650207,
+    "walker_fallback_ceiling": 0.02,
+    "geometry_logloss_gain": 0.040872823567902616,
+    "geometry_auc_gain": 0.053994868487826864,
+    "gate_passed": true
+  },
+  "repair_result": {
+    "median_gain": 0.0,
+    "mean_gain": -0.012380050505050505,
+    "exact_sign_flip_p": 0.11359443202783986,
+    "tip_targeted_favored_pairs": 15,
+    "random_repair_favored_pairs": 20,
+    "ties": 45,
+    "gate_passed": false
+  },
+  "preregistration": {
+    "schema": "openline.endurance.preregistration.v2",
+    "revision": 9,
+    "sha256": "0c4517bbd7bcd2855ad724828e27dd03b440a9447a44004cafe93b254bf468f7",
+    "pilot_seeds": "4901-4916 excluded",
+    "analysis_seeds": "5101-5196",
+    "mechanism_changed_after_freeze": false,
+    "threshold_changed_after_freeze": false
+  },
+  "tests": {
+    "default": {
+      "passed_count": 33,
+      "returncode": 0
+    },
+    "integration_resealed_forgery": {
+      "passed_count": 1,
+      "returncode": 0
+    }
+  },
+  "clean_install": {
+    "version": "0.4.0",
+    "imported_from_isolated_target": true,
+    "fast_verification_valid": true,
+    "tip_capture_cli_valid": true,
+    "returncode": 0
+  },
+  "semantic_verification": {
+    "valid": true,
+    "artifact_binding_valid": true,
+    "semantic_recomputation_valid": true,
+    "errors": [],
+    "chain": {
+      "valid": true,
+      "integrity_valid": true,
+      "completeness_verified": true,
+      "count": 734,
+      "chain_digest": "70334f7b5229a3ebfdace004ce40d4928fa0e612530b0c7b43f3be22e352dde1",
+      "tail_hash": "4afc03a716203a4fcdc5f62212e0b5dc414b20232448158a8260eb9113783bed"
+    }
+  },
+  "tamper_suite": {
+    "passed": true,
+    "attack_count": 5,
+    "detected_attacks": [
+      "resealed_first_contact_forgery",
+      "resealed_raw_cycle_forgery",
+      "resealed_summary_forgery",
+      "tail_truncation",
+      "unpatched_source_drift"
+    ],
+    "report_sha256": "0a8e7d204da02fb025fabf75facaf914ec59cb6ce93436997f3d50caf5491641"
+  },
+  "public_witness": {
+    "witness_digest": "dddfb68b4c80c2e6556d41e67416a7b0e50ce16ebe0477e8f9b4c755d187c92c",
+    "source_tree_digest": "2b997eb5677fcec7452f0806e29882fbecb3cf7a89851c3ba7e9a2d9b88af744",
+    "external_anchor_status": "UNPUBLISHED_LOCAL_WITNESS"
+  },
+  "release_wrapper": {
+    "command": "PIP_NO_INDEX=1 bash scripts/release_check.sh",
+    "returncode": 0
+  },
+  "claim_boundary": "The harness recovered the preregistered synthetic first-contact mechanism and rejected the uniform null. It does not establish that deployed AI systems follow DLA or that tip-targeted repair is useful."
+}

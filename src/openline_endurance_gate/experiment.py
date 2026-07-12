@@ -6,6 +6,10 @@ from pathlib import Path
 from typing import Any
 
 from .amplitude import matched_amplitude_events, matched_packet_witness
+from .collision_spacing import (
+    COLLISION_EVENT_FIELDS, COLLISION_RUN_FIELDS,
+    analyze_collision_spacing, collision_design_witness, simulate_collision_spacing,
+)
 from .damage import (
     annotate_failed_before,
     attach_damage,
@@ -15,15 +19,15 @@ from .damage import (
     select_damage_parameters,
 )
 from .fractography import FRACTOGRAPHY_FIELDS, analyze_fractography
-from .integrity import build_public_witness, merkle_root, verify_preregistration
-from .receipts import ReceiptSigner, artifact_hashes, create_chain, verify_chain, write_anchor, write_chain
+from .integrity import build_public_witness, merkle_root, verify_preregistration, verify_v040_lineage
+from .receipts import ReceiptSigner, artifact_hashes, create_chain, read_chain, verify_chain, write_anchor, write_chain
 from .sim import calibrate_fresh, generate_perturbations, run_one, schedule_events
 from .summarize import aggregate_runs, build_summary
 from .tip_capture import (
     TIP_CANDIDATE_FIELDS, TIP_CYCLE_FIELDS, TIP_PROBE_FIELDS, TIP_RUN_FIELDS,
     analyze_tip_capture, simulate_tip_capture, tip_design_witness,
 )
-from .util import canonical_json, sha256_bytes, sha256_file, write_csv
+from .util import canonical_json, read_csv, sha256_bytes, sha256_file, write_csv
 
 
 PRIMARY_CYCLE_FIELDS = [
@@ -66,6 +70,13 @@ BASE_SEMANTIC_ARTIFACTS = [
     "results/tip_capture_summary.json",
     "results/tip_capture_summary.md",
     "results/tip_capture_design_witness.json",
+    "COLLISION_SPACING_PILOT_LOG.json",
+    "V040_LINEAGE.json",
+    "results/collision_spacing_events.csv",
+    "results/collision_spacing_runs.csv",
+    "results/collision_spacing_summary.json",
+    "results/collision_spacing_summary.md",
+    "results/collision_spacing_design_witness.json",
 ]
 
 RUN_FIELDS = [
@@ -77,7 +88,7 @@ RUN_FIELDS = [
 
 def load_experiment(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("schema") not in {"openline.endurance.experiment.v1", "openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4"}:
+    if data.get("schema") not in {"openline.endurance.experiment.v1", "openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5"}:
         raise ValueError("unsupported experiment schema")
     declared = set(map(int, data["training_seeds"] + data["validation_seeds"] + data["heldout_seeds"]))
     if declared != set(map(int, data["seeds"])):
@@ -86,7 +97,7 @@ def load_experiment(path: Path) -> dict[str, Any]:
         raise ValueError("training and validation seeds overlap")
     if len(data["modes"]) != 4 or len(data["schedules"]) != 4:
         raise ValueError("default discriminating test requires four modes and four schedules")
-    if data.get("schema") in {"openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4"}:
+    if data.get("schema") in {"openline.endurance.experiment.v2", "openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5"}:
         required_pairs = int(data["analysis_plan"]["minimum_primary_order_pairs"])
         available_pairs = len(data["heldout_seeds"]) * len(data["modes"])
         if available_pairs < required_pairs:
@@ -95,9 +106,9 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("v2 requires event-bound common random numbers")
         if data.get("amplitude_sweep_design") != "COMMON_PACKET_AMPLITUDE_TRANSFORM":
             raise ValueError("v2 requires matched amplitude packets")
-    if data.get("schema") in {"openline.endurance.experiment.v3", "openline.endurance.experiment.v4"}:
+    if data.get("schema") in {"openline.endurance.experiment.v3", "openline.endurance.experiment.v4", "openline.endurance.experiment.v5"}:
         tip = data.get("tip_capture")
-        expected_tip_schema = "openline.tip-capture.experiment.v2" if data.get("schema") == "openline.endurance.experiment.v4" else "openline.tip-capture.experiment.v1"
+        expected_tip_schema = "openline.tip-capture.experiment.v2" if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5"} else "openline.tip-capture.experiment.v1"
         if not isinstance(tip, dict) or tip.get("schema") != expected_tip_schema:
             raise ValueError(f"{data.get('schema')} requires {expected_tip_schema}")
         tip_declared = set(map(int, tip["training_seeds"] + tip["validation_seeds"] + tip["heldout_seeds"]))
@@ -105,17 +116,33 @@ def load_experiment(path: Path) -> dict[str, Any]:
             raise ValueError("tip-capture train/validation/heldout seeds must partition seeds")
         if len(tip["heldout_seeds"]) < int(tip["analysis_plan"]["minimum_repair_pairs"]):
             raise ValueError("tip-capture heldout seed count is below the preregistered pair floor")
-        required_conditions = {"uniform_null", "diffusive_first_contact"} if data.get("schema") == "openline.endurance.experiment.v4" else {"uniform_null", "diffusive_tip_capture"}
+        required_conditions = {"uniform_null", "diffusive_first_contact"} if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5"} else {"uniform_null", "diffusive_tip_capture"}
         if required_conditions - set(tip["attachment_conditions"]):
             raise ValueError("tip-capture requires both a genuine null and declared diffusive treatment")
         if {"random_repair", "tip_targeted"} - set(tip["repair_policies"]):
             raise ValueError("tip-capture requires matched random and tip-targeted repair policies")
         if tip.get("randomness_coupling") != "PACKET_BOUND_COMMON_RANDOM_NUMBERS":
             raise ValueError("tip-capture requires packet-bound common random numbers")
-        if data.get("schema") == "openline.endurance.experiment.v4":
+        if data.get("schema") in {"openline.endurance.experiment.v4", "openline.endurance.experiment.v5"}:
             required_walker = {"dla_launch_margin", "dla_kill_margin", "dla_max_steps", "dla_max_restarts", "root_spacing"}
             if required_walker - set(tip):
-                raise ValueError("v4 first-contact walker configuration is incomplete")
+                raise ValueError("v4/v5 first-contact walker configuration is incomplete")
+    if data.get("schema") == "openline.endurance.experiment.v5":
+        spacing = data.get("collision_spacing")
+        if not isinstance(spacing, dict) or spacing.get("schema") != "openline.collision-spacing.experiment.v1":
+            raise ValueError("v5 requires openline.collision-spacing.experiment.v1")
+        spacing_declared = set(map(int, spacing["training_seeds"] + spacing["validation_seeds"] + spacing["heldout_seeds"]))
+        if spacing_declared != set(map(int, spacing["seeds"])):
+            raise ValueError("collision-spacing train/validation/heldout seeds must partition seeds")
+        if len(spacing["heldout_seeds"]) < int(spacing["analysis_plan"]["minimum_pairs"]):
+            raise ValueError("collision-spacing heldout seed count is below the preregistered pair floor")
+        required_schedules = {"clustered", "random_sparse_a", "random_sparse_b", "ulam_spaced", "conflict_aware"}
+        if required_schedules != set(spacing["schedules"]):
+            raise ValueError("collision-spacing requires the frozen five-condition design")
+        if spacing.get("randomness_coupling") != "EVENT_BOUND_COMMON_RANDOM_DRAWS_SCHEDULE_EXCLUDED":
+            raise ValueError("collision-spacing requires schedule-independent common random draws")
+        if int(spacing["events_per_run"]) != sum(int(value) for value in data["amplitude_multiset"].values()):
+            raise ValueError("collision-spacing event count must match the endurance perturbation multiset")
     return data
 
 
@@ -208,7 +235,34 @@ def _tip_summary_markdown(summary: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def combine_summaries(summary: dict[str, Any], tip_summary: dict[str, Any]) -> dict[str, Any]:
+def _collision_summary_markdown(summary: dict[str, Any]) -> str:
+    effects = summary["effects"]
+    lines = [
+        "# OpenLine Collision-Aware Spacing — Exploratory Synthetic Run",
+        "",
+        f"**Claim label:** `{summary['claim_label']}`",
+        f"**Status:** `{summary['status']}`",
+        f"**Exploratory gates:** {summary['passed_gate_count']}/{summary['gate_count']} passed",
+        f"**Held-out seeds:** {summary['heldout_seed_count']}",
+        "",
+        "## Main contrasts",
+        "",
+        f"- Random sparse minus Ulam collision burden: {effects['ulam_collision']['median_difference']:.6f}; p={effects['ulam_collision']['exact_sign_flip_p']:.6g}",
+        f"- Random sparse minus Ulam damage AUC: {effects['ulam_damage']['median_difference']:.6f}; p={effects['ulam_damage']['exact_sign_flip_p']:.6g}",
+        f"- Random sparse minus Ulam failures: {effects['ulam_failures']['median_difference']:.6f}; p={effects['ulam_failures']['exact_sign_flip_p']:.6g}",
+        f"- Random sparse minus conflict-aware collision burden: {effects['conflict_aware_collision']['median_difference']:.6f}; p={effects['conflict_aware_collision']['exact_sign_flip_p']:.6g}",
+        f"- Random sparse minus conflict-aware damage AUC: {effects['conflict_aware_damage']['median_difference']:.6f}; p={effects['conflict_aware_damage']['exact_sign_flip_p']:.6g}",
+        "",
+        "## Exploratory gate results",
+        "",
+    ]
+    for name, gate in summary["gates"].items():
+        lines.append(f"- `{name}`: **{'PASS' if gate['passed'] else 'FAIL'}**")
+    lines.extend(["", "## Boundary", "", summary["claim_boundary"], ""])
+    return "\n".join(lines) + "\n"
+
+
+def combine_summaries(summary: dict[str, Any], tip_summary: dict[str, Any], collision_summary: dict[str, Any] | None = None) -> dict[str, Any]:
     combined = dict(summary)
     endurance_gates = dict(combined["gates"])
     combined["endurance_status"] = combined["theory_status"]
@@ -220,7 +274,7 @@ def combine_summaries(summary: dict[str, Any], tip_summary: dict[str, Any]) -> d
     combined["gates"] = gates
     combined["passed_gate_count"] = sum(int(gate["passed"]) for gate in gates.values())
     combined["gate_count"] = len(gates)
-    combined["claim_label"] = "POWERED_SYNTHETIC_ENDURANCE_AND_TIP_CAPTURE"
+    combined["claim_label"] = "POWERED_SYNTHETIC_ENDURANCE_TIP_CAPTURE_AND_COLLISION_SPACING"
     if combined["passed_gate_count"] == combined["gate_count"]:
         combined["theory_status"] = "SURVIVES_ALL_PRE_REGISTERED_SYNTHETIC_GATES"
     elif combined["passed_gate_count"] == 0:
@@ -232,6 +286,16 @@ def combine_summaries(summary: dict[str, Any], tip_summary: dict[str, Any]) -> d
         "The first-contact treatment uses a lattice random walk independent of the reported exposure heuristic, while uniform attachment is the null. "
         "Passing shows the instruments recover declared mechanisms and reject nulls where preregistered; it does not show deployed agents obey material fatigue or DLA."
     )
+    if collision_summary is not None:
+        # v0.5 is exploratory. Preserve the v0.4 scientific score exactly and
+        # report spacing gates in a separate namespace rather than laundering
+        # the legacy 8/10 result into a new denominator.
+        combined["collision_spacing"] = collision_summary
+        combined["legacy_scientific_result_preserved"] = {
+            "status": combined["theory_status"],
+            "passed_gate_count": combined["passed_gate_count"],
+            "gate_count": combined["gate_count"],
+        }
     return combined
 
 
@@ -300,6 +364,7 @@ def _receipt_items(
     calibration: dict[str, Any],
     summary: dict[str, Any],
     tip_summary: dict[str, Any],
+    collision_summary: dict[str, Any],
     evidence: dict[str, Any],
 ) -> list[tuple[str, dict[str, Any]]] :
     items: list[tuple[str, dict[str, Any]]] = [
@@ -374,10 +439,138 @@ def _receipt_items(
                     "next_use": "separate geometry instrumentation from claims about deployed agents",
                 },
             ),
+            (
+                "collision_aware_spacing",
+                {
+                    "claim": "matched Ulam, random-sparse, clustered, and conflict-aware spacing conditions were evaluated without changing event order or random draws",
+                    "result": {
+                        "status": collision_summary["status"],
+                        "passed": collision_summary["passed_gate_count"],
+                        "total": collision_summary["gate_count"],
+                        "heldout_seeds": collision_summary["heldout_seed_count"],
+                    },
+                    "next_use": "decide whether irregular timing or graph-aware separation deserves a real-agent trace experiment",
+                },
+            ),
             ("evidence_bundle", evidence),
         ]
     )
     return items
+
+
+def _run_v5_collision_extension(root: Path, experiment: dict[str, Any]) -> dict[str, Any]:
+    lineage_errors = verify_v040_lineage(root)
+    if lineage_errors:
+        raise RuntimeError(f"v0.4.0 lineage failed: {lineage_errors}")
+
+    results_dir = root / "results"
+    receipts_dir = root / "receipts"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    receipts_dir.mkdir(parents=True, exist_ok=True)
+
+    collision_events, collision_runs = simulate_collision_spacing(experiment)
+    collision_summary = analyze_collision_spacing(collision_runs, experiment)
+    old_summary = json.loads((root / "lineage/v0.4.0/results/summary.json").read_text(encoding="utf-8"))
+    summary = dict(old_summary)
+    summary["claim_label"] = "POWERED_SYNTHETIC_ENDURANCE_TIP_CAPTURE_AND_COLLISION_SPACING"
+    summary["collision_spacing"] = collision_summary
+    summary["legacy_scientific_result_preserved"] = {
+        "status": old_summary["theory_status"],
+        "passed_gate_count": old_summary["passed_gate_count"],
+        "gate_count": old_summary["gate_count"],
+    }
+
+    write_csv(results_dir / "collision_spacing_events.csv", collision_events, COLLISION_EVENT_FIELDS)
+    write_csv(results_dir / "collision_spacing_runs.csv", collision_runs, COLLISION_RUN_FIELDS)
+    _json_dump(results_dir / "collision_spacing_design_witness.json", collision_design_witness(experiment))
+    _json_dump(results_dir / "collision_spacing_summary.json", collision_summary)
+    (results_dir / "collision_spacing_summary.md").write_text(_collision_summary_markdown(collision_summary), encoding="utf-8")
+
+    old_heldout = json.loads((root / "lineage/v0.4.0/results/heldout_witness.json").read_text(encoding="utf-8"))
+    heldout = dict(old_heldout)
+    heldout["collision_spacing"] = collision_summary
+    _json_dump(results_dir / "heldout_witness.json", heldout)
+    _json_dump(results_dir / "summary.json", summary)
+    (results_dir / "summary.md").write_text(
+        _summary_markdown(summary) + "\n" + _collision_summary_markdown(collision_summary),
+        encoding="utf-8",
+    )
+
+    old_roots = json.loads((root / "lineage/v0.4.0/results/cycle_roots.json").read_text(encoding="utf-8"))
+    cycle_roots = dict(old_roots)
+    cycle_roots["schema"] = "openline.endurance.cycle-roots.v2"
+    cycle_roots["collision_spacing_event_merkle_root"] = merkle_root(collision_events)
+    cycle_roots["collision_spacing_event_count"] = len(collision_events)
+    cycle_roots["collision_spacing_run_merkle_root"] = merkle_root(collision_runs)
+    cycle_roots["collision_spacing_run_count"] = len(collision_runs)
+    _json_dump(results_dir / "cycle_roots.json", cycle_roots)
+
+    manifest = write_manifest(root)
+    base_semantic_artifacts = list(BASE_SEMANTIC_ARTIFACTS)
+    public_witness = build_public_witness(
+        root,
+        experiment,
+        summary,
+        manifest["source_tree_digest"],
+        cycle_roots["primary_cycle_merkle_root"],
+        cycle_roots["amplitude_cycle_merkle_root"],
+        {
+            "tip_capture_cycle_merkle_root": cycle_roots["tip_capture_cycle_merkle_root"],
+            "tip_capture_candidate_merkle_root": cycle_roots["tip_capture_candidate_merkle_root"],
+            "tip_capture_probe_merkle_root": cycle_roots["tip_capture_probe_merkle_root"],
+            "collision_spacing_event_merkle_root": cycle_roots["collision_spacing_event_merkle_root"],
+            "collision_spacing_run_merkle_root": cycle_roots["collision_spacing_run_merkle_root"],
+        },
+        base_semantic_artifacts,
+    )
+    _json_dump(results_dir / "public_witness.json", public_witness)
+    manifest = write_manifest(root)
+    semantic_artifacts = base_semantic_artifacts + ["results/public_witness.json", "MANIFEST.json"]
+    evidence = {
+        "claim": "v0.4.0 scientific artifacts are pinned byte-for-byte and v0.5.0 collision-spacing results are independently recomputable",
+        "artifact_hashes": artifact_hashes(root, semantic_artifacts),
+        "source_tree_digest": manifest["source_tree_digest"],
+        "primary_cycle_merkle_root": cycle_roots["primary_cycle_merkle_root"],
+        "amplitude_cycle_merkle_root": cycle_roots["amplitude_cycle_merkle_root"],
+        "tip_capture_cycle_merkle_root": cycle_roots["tip_capture_cycle_merkle_root"],
+        "tip_capture_candidate_merkle_root": cycle_roots["tip_capture_candidate_merkle_root"],
+        "tip_capture_probe_merkle_root": cycle_roots["tip_capture_probe_merkle_root"],
+        "collision_spacing_event_merkle_root": cycle_roots["collision_spacing_event_merkle_root"],
+        "collision_spacing_run_merkle_root": cycle_roots["collision_spacing_run_merkle_root"],
+        "public_witness_digest": public_witness["witness_digest"],
+        "semantic_verifier": "openline-endurance verify --root . --source-root .",
+        "claim_boundary": "v0.5 recomputes collision spacing and verifies inherited v0.4 artifacts against a pinned release lineage; it does not rerun the inherited first-contact simulator",
+    }
+
+    old_chain = read_chain(root / "lineage/v0.4.0/receipts/experiment.jsonl")
+    items = [(receipt["kind"], receipt["payload"]) for receipt in old_chain if receipt["kind"] != "evidence_bundle"]
+    items.append((
+        "collision_aware_spacing",
+        {
+            "claim": "matched Ulam, random-sparse, clustered, and conflict-aware spacing conditions were evaluated without changing event order or random draws",
+            "result": {
+                "status": collision_summary["status"],
+                "passed": collision_summary["passed_gate_count"],
+                "total": collision_summary["gate_count"],
+                "heldout_seeds": collision_summary["heldout_seed_count"],
+            },
+            "next_use": "test graph-informed spacing on real agent traces; do not treat Ulam as a semantic separator",
+        },
+    ))
+    items.append(("evidence_bundle", evidence))
+    signer = ReceiptSigner.generate()
+    chain = create_chain(items, signer)
+    write_chain(receipts_dir / "experiment.jsonl", chain)
+    write_anchor(receipts_dir / "experiment.anchor.json", chain, signer)
+    verification = verify_chain(receipts_dir / "experiment.jsonl", receipts_dir / "experiment.anchor.json")
+    return {
+        "summary": summary,
+        "collision_spacing_summary": collision_summary,
+        "receipt_verification": verification,
+        "public_witness": public_witness,
+        "v040_lineage_valid": True,
+        "private_key_persisted": False,
+    }
 
 
 def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any]:
@@ -389,6 +582,8 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
     prereg_errors = verify_preregistration(root)
     if prereg_errors:
         raise RuntimeError(f"preregistration failed: {prereg_errors}")
+    if experiment.get("schema") == "openline.endurance.experiment.v5":
+        return _run_v5_collision_extension(root, experiment)
 
     results_dir = root / "results"
     receipts_dir = root / "receipts"
@@ -449,7 +644,9 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
 
     tip_cycles, tip_runs, tip_candidates, tip_probes = simulate_tip_capture(experiment)
     tip_summary = analyze_tip_capture(tip_cycles, tip_runs, tip_candidates, tip_probes, experiment)
-    summary = combine_summaries(summary, tip_summary)
+    collision_events, collision_runs = simulate_collision_spacing(experiment)
+    collision_summary = analyze_collision_spacing(collision_runs, experiment)
+    summary = combine_summaries(summary, tip_summary, collision_summary)
 
     amplitude_fields = [field for field in PRIMARY_CYCLE_FIELDS if field not in {"damage_D", "kappa_star_eff", "vkd_f", "failed_before_cycle"}]
     write_csv(results_dir / "cycles.csv", primary_cycles, PRIMARY_CYCLE_FIELDS)
@@ -464,6 +661,8 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
     write_csv(results_dir / "tip_capture_runs.csv", tip_runs, TIP_RUN_FIELDS)
     write_csv(results_dir / "tip_capture_candidates.csv", tip_candidates, TIP_CANDIDATE_FIELDS)
     write_csv(results_dir / "tip_capture_probes.csv", tip_probes, TIP_PROBE_FIELDS)
+    write_csv(results_dir / "collision_spacing_events.csv", collision_events, COLLISION_EVENT_FIELDS)
+    write_csv(results_dir / "collision_spacing_runs.csv", collision_runs, COLLISION_RUN_FIELDS)
     _json_dump(results_dir / "calibration.json", calibration)
     _json_dump(results_dir / "damage_fit.json", fitted_damage)
     _json_dump(results_dir / "damage_diagnostics.json", damage_fit_diagnostics)
@@ -473,6 +672,9 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
     _json_dump(results_dir / "tip_capture_design_witness.json", tip_design_witness(experiment))
     _json_dump(results_dir / "tip_capture_summary.json", tip_summary)
     (results_dir / "tip_capture_summary.md").write_text(_tip_summary_markdown(tip_summary), encoding="utf-8")
+    _json_dump(results_dir / "collision_spacing_design_witness.json", collision_design_witness(experiment))
+    _json_dump(results_dir / "collision_spacing_summary.json", collision_summary)
+    (results_dir / "collision_spacing_summary.md").write_text(_collision_summary_markdown(collision_summary), encoding="utf-8")
     _json_dump(
         results_dir / "heldout_witness.json",
         {
@@ -481,6 +683,7 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
             "amplitude_effect": summary["amplitude_effect"],
             "robustness_witnesses": summary["robustness_witnesses"],
             "tip_capture": tip_summary,
+            "collision_spacing": collision_summary,
             "gates": summary["gates"],
         },
     )
@@ -499,6 +702,10 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
         "tip_capture_candidate_count": len(tip_candidates),
         "tip_capture_probe_merkle_root": merkle_root(tip_probes),
         "tip_capture_probe_count": len(tip_probes),
+        "collision_spacing_event_merkle_root": merkle_root(collision_events),
+        "collision_spacing_event_count": len(collision_events),
+        "collision_spacing_run_merkle_root": merkle_root(collision_runs),
+        "collision_spacing_run_count": len(collision_runs),
     }
     _json_dump(results_dir / "cycle_roots.json", cycle_roots)
 
@@ -515,6 +722,8 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
             "tip_capture_cycle_merkle_root": cycle_roots["tip_capture_cycle_merkle_root"],
             "tip_capture_candidate_merkle_root": cycle_roots["tip_capture_candidate_merkle_root"],
             "tip_capture_probe_merkle_root": cycle_roots["tip_capture_probe_merkle_root"],
+            "collision_spacing_event_merkle_root": cycle_roots["collision_spacing_event_merkle_root"],
+            "collision_spacing_run_merkle_root": cycle_roots["collision_spacing_run_merkle_root"],
         },
         base_semantic_artifacts,
     )
@@ -530,12 +739,14 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
         "tip_capture_cycle_merkle_root": cycle_roots["tip_capture_cycle_merkle_root"],
         "tip_capture_candidate_merkle_root": cycle_roots["tip_capture_candidate_merkle_root"],
         "tip_capture_probe_merkle_root": cycle_roots["tip_capture_probe_merkle_root"],
+        "collision_spacing_event_merkle_root": cycle_roots["collision_spacing_event_merkle_root"],
+        "collision_spacing_run_merkle_root": cycle_roots["collision_spacing_run_merkle_root"],
         "public_witness_digest": public_witness["witness_digest"],
         "semantic_verifier": "openline-endurance verify --root . --source-root .",
         "claim_boundary": "signatures prove chain custody under the pinned local key; semantic recomputation tests metric claims; an external publication of the public witness is still required to resist whole-repository replacement",
     }
     signer = ReceiptSigner.generate()
-    chain = create_chain(_receipt_items(primary_runs, amplitude_runs, calibration, summary, tip_summary, evidence), signer)
+    chain = create_chain(_receipt_items(primary_runs, amplitude_runs, calibration, summary, tip_summary, collision_summary, evidence), signer)
     write_chain(receipts_dir / "experiment.jsonl", chain)
     write_anchor(receipts_dir / "experiment.anchor.json", chain, signer)
     verification = verify_chain(receipts_dir / "experiment.jsonl", receipts_dir / "experiment.anchor.json")
@@ -543,6 +754,7 @@ def run_experiment(root: Path, config_path: Path | None = None) -> dict[str, Any
         "calibration": calibration,
         "summary": summary,
         "tip_capture_summary": tip_summary,
+        "collision_spacing_summary": collision_summary,
         "receipt_verification": verification,
         "public_witness": public_witness,
         "private_key_persisted": False,

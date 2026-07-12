@@ -30,6 +30,9 @@ def main() -> int:
     tip_parser = sub.add_parser("tip-capture", help="print the execution tip-capture summary")
     tip_parser.add_argument("--root", default=".")
 
+    spacing_parser = sub.add_parser("collision-spacing", help="print the exploratory collision-aware spacing summary")
+    spacing_parser.add_argument("--root", default=".")
+
     args = parser.parse_args()
     root = Path(args.root)
     if args.command == "run":
@@ -52,9 +55,15 @@ def main() -> int:
             parser.error(f"missing fractography result: {path}")
         print(path.read_text(encoding="utf-8"), end="")
         return 0
-    path = root / "results" / "tip_capture_summary.json"
+    if args.command == "tip-capture":
+        path = root / "results" / "tip_capture_summary.json"
+        if not path.exists():
+            parser.error(f"missing tip-capture result: {path}")
+        print(path.read_text(encoding="utf-8"), end="")
+        return 0
+    path = root / "results" / "collision_spacing_summary.json"
     if not path.exists():
-        parser.error(f"missing tip-capture result: {path}")
+        parser.error(f"missing collision-spacing result: {path}")
     print(path.read_text(encoding="utf-8"), end="")
     return 0
 

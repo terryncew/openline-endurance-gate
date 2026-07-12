@@ -1,13 +1,5 @@
 # External Anchor
 
-The repository can prove internal consistency. It cannot, by itself, prove that an attacker did not replace the entire repository and issue a new signing key.
+Release: `v0.5.0`
 
-After a verified run, publish the `witness_digest` from `results/public_witness.json` somewhere independently durable. The smallest useful publication is:
-
-```text
-OpenLine Endurance Gate v0.4.0
-witness_digest: <64 hex characters>
-release archive sha256: <64 hex characters>
-```
-
-A GitHub release, mirrored commit, public timestamp, transparency log, or another party's signed receipt can serve as the external witness. Keep the raw data local if needed; the digest is enough to detect later replacement.
+The locally generated witness is stored at `results/public_witness.json`. Publish its `witness_digest` outside this repository after final release packaging. Until then, whole-repository replacement remains outside the local trust boundary.

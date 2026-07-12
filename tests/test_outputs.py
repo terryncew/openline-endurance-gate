@@ -22,6 +22,9 @@ def test_default_run_has_expected_powered_artifacts_and_heldout_split():
     expected_tip_cycles = len(tip["seeds"]) * len(tip["attachment_conditions"]) * len(tip["repair_policies"]) * tip["cycles"]
     assert len(read_csv(ROOT / "results/tip_capture_cycles.csv")) == expected_tip_cycles
     assert len(read_csv(ROOT / "results/tip_capture_runs.csv")) == len(tip["seeds"]) * len(tip["attachment_conditions"]) * len(tip["repair_policies"])
+    spacing = experiment["collision_spacing"]
+    assert len(read_csv(ROOT / "results/collision_spacing_runs.csv")) == len(spacing["seeds"]) * len(spacing["schedules"])
+    assert len(read_csv(ROOT / "results/collision_spacing_events.csv")) == len(spacing["seeds"]) * len(spacing["schedules"]) * spacing["events_per_run"]
 
 
 def test_summary_exposes_every_gate_and_power_boundary():
@@ -49,6 +52,11 @@ def test_design_and_fractography_witnesses_are_present():
     assert tip_design["heldout_seed_count"] == 80
     assert "geometry_lift" in tip_summary
     assert "uniform_null" in tip_summary["capture_by_condition"]
+    spacing_design = json.loads((ROOT / "results/collision_spacing_design_witness.json").read_text())
+    spacing_summary = json.loads((ROOT / "results/collision_spacing_summary.json").read_text())
+    assert spacing_design["ulam_random_a_same_gap_multiset"]
+    assert spacing_design["common_random_draw_key_excludes_schedule"]
+    assert spacing_summary["heldout_seed_count"] == 80
 
 
 def test_fast_custody_verifier_passes_default_artifacts():

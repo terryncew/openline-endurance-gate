@@ -65,8 +65,6 @@ def _clone(destination: Path) -> Path:
             ".pytest_cache",
             "__pycache__",
             "*.egg-info",
-            "RUN_REPORT.json",
-            "TAMPER_REPORT.json",
             "ZIP_VERIFICATION.json",
             "*.zip",
             "*.sha256",
@@ -164,17 +162,12 @@ def _raw_cycle_reseal(temp: Path) -> dict[str, Any]:
     _patch_manifest(repo, "results/cycles.csv")
     _resign_with_patched_hashes(repo, ["results/cycles.csv"])
     result = _verify_subprocess(repo, full_semantic=True)
-    expected = {
-        "damage_series_recompute_mismatch",
-        "cycle_merkle_root_recompute_mismatch",
-        "evidence_primary_cycle_root_mismatch",
-    }
+    expected = "v040_lineage_hash_mismatch:results/cycles.csv"
     detected = (
         not result["valid"]
         and result["chain"]["valid"]
-        and result["artifact_binding_valid"]
-        and not result["semantic_recomputation_valid"]
-        and bool(expected.intersection(result["errors"]))
+        and not result.get("lineage_binding_valid", True)
+        and expected in result["errors"]
     )
     return {
         "detected": detected,
@@ -182,6 +175,43 @@ def _raw_cycle_reseal(temp: Path) -> dict[str, Any]:
         "attack": "mutate fitted damage_D in a raw primary-cycle row, patch hashes, replace keypair, resign chain",
     }
 
+
+
+def _collision_cycle_reseal(temp: Path) -> dict[str, Any]:
+    repo = _clone(temp)
+    path = repo / "results/collision_spacing_events.csv"
+    rewritten = path.with_suffix(".tampered.csv")
+    changed = False
+    with path.open("r", newline="", encoding="utf-8") as source, rewritten.open("w", newline="", encoding="utf-8") as destination:
+        reader = csv.DictReader(source)
+        fields = list(reader.fieldnames or [])
+        if "damage_after" not in fields:
+            raise RuntimeError("collision_spacing_events.csv is missing damage_after")
+        writer = csv.DictWriter(destination, fieldnames=fields)
+        writer.writeheader()
+        for row in reader:
+            if not changed and row.get("damage_after") not in {None, ""}:
+                row["damage_after"] = f"{float(row['damage_after']) + 0.001:.10f}"
+                changed = True
+            writer.writerow(row)
+    if not changed:
+        raise RuntimeError("no collision damage value available to tamper")
+    rewritten.replace(path)
+    _patch_manifest(repo, "results/collision_spacing_events.csv")
+    _resign_with_patched_hashes(repo, ["results/collision_spacing_events.csv"])
+    result = _verify_subprocess(repo, full_semantic=True)
+    detected = (
+        not result["valid"]
+        and result["chain"]["valid"]
+        and result["artifact_binding_valid"]
+        and not result["semantic_recomputation_valid"]
+        and "collision_spacing_events_recompute_mismatch" in result["errors"]
+    )
+    return {
+        "detected": detected,
+        "verifier": result,
+        "attack": "mutate one collision-spacing damage row, patch hashes, replace keypair, resign chain",
+    }
 
 def _walker_cycle_reseal(temp: Path) -> dict[str, Any]:
     repo = _clone(temp)
@@ -210,9 +240,8 @@ def _walker_cycle_reseal(temp: Path) -> dict[str, Any]:
     detected = (
         not result["valid"]
         and result["chain"]["valid"]
-        and result["artifact_binding_valid"]
-        and not result["semantic_recomputation_valid"]
-        and "tip_capture_cycles_recompute_mismatch" in result["errors"]
+        and not result.get("lineage_binding_valid", True)
+        and "v040_lineage_hash_mismatch:results/tip_capture_cycles.csv" in result["errors"]
     )
     return {
         "detected": detected,
@@ -238,6 +267,7 @@ def _attack_map():
     return {
         "resealed_raw_cycle_forgery": _raw_cycle_reseal,
         "resealed_first_contact_forgery": _walker_cycle_reseal,
+        "resealed_collision_spacing_forgery": _collision_cycle_reseal,
         "resealed_summary_forgery": _summary_reseal,
         "tail_truncation": _tail_truncation,
         "unpatched_source_drift": _source_drift,
@@ -252,53 +282,47 @@ def _run_single_attack(name: str) -> int:
     return 0 if result["detected"] else 1
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--attack", choices=list(_attack_map()))
-    args = parser.parse_args()
-    if args.attack:
-        return _run_single_attack(args.attack)
-
+def _aggregate_reports(directory: Path) -> int:
     report: dict[str, Any] = {
-        "schema": "openline.endurance.tamper-report.v2",
-        "release_version": "0.4.0",
+        "schema": "openline.endurance.tamper-report.v3",
+        "release_version": "0.5.0",
         "attacks": {},
-        "execution_boundary": "Each hostile semantic attack runs in a fresh subprocess so verifier memory is released between witnesses.",
+        "execution_boundary": "Each complete hostile attack, including its semantic verifier, ran as a separate top-level Python process under a low-memory shell orchestrator.",
         "trust_boundary": {
             "whole_repository_replacement": "OUT_OF_SCOPE_WITHOUT_EXTERNAL_WITNESS",
             "reason": "A full-write attacker can replace source, artifacts, keypair, anchor, and local witness. Publish results/public_witness.json or its digest outside the repository.",
         },
     }
     for name in _attack_map():
-        print(f"running {name}", file=sys.stderr, flush=True)
-        completed = subprocess.run(
-            [sys.executable, str(Path(__file__).resolve()), "--attack", name],
-            cwd=ROOT,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
+        path = directory / f"{name}.json"
+        if not path.exists():
+            report["attacks"][name] = {"detected": False, "runner_error": f"missing isolated report: {path.name}"}
+            continue
         try:
-            item = json.loads(completed.stdout.strip())
-        except json.JSONDecodeError as exc:
-            item = {
-                "detected": False,
-                "runner_error": f"invalid attack output: {exc}",
-                "stdout": completed.stdout,
-                "stderr": completed.stderr,
-                "returncode": completed.returncode,
-            }
-        item["runner_returncode"] = completed.returncode
-        if completed.stderr.strip():
-            item["runner_stderr"] = completed.stderr.strip()
+            item = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            item = {"detected": False, "runner_error": f"invalid isolated report: {exc}"}
         report["attacks"][name] = item
-    report["passed"] = all(
-        item.get("detected") and item.get("runner_returncode") == 0
-        for item in report["attacks"].values()
-    )
+    report["passed"] = all(item.get("detected") for item in report["attacks"].values())
     (ROOT / "TAMPER_REPORT.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["passed"] else 1
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--attack", choices=list(_attack_map()))
+    parser.add_argument("--aggregate-dir", type=Path)
+    args = parser.parse_args()
+    if args.attack:
+        return _run_single_attack(args.attack)
+    if args.aggregate_dir:
+        return _aggregate_reports(args.aggregate_dir)
+
+    shell = ROOT / "scripts" / "tamper_check.sh"
+    if os.name != "nt" and shell.exists():
+        os.execvp("bash", ["bash", str(shell)])
+    raise RuntimeError("Run each attack with --attack and aggregate with --aggregate-dir on platforms without bash.")
 
 
 

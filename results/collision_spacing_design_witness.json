@@ -1,0 +1,53 @@
+{
+  "clustered_is_positive_control_not_primary_contrast": true,
+  "common_random_draw_key_excludes_schedule": true,
+  "conflict_graph": {
+    "handoff_depth": [
+      "memory_horizon",
+      "token_capacity"
+    ],
+    "latency_floor": [
+      "retry_demand"
+    ],
+    "memory_horizon": [
+      "handoff_depth"
+    ],
+    "retry_demand": [
+      "latency_floor"
+    ],
+    "risk_tolerance": [],
+    "token_capacity": [
+      "handoff_depth"
+    ]
+  },
+  "declared_horizon": 69,
+  "event_count": 20,
+  "event_order_identical_across_schedules": true,
+  "same_sparse_span": true,
+  "schema": "openline.collision-spacing.design-witness.v1",
+  "ulam_conflict_aware_same_gap_multiset": true,
+  "ulam_positions": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    8,
+    11,
+    13,
+    16,
+    18,
+    26,
+    28,
+    36,
+    38,
+    47,
+    48,
+    53,
+    57,
+    62,
+    69
+  ],
+  "ulam_random_a_same_gap_multiset": true,
+  "ulam_random_b_same_gap_multiset": true
+}

@@ -20,7 +20,8 @@ def test_default_receipt_chain_is_signed_and_complete():
     amplitude_runs = len((ROOT / "results/amplitude_runs.csv").read_text().splitlines()) - 1
     assert result["valid"]
     assert result["completeness_verified"]
-    assert len(chain) == 2 + runs + amplitude_runs + 4
+    assert len(chain) == 2 + runs + amplitude_runs + 5
+    assert sum(receipt["kind"] == "collision_aware_spacing" for receipt in chain) == 1
 
 
 def test_tail_deletion_fails_completeness(tmp_path):

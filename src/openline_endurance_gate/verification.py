@@ -7,6 +7,9 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from .collision_spacing import (
+    analyze_collision_spacing, collision_design_witness, simulate_collision_spacing,
+)
 from .damage import (
     annotate_failed_before,
     attach_damage,
@@ -17,7 +20,7 @@ from .damage import (
 )
 from .experiment import BASE_SEMANTIC_ARTIFACTS, _design_witness, combine_summaries, load_experiment
 from .fractography import analyze_fractography
-from .integrity import build_public_witness, merkle_root, verify_preregistration
+from .integrity import build_public_witness, merkle_root, verify_preregistration, verify_v040_lineage
 from .receipts import read_chain, verify_chain
 from .sim import calibrate_fresh
 from .summarize import build_summary
@@ -46,6 +49,9 @@ INT_FIELDS = {
     "branch_size", "label", "tip_depth", "receipt_used", "success", "walker_attachment_count",
     "walker_fallback_count",
     "recovery_cost",
+    "event_index", "event_time", "gap", "active_conflict_count", "first_failure_this_event",
+    "declared_horizon", "last_event_time", "failures", "first_failure_event", "adjacent_conflict_count",
+    "conflicting_pair_count", "conflict_degree",
 }
 FLOAT_FIELDS = {
     "difficulty", "config_accuracy", "requirement_accuracy", "context_pressure", "handoff_loss", "kappa",
@@ -56,6 +62,9 @@ FLOAT_FIELDS = {
     "mean_burial_depth", "mean_interior_shielded_cycles", "mean_top_decile_capture",
     "mean_top_decile_expected_share", "frontier_capture_lift", "recovery_rate", "mean_recovery_cost",
     "mean_recovery_depth", "branch_capture_share",
+    "collision_burden", "damage_before", "damage_after", "failure_probability",
+    "common_random_draw", "mean_collision_burden", "peak_collision_burden", "damage_auc", "peak_damage",
+    "final_event_damage",
 }
 
 
@@ -179,6 +188,102 @@ def verify_manifest(root: Path) -> list[str]:
     return errors
 
 
+def _v5_expected_summary(root: Path, collision_summary: dict[str, Any]) -> dict[str, Any]:
+    old_summary = json.loads((root / "lineage/v0.4.0/results/summary.json").read_text(encoding="utf-8"))
+    summary = dict(old_summary)
+    summary["claim_label"] = "POWERED_SYNTHETIC_ENDURANCE_TIP_CAPTURE_AND_COLLISION_SPACING"
+    summary["collision_spacing"] = collision_summary
+    summary["legacy_scientific_result_preserved"] = {
+        "status": old_summary["theory_status"],
+        "passed_gate_count": old_summary["passed_gate_count"],
+        "gate_count": old_summary["gate_count"],
+    }
+    return summary
+
+
+def _verify_v5_semantics(root: Path, experiment: dict[str, Any], manifest: dict[str, Any], evidence: dict[str, Any]) -> list[str]:
+    semantic_errors: list[str] = []
+    spacing = experiment["collision_spacing"]
+    stored_event_root, stored_event_count = _csv_merkle_root(root / "results/collision_spacing_events.csv")
+    stored_run_root, stored_run_count = _csv_merkle_root(root / "results/collision_spacing_runs.csv")
+    stored_runs = _coerce(read_csv(root / "results/collision_spacing_runs.csv"))
+    expected_runs = len(spacing["seeds"]) * len(spacing["schedules"])
+    expected_events = expected_runs * int(spacing["events_per_run"])
+    if stored_run_count != expected_runs:
+        semantic_errors.append(f"collision_spacing_run_count:{stored_run_count}:{expected_runs}")
+    if stored_event_count != expected_events:
+        semantic_errors.append(f"collision_spacing_event_count:{stored_event_count}:{expected_events}")
+
+    collision_events, collision_runs = simulate_collision_spacing(experiment)
+    fresh_event_root = merkle_root(collision_events)
+    fresh_run_root = merkle_root(collision_runs)
+    if fresh_event_root != stored_event_root:
+        semantic_errors.append("collision_spacing_events_recompute_mismatch")
+    if fresh_run_root != stored_run_root:
+        semantic_errors.append("collision_spacing_runs_recompute_mismatch")
+    if not _close(collision_runs, stored_runs, 1e-7):
+        semantic_errors.append("collision_spacing_run_metrics_recompute_mismatch")
+
+    collision_summary = analyze_collision_spacing(collision_runs, experiment)
+    stored_collision_summary = json.loads((root / "results/collision_spacing_summary.json").read_text(encoding="utf-8"))
+    if not _close(collision_summary, stored_collision_summary, 1e-7):
+        semantic_errors.append("collision_spacing_summary_recompute_mismatch")
+    design = collision_design_witness(experiment)
+    stored_design = json.loads((root / "results/collision_spacing_design_witness.json").read_text(encoding="utf-8"))
+    if not _close(design, stored_design):
+        semantic_errors.append("collision_spacing_design_witness_recompute_mismatch")
+
+    summary = _v5_expected_summary(root, collision_summary)
+    stored_summary = json.loads((root / "results/summary.json").read_text(encoding="utf-8"))
+    if not _close(summary, stored_summary, 1e-7):
+        semantic_errors.append("summary_semantic_recompute_mismatch")
+
+    roots = json.loads((root / "lineage/v0.4.0/results/cycle_roots.json").read_text(encoding="utf-8"))
+    roots = dict(roots)
+    roots["schema"] = "openline.endurance.cycle-roots.v2"
+    roots["collision_spacing_event_merkle_root"] = fresh_event_root
+    roots["collision_spacing_event_count"] = len(collision_events)
+    roots["collision_spacing_run_merkle_root"] = fresh_run_root
+    roots["collision_spacing_run_count"] = len(collision_runs)
+    stored_roots = json.loads((root / "results/cycle_roots.json").read_text(encoding="utf-8"))
+    if not _close(roots, stored_roots):
+        semantic_errors.append("cycle_merkle_root_recompute_mismatch")
+    for key in (
+        "primary_cycle_merkle_root",
+        "amplitude_cycle_merkle_root",
+        "tip_capture_cycle_merkle_root",
+        "tip_capture_candidate_merkle_root",
+        "tip_capture_probe_merkle_root",
+        "collision_spacing_event_merkle_root",
+        "collision_spacing_run_merkle_root",
+    ):
+        if evidence.get(key) != roots.get(key):
+            semantic_errors.append(f"evidence_{key}_mismatch")
+
+    public_witness = build_public_witness(
+        root,
+        experiment,
+        summary,
+        manifest["source_tree_digest"],
+        roots["primary_cycle_merkle_root"],
+        roots["amplitude_cycle_merkle_root"],
+        {
+            "tip_capture_cycle_merkle_root": roots["tip_capture_cycle_merkle_root"],
+            "tip_capture_candidate_merkle_root": roots["tip_capture_candidate_merkle_root"],
+            "tip_capture_probe_merkle_root": roots["tip_capture_probe_merkle_root"],
+            "collision_spacing_event_merkle_root": roots["collision_spacing_event_merkle_root"],
+            "collision_spacing_run_merkle_root": roots["collision_spacing_run_merkle_root"],
+        },
+        list(BASE_SEMANTIC_ARTIFACTS),
+    )
+    stored_public_witness = json.loads((root / "results/public_witness.json").read_text(encoding="utf-8"))
+    if not _close(public_witness, stored_public_witness):
+        semantic_errors.append("public_witness_recompute_mismatch")
+    if evidence.get("public_witness_digest") != public_witness["witness_digest"]:
+        semantic_errors.append("evidence_public_witness_digest_mismatch")
+    return semantic_errors
+
+
 def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: bool = True) -> dict[str, Any]:
     root = root.resolve()
     source_root = (source_root or root).resolve()
@@ -204,6 +309,30 @@ def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: 
     if evidence.get("source_tree_digest") != manifest.get("source_tree_digest"):
         errors.append("evidence_source_digest_mismatch")
 
+    experiment_for_branch = load_experiment(root / "experiment.json")
+    if experiment_for_branch.get("schema") == "openline.endurance.experiment.v5":
+        errors.extend(verify_v040_lineage(root))
+        semantic_errors = _verify_v5_semantics(root, experiment_for_branch, manifest, evidence) if full_semantic else []
+        errors.extend(semantic_errors)
+        return {
+            "valid": not errors,
+            "chain": chain_result,
+            "artifact_binding_valid": not any(
+                error == "evidence_receipt_count_mismatch"
+                or error.startswith("evidence_missing:")
+                or error.startswith("evidence_hash_mismatch:")
+                or error == "evidence_source_digest_mismatch"
+                or error.startswith("manifest_")
+                or error.startswith("preregistration_")
+                or error.startswith("v040_lineage_")
+                or error == "source_tree_digest_mismatch"
+                for error in errors
+            ),
+            "semantic_recomputation_valid": not semantic_errors,
+            "lineage_binding_valid": not any(error.startswith("v040_lineage_") for error in errors),
+            "errors": errors,
+        }
+
     semantic_errors: list[str] = []
     if full_semantic:
         experiment = load_experiment(root / "experiment.json")
@@ -218,6 +347,9 @@ def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: 
         stored_tip_runs = _coerce(read_csv(root / "results/tip_capture_runs.csv"))
         stored_tip_candidate_root, _ = _csv_merkle_root(root / "results/tip_capture_candidates.csv")
         stored_tip_probe_root, _ = _csv_merkle_root(root / "results/tip_capture_probes.csv")
+        stored_collision_event_root, stored_collision_event_count = _csv_merkle_root(root / "results/collision_spacing_events.csv")
+        stored_collision_run_root, stored_collision_run_count = _csv_merkle_root(root / "results/collision_spacing_runs.csv")
+        stored_collision_runs = _coerce(read_csv(root / "results/collision_spacing_runs.csv"))
         expected_primary = len(experiment["seeds"]) * len(experiment["modes"]) * len(experiment["schedules"]) * int(experiment["primary_cycles"])
         expected_amplitude = len(experiment["seeds"]) * len(experiment["modes"]) * 3 * int(experiment["primary_cycles"])
         if len(primary_cycles) != expected_primary:
@@ -228,6 +360,13 @@ def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: 
         expected_tip_cycles = len(tip_config["seeds"]) * len(tip_config["attachment_conditions"]) * len(tip_config["repair_policies"]) * int(tip_config["cycles"])
         if stored_tip_cycle_count != expected_tip_cycles:
             semantic_errors.append(f"tip_capture_observation_count:{stored_tip_cycle_count}:{expected_tip_cycles}")
+        spacing_config = experiment["collision_spacing"]
+        expected_collision_runs = len(spacing_config["seeds"]) * len(spacing_config["schedules"])
+        expected_collision_events = expected_collision_runs * int(spacing_config["events_per_run"])
+        if stored_collision_run_count != expected_collision_runs:
+            semantic_errors.append(f"collision_spacing_run_count:{stored_collision_run_count}:{expected_collision_runs}")
+        if stored_collision_event_count != expected_collision_events:
+            semantic_errors.append(f"collision_spacing_event_count:{stored_collision_event_count}:{expected_collision_events}")
 
         recomputed_primary_runs = recompute_runs(primary_cycles)
         recomputed_amplitude_runs = recompute_runs(amplitude_cycles)
@@ -314,7 +453,25 @@ def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: 
         if not _close(tip_design, stored_tip_design):
             semantic_errors.append("tip_capture_design_witness_recompute_mismatch")
 
-        summary = combine_summaries(endurance_summary, tip_summary)
+        collision_events, collision_runs = simulate_collision_spacing(experiment)
+        fresh_collision_event_root = merkle_root(collision_events)
+        fresh_collision_run_root = merkle_root(collision_runs)
+        if fresh_collision_event_root != stored_collision_event_root:
+            semantic_errors.append("collision_spacing_events_recompute_mismatch")
+        if fresh_collision_run_root != stored_collision_run_root:
+            semantic_errors.append("collision_spacing_runs_recompute_mismatch")
+        if not _close(collision_runs, stored_collision_runs, 1e-7):
+            semantic_errors.append("collision_spacing_run_metrics_recompute_mismatch")
+        collision_summary = analyze_collision_spacing(collision_runs, experiment)
+        stored_collision_summary = json.loads((root / "results/collision_spacing_summary.json").read_text(encoding="utf-8"))
+        if not _close(collision_summary, stored_collision_summary, 1e-7):
+            semantic_errors.append("collision_spacing_summary_recompute_mismatch")
+        collision_design = collision_design_witness(experiment)
+        stored_collision_design = json.loads((root / "results/collision_spacing_design_witness.json").read_text(encoding="utf-8"))
+        if not _close(collision_design, stored_collision_design):
+            semantic_errors.append("collision_spacing_design_witness_recompute_mismatch")
+
+        summary = combine_summaries(endurance_summary, tip_summary, collision_summary)
         stored_summary = json.loads((root / "results/summary.json").read_text(encoding="utf-8"))
         if not _close(summary, stored_summary, 1e-7):
             semantic_errors.append("summary_semantic_recompute_mismatch")
@@ -331,6 +488,10 @@ def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: 
             "tip_capture_candidate_count": len(tip_candidates),
             "tip_capture_probe_merkle_root": fresh_tip_roots["probes"],
             "tip_capture_probe_count": len(tip_probes),
+            "collision_spacing_event_merkle_root": fresh_collision_event_root,
+            "collision_spacing_event_count": len(collision_events),
+            "collision_spacing_run_merkle_root": fresh_collision_run_root,
+            "collision_spacing_run_count": len(collision_runs),
         }
         stored_roots = json.loads((root / "results/cycle_roots.json").read_text(encoding="utf-8"))
         if not _close(roots, stored_roots):
@@ -345,6 +506,10 @@ def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: 
             semantic_errors.append("evidence_tip_capture_candidate_root_mismatch")
         if evidence.get("tip_capture_probe_merkle_root") != roots["tip_capture_probe_merkle_root"]:
             semantic_errors.append("evidence_tip_capture_probe_root_mismatch")
+        if evidence.get("collision_spacing_event_merkle_root") != roots["collision_spacing_event_merkle_root"]:
+            semantic_errors.append("evidence_collision_spacing_event_root_mismatch")
+        if evidence.get("collision_spacing_run_merkle_root") != roots["collision_spacing_run_merkle_root"]:
+            semantic_errors.append("evidence_collision_spacing_run_root_mismatch")
 
         design = _design_witness(experiment)
         stored_design = json.loads((root / "results/design_witness.json").read_text(encoding="utf-8"))
@@ -362,6 +527,8 @@ def verify_evidence(root: Path, source_root: Path | None = None, full_semantic: 
                 "tip_capture_cycle_merkle_root": roots["tip_capture_cycle_merkle_root"],
                 "tip_capture_candidate_merkle_root": roots["tip_capture_candidate_merkle_root"],
                 "tip_capture_probe_merkle_root": roots["tip_capture_probe_merkle_root"],
+                "collision_spacing_event_merkle_root": roots["collision_spacing_event_merkle_root"],
+                "collision_spacing_run_merkle_root": roots["collision_spacing_run_merkle_root"],
             },
             list(BASE_SEMANTIC_ARTIFACTS),
         )

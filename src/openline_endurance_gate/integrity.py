@@ -58,6 +58,32 @@ def verify_preregistration(root: Path) -> list[str]:
     for key, expected in locked.items():
         if experiment.get(key) != expected:
             errors.append(f"preregistration_locked_design_mismatch:{key}")
+    lineage_expected = prereg.get("lineage_sha256")
+    if lineage_expected:
+        lineage_path = root / "V040_LINEAGE.json"
+        if not lineage_path.exists():
+            errors.append("preregistration_lineage_missing")
+        elif sha256_file(lineage_path) != lineage_expected:
+            errors.append("preregistration_lineage_hash_mismatch")
+    return errors
+
+
+def verify_v040_lineage(root: Path) -> list[str]:
+    """Verify the inherited v0.4.0 evidence boundary byte-for-byte."""
+    errors: list[str] = []
+    path = root / "V040_LINEAGE.json"
+    if not path.exists():
+        return ["v040_lineage_missing"]
+    lineage = json.loads(path.read_text(encoding="utf-8"))
+    if lineage.get("schema") != "openline.endurance.lineage.v1":
+        errors.append("v040_lineage_schema_invalid")
+    for bucket in ("inherited_artifact_hashes", "unchanged_mechanism_hashes", "snapshot_hashes"):
+        for relative, expected in lineage.get(bucket, {}).items():
+            candidate = root / relative
+            if not candidate.exists():
+                errors.append(f"v040_lineage_missing:{relative}")
+            elif sha256_file(candidate) != expected:
+                errors.append(f"v040_lineage_hash_mismatch:{relative}")
     return errors
 
 

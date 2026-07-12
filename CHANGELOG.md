@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0 — Collision-Aware Spacing Exploratory Test
+
+- Preserves the v0.4.0 scientific result at 8/10; spacing gates remain a separate exploratory denominator.
+- Adds clustered, two matched random-sparse, Ulam-spaced, and conflict-aware schedules over identical event order and common random draws.
+- Makes Ulam, random, and conflict-aware conditions share the exact same gap multiset and 69-tick span.
+- Derives the conflict graph only from overlapping requirement-to-field dependencies; schedules never read outcomes.
+- Freezes 96 fresh seeds after an excluded 16-seed implementation pilot: 8 train, 8 validation, and 80 held out.
+- Adds 9,600 event observations, canonical Merkle roots, semantic recomputation, CLI output, signed receipt binding, and a resealed collision-row forgery test.
+- Result: 5/7 exploratory gates passed. Ulam failed to reduce collision or damage versus matched random spacing. Conflict-aware spacing reduced both.
+- Pins the released v0.4.0 mechanism and evidence tree as byte-for-byte lineage; the v0.5 verifier independently regenerates the spacing extension rather than claiming to rerun the inherited high-cost simulator.
+- Adds low-memory shell orchestration so all six hostile attacks and release phases run as separate top-level Python processes.
+
 ## 0.4.0 — Independent First-Contact Mechanism
 
 - Preserves v0.3.1 as the honest 7/10 failed baseline rather than rewriting its result.

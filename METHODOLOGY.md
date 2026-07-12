@@ -98,7 +98,7 @@ The analyzer reports crack origin, peak, burden, unresolved span, repair half-li
 
 ## Integrity
 
-`PREREGISTRATION.json` binds the experiment configuration and mechanism files before results are generated. Raw cycle rows are committed by Merkle roots. A signed receipt chain binds run summaries and evidence artifacts. The semantic verifier recomputes all consequential claims from raw cycle files.
+`PREREGISTRATION.json` binds the experiment configuration and mechanism files before results are generated. Raw rows are committed by Merkle roots. A signed receipt chain binds run summaries and evidence artifacts. In v0.5, the verifier pins the released v0.4 mechanisms and evidence byte-for-byte through `V040_LINEAGE.json`, then independently regenerates all consequential v0.5 collision-spacing claims from the frozen mechanism and seed block.
 
 The local anchor cannot defend against an attacker replacing the entire repository and generating a new keypair. External publication of the compact witness digest is the next trust boundary.
 
@@ -116,9 +116,9 @@ The primary graph witnesses are frontier capture concentration, held-out Geometr
 
 Receipts preserve ancestry and visible pointers. They do not directly close defects. Any outcome change requires a gate, rollback, quarantine, or repair policy that actually consults the receipt structure.
 
-## Graph evidence binding
+## Inherited graph evidence binding
 
-The full verifier regenerates graph cycles, candidate rows, recovery probes, held-out models, gate summaries, and design witnesses. Stored graph CSVs are streamed into canonical row Merkle roots before regeneration, avoiding simultaneous retention of stored and fresh graph objects. The comparison remains exact at the canonical row level.
+The v0.4 release established the first-contact graph result. v0.5 preserves that result as pinned lineage rather than silently rerunning the expensive inherited simulator. `V040_LINEAGE.json` commits the released v0.4 raw artifacts, summaries, receipts, and mechanism files; any inherited change breaks the lineage witness. The v0.5 verifier independently regenerates only the new collision-spacing events, run summaries, gates, and design witness, with exact canonical Merkle comparison.
 
 ## v0.3.1 reporting correction
 
@@ -127,3 +127,18 @@ The scientific run is unchanged. Paired repair-yield effects are reported in vio
 ## v0.4.0 mechanism revision
 
 The v0.3.1 selector chose uniformly among active tips and then sometimes walked inward; it was a weak proxy for diffusion-limited first contact and failed its concentration gate. v0.4.0 replaces it with an explicit random-walk contact process. Recent captures remain diagnostic evidence and never enter the selector. This is a new preregistered experiment, not a repair of the old outcome.
+
+## v0.5.0 collision-aware spacing experiment
+
+This extension asks a narrower question: with event identity, amplitude, order, count, and random draws held fixed, does the ordering of idle gaps change semantic collision and accumulated synthetic damage?
+
+The primary Ulam contrast is deliberately matched. The first twenty Ulam numbers define nineteen gaps over a 69-tick span. `random_sparse_a` and `random_sparse_b` independently permute that exact gap multiset. `conflict_aware` permutes the same gaps by assigning larger gaps to interfaces with higher predicted interference. No condition changes event order or sees an observed failure.
+
+The conflict graph is derived from overlap in `REQ_TO_FIELDS`. Same-target events have score 1. Requirements that update overlapping configuration fields have a positive edge; disconnected requirements have score 0. This graph is a declared synthetic proxy for semantic interference, not a learned ontology.
+
+At each event, prior conflicting traces decay with elapsed time. Their remaining strength contributes to collision burden. Damage also decays during gaps and rises from the current event plus collision burden. The same schedule-independent random draw is compared with each condition's failure probability. These equations define the toy world only; their constants were frozen after the excluded 6001–6016 implementation pilot and before opening seeds 6201–6296.
+
+Seven exploratory gates test matching, a clustered positive control, a two-random negative control, Ulam collision and damage reduction, and conflict-graph collision and damage reduction. The v0.4.0 ten-gate score remains unchanged regardless of these outcomes.
+
+Held-out result: Ulam failed both operational gates. Its median collision burden and damage AUC were higher than the matched random-sparse control. Conflict-aware spacing passed both corresponding gates. The clean inference is that sparse irregular timing alone carried no useful structure here, while graph-informed placement of the same gaps did.
+
