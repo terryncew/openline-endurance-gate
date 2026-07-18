@@ -1,0 +1,44 @@
+{
+  "candidate_passed": true,
+  "detached_release_status": "PENDING_FULL_RELEASE_GATE",
+  "experiment_chain": {
+    "chain_digest": "60e77344cade1730627a60931acd875161ca194292c21f7c0be8f8fe0fea5862",
+    "completeness_verified": true,
+    "count": 742,
+    "errors": [],
+    "integrity_valid": true,
+    "tail_hash": "7d887cf2ec4cfa0471de4516a5aac9ebbfa0615fe8296a2c188df35f31b45178",
+    "valid": true
+  },
+  "fast_verification_without_detached_release": {
+    "artifact_binding_valid": true,
+    "chain": {
+      "chain_digest": "60e77344cade1730627a60931acd875161ca194292c21f7c0be8f8fe0fea5862",
+      "completeness_verified": true,
+      "count": 742,
+      "errors": [],
+      "integrity_valid": true,
+      "tail_hash": "7d887cf2ec4cfa0471de4516a5aac9ebbfa0615fe8296a2c188df35f31b45178",
+      "valid": true
+    },
+    "errors": [],
+    "lineage_binding_valid": true,
+    "release_attestation": {
+      "errors": [],
+      "skipped": true,
+      "valid": true
+    },
+    "release_attestation_valid": true,
+    "semantic_recomputation_valid": true,
+    "valid": true
+  },
+  "schema": "openline.endurance.succession-tooling-candidate.v1",
+  "scientific_release_preserved": "0.9.1",
+  "succession_selftest": {
+    "check_count": 20,
+    "claim_boundary": "Synthetic mechanism check only. This does not estimate deployed-agent benefit or establish a universal succession threshold.",
+    "passed": true,
+    "passed_check_count": 20
+  },
+  "tooling_version": "0.10.0"
+}

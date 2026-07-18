@@ -1,0 +1,25 @@
+name: succession-calibrator
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-succession:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install exact development dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run complete non-integration test suite
+        run: PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q
+      - name: Run deterministic synthetic hostile check
+        run: python scripts/succession_selftest.py

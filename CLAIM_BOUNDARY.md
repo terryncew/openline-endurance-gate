@@ -1,5 +1,11 @@
 # Claim Boundary
 
+## v0.10.0 succession tooling
+
+The Succession Calibrator is an agent/task-specific advisory built from recomputed COLE checkpoints and receiver-owned labels. The included 500-sample result is a constructed mechanism check. It proves that the implementation can recover the constructed persistence rule and reject the declared hostile controls; it does not estimate benefit on deployed agents, establish a universal health threshold, or authorize automatic retirement.
+
+UCR remains an evidence-sufficiency measure, not an agent-health measure. A valid signature with unsupported material claims is insufficient evidence. A `succession_candidate` still requires receiver approval and a verified handoff in the fresh runtime before source retirement.
+
 ## Permitted v0.9.1 claim
 
 > In this controlled experiment, a compact verified handoff preserved specified state and changed post-intervention performance by the measured amount.

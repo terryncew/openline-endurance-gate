@@ -44,6 +44,7 @@ PYTEST_GROUPS = [
         "tests/test_packaging.py",
         "tests/test_receipts.py",
         "tests/test_simulation.py",
+        "tests/test_succession.py",
     ],
     [
         "tests/test_state_restoration.py",

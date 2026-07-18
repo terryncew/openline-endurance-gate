@@ -1,0 +1,21 @@
+{
+  "base_commit": "fd62993d45a4afcf00abdb0a4805650688dfa068",
+  "base_release": "0.9.1",
+  "base_wrapper_hashes": {
+    "MANIFEST.json": "bb2806f84def968df23c2180a7ec7013b57f651852baa8eb820bf283bd45f714",
+    "RUN_REPORT.json": "da0e2a3762665ef4495dbe26fb9921f4eef2b6df6e1bb0b6c8231387375db952",
+    "TAMPER_REPORT.json": "5751922fac6fe8c925830691ee0169971d8747983673837653dce8604589063a",
+    "receipts/experiment.anchor.json": "7cf7eb35a0519ee33d1d62bd5eb970133b9f35eadaf1c135ea8caee6efd0633a",
+    "receipts/experiment.jsonl": "35665632c9f6a25cf3587221e9b22282c899b2a1610370d91bd619cd2ee07559",
+    "receipts/release.anchor.json": "e9f7ce320d57719d9fa79a3353bad95e9501a97eac76ab70303d4e29322344e2",
+    "receipts/release.jsonl": "2e1894a2c69ffa292ff7bc71b0fb2ef5371da4256b210cce960f1960d2ef8fb9",
+    "results/public_witness.json": "733773d4508c142f702ec1ba823ef1b9b6b76c034887981e862541aa055290ff"
+  },
+  "claim_boundary": "Version 0.10.0 adds tooling around the unchanged v0.9.1 scientific artifact set. Wrapper manifests, public witnesses, and local receipt keys may be resealed to bind the new source; their base hashes remain recorded here. The Git commit is the durable byte source.",
+  "scientific_artifact_count": 97,
+  "scientific_artifact_hash_map_digest": "6651b99a7144930be8502d32491d62f58e6fe0d00695b99fa4609add908fbc35",
+  "scientific_artifact_hash_map_digest_algorithm": "sha256-canonical-path-hash-map-v1",
+  "scientific_result_changed": false,
+  "schema": "openline.endurance.tooling-lineage.v1",
+  "tooling_release": "0.10.0"
+}

@@ -1,12 +1,20 @@
 {
   "entries": [
     {
+      "path": ".github/workflows/succession.yml",
+      "sha256": "8cba87021f16fb0593b206b24945e1666adee0b676eda9876b098d568e6e0542"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "76d8be8cdd2809531c8eb5dee7fc20015cc1b368deb8f9c963b8a7ab1cdef579"
+    },
+    {
       "path": "CHANGELOG.md",
-      "sha256": "20c935e2171f469ba3e0bf38c383a39e50b5e394a1c5e80acf7d6b4b566115c9"
+      "sha256": "56a3252b8f76821d5dd576297a8dfdeb65bf6bd9b411f1020acfff6f0fe980c6"
     },
     {
       "path": "CLAIM_BOUNDARY.md",
-      "sha256": "a17b1d3b280536d17b6428c9dc04a33c753e4032be8301a0702f9e3b27ebd275"
+      "sha256": "1b3e4f003bb3045ec8c83068fbde86de04e35bbacd54db5ddb96f8966b66169b"
     },
     {
       "path": "COLLISION_SPACING_PILOT_LOG.json",
@@ -42,7 +50,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "5567c73d03c6d8fc862093d1cb8b4e590d9625267a9bc67af788245ac09c77a1"
+      "sha256": "20f9b612c7b7be20514965c2ad34a98e64c921e1d2f12a2eaf84c8e8d06aedfe"
     },
     {
       "path": "RECOVERY_RELEASE_GATE.json",
@@ -53,12 +61,20 @@
       "sha256": "f1ea9de8a6cce9c4da59cbc89826c9b08ff8b64ae0a5db6ae661dd3771072584"
     },
     {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "799c0b74510532fb425afa42f84741033ce21bb49c7ebafa93ffba35c37f2a05"
+    },
+    {
       "path": "TIP_CAPTURE_PILOT_LOG.json",
       "sha256": "5fbf9a3f94049e3240688f1a96f0ac499d3d0e90a4a063effd304f19e44a8948"
     },
     {
       "path": "TIP_CAPTURE_V040_PILOT_LOG.json",
       "sha256": "5199367208c68ed74a82f8512e426aed5b62e52b78e397955a3f13c0af82e001"
+    },
+    {
+      "path": "V0100_LINEAGE.json",
+      "sha256": "71b56bf608cb10dda67fce45b2f0132005594ae4a89cfbaf728acb9fc4a603f1"
     },
     {
       "path": "V040_LINEAGE.json",
@@ -103,6 +119,10 @@
     {
       "path": "docs/RECOVERY_THREAT_MODEL.md",
       "sha256": "a594a03db89d005ead4caa3098a7b9b433bffda87b39932c9ef52a7bbc51d22d"
+    },
+    {
+      "path": "docs/SUCCESSION_CALIBRATION.md",
+      "sha256": "f69559228537886870a2c17aee11cb4c861e5b5c0db9d02ace5703b58965b0d1"
     },
     {
       "path": "examples/run_experiment.py",
@@ -590,7 +610,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "6656324d3aa2eb3df08424806934eb38ca80bb9b8cd17e136348a16bd2b27585"
+      "sha256": "ae8a7974dc49c88839986311f8ac89f0b381b60f2048223a6b5bc2d939bd119a"
     },
     {
       "path": "results/amplitude_cycles.csv",
@@ -754,7 +774,7 @@
     },
     {
       "path": "results/public_witness.json",
-      "sha256": "733773d4508c142f702ec1ba823ef1b9b6b76c034887981e862541aa055290ff"
+      "sha256": "da16bca2dc2195fc208686494ce4d5dbd2beee13ef0f6226ec37f556ee1021a4"
     },
     {
       "path": "results/recovery_cycles.part-000.csv.gz",
@@ -885,6 +905,10 @@
       "sha256": "c8f0b629c3c8ba682436ca4f66dc31e9f324bc9aafd03f2833e4dee5c6db878d"
     },
     {
+      "path": "results/succession_synthetic_selftest.json",
+      "sha256": "68dfbdaf31944c9cac7d3fdb51fe1b5be6fce5ea17812042941a81a17380e864"
+    },
+    {
       "path": "results/summary.json",
       "sha256": "08007b185009e2e9698147eec16ec6a82c9d89dbbc63110aba229369232cf55e"
     },
@@ -921,16 +945,28 @@
       "sha256": "2da5d79bcabade69f19193e16e6c0576af05f247d3392785b69d0fc500519443"
     },
     {
+      "path": "scripts/finalize_succession_release.py",
+      "sha256": "d692c66f91aa9d08b03c81c67cbd4303e07df969aac44d06892887f92bc37241"
+    },
+    {
       "path": "scripts/release_check.py",
-      "sha256": "4e4d6f1845e987694e6a0e1337ba29dde28206a04934d06c822b0050bf1d4d56"
+      "sha256": "f877b0400487e354a1586af6a1661a5de27303e20c76050e1f30958e25ae7e49"
     },
     {
       "path": "scripts/release_check.sh",
-      "sha256": "ba8fc15e3612a1757a6dd3975b65cc58a345c9b5a83a9198defb8476ea44e66e"
+      "sha256": "e999eafd588ea34947432bd5fc4717153d26134f18fb430a0a51a7b529057cfb"
+    },
+    {
+      "path": "scripts/seal_succession_candidate.py",
+      "sha256": "3184790da8933ce9aaca9c52ecaaa8a1d644e148e979182dc942ec954121e0dc"
+    },
+    {
+      "path": "scripts/succession_selftest.py",
+      "sha256": "cd449f39e65736739be6704cb09d2778574d72693ad281ff868dcc9ef87553ce"
     },
     {
       "path": "scripts/tamper_check.py",
-      "sha256": "f463f0b66cb3a2fb0575c53b75c6c0f5eb1da1ced87d8c1fb579d3d03f175482"
+      "sha256": "1e29b9c24435aace8bbbecd2272a524a6e4e4298ad6c8eba76a9ae1063157980"
     },
     {
       "path": "scripts/tamper_check.sh",
@@ -938,7 +974,7 @@
     },
     {
       "path": "src/openline_endurance_gate/__init__.py",
-      "sha256": "4378af195324e4cbf44b20de5d4fa41e667d8f476488866c7708fe7eaaacbed4"
+      "sha256": "d145d2cd5c4eec310b746c437f39f5f948e4c6ca4df40e7346269b580ee09ca7"
     },
     {
       "path": "src/openline_endurance_gate/__main__.py",
@@ -950,7 +986,7 @@
     },
     {
       "path": "src/openline_endurance_gate/cli.py",
-      "sha256": "3d680898b3cf71b578ace0a1d677d3ac341ae30b5a4e0547f4a8792208e49d62"
+      "sha256": "93d79e6679ad0b924b7e498313376dac1dd7d744d418f03caee34f39bfed5701"
     },
     {
       "path": "src/openline_endurance_gate/collision_spacing.py",
@@ -1014,7 +1050,7 @@
     },
     {
       "path": "src/openline_endurance_gate/release_attestation.py",
-      "sha256": "681095e9b2694dddae51ed1ef0bf4673a7be447bba52b25384cf2c48704510d6"
+      "sha256": "cd7fd12641bede7e011e35b10819991c1ad1bfd137ffdcba9b7a44c3720fd65a"
     },
     {
       "path": "src/openline_endurance_gate/restoration_stream.py",
@@ -1041,6 +1077,10 @@
       "sha256": "026ace9d859f6be2ba7d390750eea101272335cd0cdfc308d56f92e0cf10073a"
     },
     {
+      "path": "src/openline_endurance_gate/succession.py",
+      "sha256": "0fd92bdfed08107a6826f03131fe6f076744deaad2785b4177c56f484cb35d12"
+    },
+    {
       "path": "src/openline_endurance_gate/summarize.py",
       "sha256": "22684e8cff4540d651362aceb06cb78a1fd00617ee48e287f1a35f1e5a364553"
     },
@@ -1049,12 +1089,16 @@
       "sha256": "c198afa4a460600a54d636db194e527b9b75232158182201d06fc2b92aac77d0"
     },
     {
+      "path": "src/openline_endurance_gate/tooling_lineage.py",
+      "sha256": "dde560a08dc59347381b26fae3e009980888409182ad9cc08decb0147359e8d7"
+    },
+    {
       "path": "src/openline_endurance_gate/util.py",
       "sha256": "f2886b796a28194549296b82a8e4ae4d8a796b0b421ce2da1795456e04d185d0"
     },
     {
       "path": "src/openline_endurance_gate/verification.py",
-      "sha256": "7685bd22e2e0ce0a990dccc8f714f8c166cb3be4964a41b8623ca8fe955722e8"
+      "sha256": "8512fdc42970be58c5743ef65364944fd1bc78ae4db1233162c8a3cb602ab170"
     },
     {
       "path": "src/openline_endurance_gate/world.py",
@@ -1078,7 +1122,7 @@
     },
     {
       "path": "tests/test_integrity.py",
-      "sha256": "36ca2d1804a8e44b0dc88edaaa250fa1c2044967da1f830d172bb28e85b1de93"
+      "sha256": "292274c2f253b4f73ee597e24d2473d9f188d9f98aa1085c275f3e9788d59c0d"
     },
     {
       "path": "tests/test_load_rate.py",
@@ -1090,11 +1134,11 @@
     },
     {
       "path": "tests/test_packaging.py",
-      "sha256": "5d522471123e86481c1901f554bb75c278d52ac63290b4e1ccab3b58ef298266"
+      "sha256": "695a41a0916aa6610988ed7272578149868ec2b0dd5d9b923ff2e44ed4bfffd2"
     },
     {
       "path": "tests/test_receipts.py",
-      "sha256": "3cb2e85a52caaf192db0202fc8560f88a3b939eeb497b13e3ced5a3576545480"
+      "sha256": "1c9aaf085d7cda4029704fbb7ef93cc54f857c1e46cf9baeaaa53d0dbe52bc1b"
     },
     {
       "path": "tests/test_recovery.py",
@@ -1113,6 +1157,10 @@
       "sha256": "a77486bee15fbe4c7181986aaff7836d045a791c5ce5708085f987a0e26ce1ae"
     },
     {
+      "path": "tests/test_succession.py",
+      "sha256": "a2e35ddb13ffb0d986d16fad22d86887b8b73b8660362d7fc7652b3cbac541b7"
+    },
+    {
       "path": "tests/test_tip_capture.py",
       "sha256": "f4dcf414b2278e196d36292c32c6624a2bf0a11e92ed779f3d703ed54f498736"
     },
@@ -1121,7 +1169,7 @@
       "sha256": "ccbadf2e602cc7b1d13f19f22619775cae60a6da90b3effd9951593dea13ce9e"
     }
   ],
-  "entry_count": 280,
+  "entry_count": 292,
   "schema": "openline.endurance.manifest.v2",
-  "source_tree_digest": "c93fa2c3059f9400d0d7062723f8ec11f091ad3ca6a1341c5a034d6a3b8456c5"
+  "source_tree_digest": "dfb3b155ccb59cc7cc3a4de2890e62fd0933df24fa8f021e48543851a0aa6da2"
 }

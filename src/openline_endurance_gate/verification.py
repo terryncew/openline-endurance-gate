@@ -48,6 +48,7 @@ from .release_attestation import verify_release_attestation
 from .sim import calibrate_fresh
 from .summarize import build_summary
 from .tip_capture import analyze_tip_capture, simulate_tip_capture, tip_design_witness
+from .tooling_lineage import verify_v0100_tooling_lineage
 from .util import canonical_json, mean, read_csv, sha256_bytes, sha256_file
 
 
@@ -870,6 +871,8 @@ def verify_evidence(
                 errors.append(f"evidence_hash_mismatch:{relative}")
     errors.extend(verify_manifest(source_root))
     errors.extend(verify_preregistration(source_root))
+    if (source_root / "V0100_LINEAGE.json").exists():
+        errors.extend(verify_v0100_tooling_lineage(source_root))
     manifest = json.loads((source_root / "MANIFEST.json").read_text(encoding="utf-8"))
     if evidence.get("source_tree_digest") != manifest.get("source_tree_digest"):
         errors.append("evidence_source_digest_mismatch")
@@ -904,12 +907,13 @@ def verify_evidence(
                 or error.startswith("v070_lineage_")
                 or error.startswith("v080_lineage_")
                 or error.startswith("v091_lineage_")
+                or error.startswith("v0100_")
                 or error == "source_tree_digest_mismatch"
                 for error in errors
             ),
             "semantic_recomputation_valid": not semantic_errors,
             "lineage_binding_valid": not any(
-                error.startswith(("v070_lineage_", "v080_lineage_", "v090_lineage_", "v091_lineage_"))
+                error.startswith(("v070_lineage_", "v080_lineage_", "v090_lineage_", "v091_lineage_", "v0100_"))
                 for error in errors
             ),
             "release_attestation_valid": bool(release_result["valid"]),

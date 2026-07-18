@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openline-endurance-gate"
-version = "0.9.1"
-description = "A falsifiable synthetic harness for endurance, state restoration, and verified recovery handoffs."
+version = "0.10.0"
+description = "A falsifiable harness for endurance, verified recovery, and calibrated agent succession."
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -13,7 +13,13 @@ authors = [{name = "Terrynce White"}]
 dependencies = ["cryptography>=42"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+succession = [
+  "cole-portable-core @ git+https://github.com/terryncew/cole-portable-core.git@c7a2d63befa9105579ac28940f3de00cdc8d76cc",
+]
+dev = [
+  "pytest>=8",
+  "cole-portable-core @ git+https://github.com/terryncew/cole-portable-core.git@c7a2d63befa9105579ac28940f3de00cdc8d76cc",
+]
 
 [project.scripts]
 openline-endurance = "openline_endurance_gate.cli:main"

@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+.DS_Store
+
+# Receiver-owned calibration secrets and local workspaces.
+*.private.hex
+succession-calibration/
+
+# Standalone hostile-check output is intentionally outside the attested report.
+TAMPER_REPORT.standalone.json

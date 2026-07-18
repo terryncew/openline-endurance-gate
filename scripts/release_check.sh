@@ -28,7 +28,7 @@ run_preflight() {
     -k "$filter"
   capture_step pytest-1 env PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}" PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
     "$PYTHON_BIN" -m pytest -q \
-    tests/test_packaging.py tests/test_receipts.py tests/test_simulation.py \
+    tests/test_packaging.py tests/test_receipts.py tests/test_simulation.py tests/test_succession.py \
     -k "$filter"
   capture_step pytest-2 env PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}" PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
     "$PYTHON_BIN" -m pytest -q \

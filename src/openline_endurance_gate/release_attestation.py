@@ -98,6 +98,12 @@ def verify_release_attestation(root: Path) -> dict[str, Any]:
         errors.append("release_attestation_embedded_tamper_report_mismatch")
     if run_report.get("tamper_suite", {}).get("returncode") != 0:
         errors.append("release_attestation_tamper_returncode_mismatch")
+    tooling_version = payload.get("tooling_version")
+    if tooling_version is not None and tooling_version != run_report.get("tooling_version"):
+        errors.append("release_attestation_tooling_version_mismatch")
+    release_status = payload.get("release_status")
+    if release_status is not None and release_status != run_report.get("release_status"):
+        errors.append("release_attestation_status_mismatch")
     semantic = run_report.get("semantic_verification", {})
     if semantic.get("valid") is not True:
         errors.append("release_attestation_semantic_report_not_valid")
@@ -125,6 +131,7 @@ def write_release_attestation(root: Path) -> dict[str, Any]:
     experiment = json.loads((root / "experiment.json").read_text(encoding="utf-8"))
     witness = json.loads((root / "results/public_witness.json").read_text(encoding="utf-8"))
     manifest = json.loads((root / "MANIFEST.json").read_text(encoding="utf-8"))
+    run_report = json.loads((root / "RUN_REPORT.json").read_text(encoding="utf-8"))
     payload = {
         "schema": "openline.endurance.release-attestation.v1",
         "release_version": experiment.get("release_version"),
@@ -134,6 +141,8 @@ def write_release_attestation(root: Path) -> dict[str, Any]:
         "public_witness_digest": witness["witness_digest"],
         "source_tree_digest": manifest["source_tree_digest"],
         "preregistration_sha256": sha256_file(root / "PREREGISTRATION.json"),
+        "tooling_version": run_report.get("tooling_version"),
+        "release_status": run_report.get("release_status"),
         "claim_boundary": (
             "This outer receipt detects later release-report edits under the pinned release key. "
             "Independent publication of its anchor hash is still required to resist whole-repository replacement."

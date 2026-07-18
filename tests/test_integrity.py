@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from openline_endurance_gate.integrity import verify_preregistration, verify_v091_lineage
+from openline_endurance_gate.tooling_lineage import verify_v0100_tooling_lineage
 from openline_endurance_gate.util import sha256_file
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +30,10 @@ def test_public_witness_is_compact_and_self_scoped():
     assert witness["external_anchor_status"] == "UNPUBLISHED_LOCAL_WITNESS"
     assert len(witness["witness_digest"]) == 64
     assert "whole-repository replacement" in witness["claim_boundary"]
+
+
+def test_v0100_tooling_lineage_preserves_the_scientific_artifact_set():
+    assert verify_v0100_tooling_lineage(ROOT) == []
 
 
 def test_streaming_csv_merkle_matches_in_memory(tmp_path):

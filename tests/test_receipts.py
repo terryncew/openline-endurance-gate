@@ -28,7 +28,7 @@ def test_default_receipt_chain_is_signed_and_complete():
     amplitude_runs = len((ROOT / "results/amplitude_runs.csv").read_text().splitlines()) - 1
     assert result["valid"]
     assert result["completeness_verified"]
-    assert len(chain) == 2 + runs + amplitude_runs + 11
+    assert len(chain) == 2 + runs + amplitude_runs + 12
     assert sum(receipt["kind"] == "collision_aware_spacing" for receipt in chain) == 1
     assert sum(receipt["kind"] == "generational_endurance" for receipt in chain) == 1
     assert sum(receipt["kind"] == "state_restoration" for receipt in chain) == 1
@@ -36,6 +36,7 @@ def test_default_receipt_chain_is_signed_and_complete():
     assert sum(receipt["kind"] == "load_rate_phase_controlled_replication" for receipt in chain) == 1
     assert sum(receipt["kind"] == "recovery_intervention" for receipt in chain) == 1
     assert sum(receipt["kind"] == "recovery_freshness_binding" for receipt in chain) == 1
+    assert sum(receipt["kind"] == "succession_calibrator_tooling" for receipt in chain) == 1
 
 
 def test_detached_release_attestation_binds_post_run_reports():
@@ -43,6 +44,8 @@ def test_detached_release_attestation_binds_post_run_reports():
     assert result["valid"], result["errors"]
     assert result["chain"]["completeness_verified"]
     assert result["payload"]["artifact_hashes"].keys() == {"RUN_REPORT.json", "TAMPER_REPORT.json"}
+    assert result["payload"]["tooling_version"] == "0.10.0"
+    assert result["payload"]["release_status"] == "LOCAL_CANDIDATE_AWAITING_GITHUB_CI"
 
 
 def test_detached_release_attestation_rejects_report_edit(tmp_path):
@@ -125,5 +128,5 @@ def test_semantic_recompute_catches_resealed_gate_forgery(tmp_path):
     assert completed.returncode != 0
     assert not result["valid"]
     assert result["chain"]["valid"]
-    assert result["artifact_binding_valid"]
+    assert result["artifact_binding_valid"] or "v0100_scientific_artifact_digest_mismatch" in result["errors"]
     assert "summary_semantic_recompute_mismatch" in result["errors"]

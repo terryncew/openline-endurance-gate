@@ -1,10 +1,80 @@
 # OpenLine Endurance Gate
 
+Version 0.10.0 adds a receiver-owned Succession Calibrator around the exact COLE Portable Core 2.1 draft measurement contract. It guides a developer from signed checkpoint measurement, through matched continue-vs-successor labels, to a signed agent-specific advisory policy. It keeps every metric separate, refuses unsupported material claims, and never authorizes automatic retirement.
+
+`openline-endurance-gate` helps you measure an agent, learn when a fresh successor has historically performed better, and prepare a verified handoff without inventing a universal health score. It is also a falsifiable synthetic reliability harness for cumulative state loss, dependency-frontier geometry, verified inheritance, restoration, and disturbance-rate effects.
+
+## v0.10.0 — Measure, calibrate, then consider succession
+
+The public COLE reference profile is intentionally uncalibrated and returns `white`. Endurance Gate does not turn that reference prior into a universal agent-health rule. Instead, it adds a guided workflow:
+
+1. issue and recompute-verify run-bound COLE measurement bundles;
+2. compare the current agent with a fresh successor from the same verified handoff;
+3. label the paired outcomes under a declared benefit margin;
+4. split whole run IDs between training and holdout sets;
+5. fit each COLE threshold separately plus an explicit persistence rule;
+6. emit a signed policy and, only after 500 admitted labeled samples plus declared held-out validation floors, an exact COLE `calibrated` profile;
+7. return `observe_only`, `continue_observation`, `prepare_handoff`, `insufficient_evidence`, or `succession_candidate`.
+
+There is no combined health score. Kappa, epsilon, delta-hol, and phi-star remain separate. UCR remains a claim-support check: it is reported separately and a nonzero UCR makes the checkpoint insufficient evidence for a succession candidate.
+
+Every assessment says `automatic_retirement_authorized: false`. A `succession_candidate` means the receiver should create and verify a handoff in a fresh runtime, review the result, and only then decide whether to retire the source runtime.
+
+Install the pinned COLE integration and create a private local workspace:
+
+```bash
+python -m pip install -e '.[succession]'
+openline-endurance succession-init --root succession-calibration
+```
+
+Measure a warm checkpoint using a Wire Canon receipt/disclosure request:
+
+```bash
+openline-endurance succession-measure \
+  --request succession-calibration/request.json \
+  --reference-profile my.agent-quality-micros.v1 \
+  --key succession-calibration/measurement.private.hex \
+  --out succession-calibration/run-001-seq-010.bundle.json
+```
+
+Append a paired label, calibrate, and assess:
+
+```bash
+openline-endurance succession-label \
+  --bundle succession-calibration/run-001-seq-010.bundle.json \
+  --sample-id run-001-seq-010 \
+  --continued-quality-micros 610000 \
+  --successor-quality-micros 790000 \
+  --benefit-margin-micros 100000 \
+  --out succession-calibration/observations.jsonl
+
+openline-endurance succession-calibrate \
+  --observations succession-calibration/observations.jsonl \
+  --policy-key succession-calibration/policy.private.hex \
+  --expected-measurement-key succession-calibration/measurement.public.hex \
+  --out succession-calibration/policy.json \
+  --cole-profile-out succession-calibration/cole-profile.json
+
+openline-endurance succession-assess \
+  --bundle succession-calibration/current.bundle.json \
+  --history succession-calibration/history.jsonl \
+  --policy succession-calibration/policy.json \
+  --expected-policy-key succession-calibration/policy.public.hex
+```
+
+With fewer than 500 clean admitted samples, inadequate label/run coverage, or a held-out result below the declared validation floors, a signed policy is still produced for inspection, but it remains `observe_only` and no calibrated COLE profile is written. See [the calibration guide](docs/SUCCESSION_CALIBRATION.md).
+
+Run the deterministic 500-sample synthetic mechanism check:
+
+```bash
+PYTHONPATH=/path/to/cole-portable-core python scripts/succession_selftest.py
+```
+
+The self-test is not a deployed-agent benchmark. Its constructed labels test that isolated spikes do not trigger, persistent signals can yield a candidate, policy tampering fails, run mixing fails, and a perfectly signed unsupported receipt remains insufficient evidence.
+
+## v0.9.1 — Replay and freshness binding, Pass 2 (preserved result)
+
 Version 0.9.1 completes Recovery Intervention Pass 2. It preserves v0.9.0 byte-for-byte, reruns the five matched conditions on 80 fresh held-out seeds, and adds stateful `run_id`, packet-parent, and generation binding. A valid signature is not sufficient for acceptance: stale, cross-run, and incomplete packets fail through independent checks.
-
-`openline-endurance-gate` is a falsifiable synthetic reliability harness for cumulative state loss, dependency-frontier geometry, verified inheritance, restoration, and disturbance-rate effects.
-
-## v0.9.1 — Replay and freshness binding, Pass 2
 
 Both compact tracks carry the same `run_id`, `parent_hash`, and `generation_index` fields and check them against the same verifier-session shape. The unsigned track covers its fields only with an unkeyed checksum; an attacker can rewrite them and recompute it. The OLP track signs the fields in the envelope body and in all eight receipts.
 
@@ -49,7 +119,7 @@ The hard result is narrow:
 
 **With retained context matched by disturbance index, concentrated disturbances shortened synthetic survival relative to slow delivery.**
 
-This release does not claim that AI agents obey fluid mechanics, identify a universal breaking rate, validate a physical Coherence Dynamics variable, or establish an activation-envelope retirement policy.
+This release does not claim that AI agents obey fluid mechanics, identify a universal breaking rate, validate a physical Coherence Dynamics variable, or establish a universal retirement policy. The v0.10 succession policy is receiver-owned, corpus-bound, agent/task-specific, advisory, and falsifiable on its held-out split.
 
 ## Run
 
@@ -64,10 +134,13 @@ python -m openline_endurance_gate verify --root . --source-root .
 ## Release gate
 
 ```bash
+python -m pip install -e '.[dev]'
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -q
 bash scripts/tamper_check.sh
 bash scripts/release_check.sh
 ```
+
+The included local `RUN_REPORT.json` is marked `LOCAL_CANDIDATE_AWAITING_GITHUB_CI`: this build environment did not provide pytest and blocked dependency installation. The live 500-sample succession check, all 19 isolated hostile attacks, compilation, CLI smoke test, full semantic recomputation, and detached attestation passed locally. After pushing, require the complete non-integration suite in `.github/workflows/succession.yml` to pass before tagging v0.10.0.
 
 The standalone hostile check writes `TAMPER_REPORT.standalone.json`; it does not overwrite the report bound by the detached release attestation.
 

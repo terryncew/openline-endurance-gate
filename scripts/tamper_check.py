@@ -143,6 +143,20 @@ def _light_summary_verification(repo: Path) -> dict[str, Any]:
     return result
 
 
+def _artifact_or_tooling_lineage_detected(result: dict[str, Any]) -> bool:
+    """Accept either binding layer when a resealed scientific artifact changes.
+
+    v0.10 adds a fixed digest over the complete v0.9.1 scientific artifact set.
+    A mutation can therefore fail that earlier lineage check even after an
+    attacker patches the active manifest and replaces the local receipt key.
+    """
+
+    return bool(result.get("artifact_binding_valid")) or any(
+        error == "v0100_scientific_artifact_digest_mismatch"
+        for error in result.get("errors", [])
+    )
+
+
 def _summary_reseal(temp: Path) -> dict[str, Any]:
     repo = _clone(temp)
     path = repo / "results/summary.json"
@@ -157,7 +171,7 @@ def _summary_reseal(temp: Path) -> dict[str, Any]:
     detected = (
         not result["semantic_recomputation_valid"]
         and result["chain"]["valid"]
-        and result["artifact_binding_valid"]
+        and _artifact_or_tooling_lineage_detected(result)
         and "summary_semantic_recompute_mismatch" in result["errors"]
     )
     return {"detected": detected, "verifier": result, "attack": "flip one gate, patch hashes, replace keypair, resign chain"}
@@ -248,7 +262,7 @@ def _recovery_summary_reseal(temp: Path) -> dict[str, Any]:
     detected = (
         not result["semantic_recomputation_valid"]
         and result["chain"]["valid"]
-        and result["artifact_binding_valid"]
+        and _artifact_or_tooling_lineage_detected(result)
         and "recovery_summary_recompute_mismatch" in result["errors"]
     )
     return {
@@ -477,7 +491,7 @@ def _load_rate_cycle_reseal(temp: Path) -> dict[str, Any]:
     shard = verify_load_rate_shard(repo, 0, persist=False)
     detected = (
         result["chain"]["valid"]
-        and result["artifact_binding_valid"]
+        and _artifact_or_tooling_lineage_detected(result)
         and not shard["passed"]
         and not shard["cycle_bytes_match"]
     )

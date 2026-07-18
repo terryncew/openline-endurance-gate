@@ -129,7 +129,7 @@
     "results/tip_capture_summary.json": "1f686abce585a1f780526bd14edaa20dee740a73cdcb099df1ec85ad91ff5e88",
     "results/tip_capture_summary.md": "2da5d79bcabade69f19193e16e6c0576af05f247d3392785b69d0fc500519443"
   },
-  "source_tree_digest": "c93fa2c3059f9400d0d7062723f8ec11f091ad3ca6a1341c5a034d6a3b8456c5",
+  "source_tree_digest": "dfb3b155ccb59cc7cc3a4de2890e62fd0933df24fa8f021e48543851a0aa6da2",
   "theory_status": "MIXED_SYNTHETIC_RESULT",
-  "witness_digest": "41b51875eabff0185f25422b15bc582da06f652bf537381387ea136fc29002cb"
+  "witness_digest": "060ac438b7ee43694093829fcb50961c9667e5778ad2f0730612f84ddfcf3cb1"
 }

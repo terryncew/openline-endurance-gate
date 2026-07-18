@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.0
+
+- Adds a guided COLE Portable Core 2.1 measurement, labeling, calibration, and advisory-assessment workflow.
+- Pins the optional COLE implementation to commit `c7a2d63befa9105579ac28940f3de00cdc8d76cc` instead of copying its equations.
+- Binds each recomputed COLE receipt to signed `run_id` and `sequence` metadata.
+- Requires paired labels to agree with declared continue/successor outcomes and benefit margin, or to bind to a human-review artifact hash.
+- Uses a deterministic run-grouped 80/20 split, separate metric thresholds, a declared critical-specificity floor, and an explicit learned persistence rule.
+- Keeps fewer-than-500-sample and unpinned-signer policies in `observe_only`; only eligible corpora emit an exact COLE `calibrated` profile.
+- Treats UCR only as evidence sufficiency. Signed measurements with absent or unsupported material claims cannot become succession candidates.
+- Forbids automatic retirement in every signed policy and assessment. A verified handoff and receiver approval remain mandatory.
+- Adds a 500-sample synthetic mechanism self-test and hostile controls without presenting it as deployed-agent evidence.
+- Requires receiver policy-key pinning and keeps a policy observation-only when its declared held-out accuracy, specificity, or sensitivity floor fails.
+
 ## 0.9.1
 
 - Preserves the complete v0.9.0 Pass-1 release byte-for-byte in `lineage/v0.9.0`.

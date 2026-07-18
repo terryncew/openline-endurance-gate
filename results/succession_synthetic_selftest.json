@@ -1,0 +1,112 @@
+{
+  "check_count": 20,
+  "checks": [
+    {
+      "check": "clean_bundle_recomputes",
+      "passed": true
+    },
+    {
+      "check": "run_binding_tamper_rejected",
+      "passed": true
+    },
+    {
+      "check": "hostile_json_nesting_rejected",
+      "passed": true
+    },
+    {
+      "check": "five_hundred_samples_activate_advisory",
+      "passed": true
+    },
+    {
+      "check": "all_samples_admitted",
+      "passed": true
+    },
+    {
+      "check": "heldout_mechanism_recovered",
+      "passed": true
+    },
+    {
+      "check": "declared_holdout_floors_met",
+      "passed": true
+    },
+    {
+      "check": "isolated_spike_requires_persistence",
+      "passed": true
+    },
+    {
+      "check": "signed_policy_verifies",
+      "passed": true
+    },
+    {
+      "check": "cole_profile_is_exact_and_calibrated",
+      "passed": true
+    },
+    {
+      "check": "single_spike_does_not_trigger",
+      "passed": true
+    },
+    {
+      "check": "repeated_signal_yields_candidate",
+      "passed": true
+    },
+    {
+      "check": "automatic_retirement_stays_forbidden",
+      "passed": true
+    },
+    {
+      "check": "handoff_precedes_source_retirement",
+      "passed": true
+    },
+    {
+      "check": "signed_unsupported_bundle_refused",
+      "passed": true
+    },
+    {
+      "check": "ucr_reported_separately",
+      "passed": true
+    },
+    {
+      "check": "cross_run_history_rejected",
+      "passed": true
+    },
+    {
+      "check": "policy_tamper_rejected",
+      "passed": true
+    },
+    {
+      "check": "receiver_policy_key_pin_required",
+      "passed": true
+    },
+    {
+      "check": "poor_holdout_stays_observation_only",
+      "passed": true
+    }
+  ],
+  "claim_boundary": "Synthetic mechanism check only. This does not estimate deployed-agent benefit or establish a universal succession threshold.",
+  "cole_algorithm_id": "cole-portable-core-2.1-draft",
+  "holdout_samples": 100,
+  "holdout_validation": {
+    "accuracy_micros": 1000000,
+    "balanced_accuracy_micros": 1000000,
+    "confusion": {
+      "false_negative": 0,
+      "false_positive": 0,
+      "true_negative": 80,
+      "true_positive": 20
+    },
+    "precision_micros": 1000000,
+    "sensitivity_micros": 1000000,
+    "specificity_micros": 1000000
+  },
+  "passed": true,
+  "passed_check_count": 20,
+  "persistence": {
+    "minimum_metric_breaches": 4,
+    "persistence_required": 2,
+    "persistence_window": 2
+  },
+  "policy_mode": "calibrated_advisory",
+  "schema": "openline.succession.synthetic-selftest.v1",
+  "submitted_samples": 500,
+  "train_samples": 400
+}
