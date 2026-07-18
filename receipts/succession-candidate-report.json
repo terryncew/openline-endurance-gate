@@ -2,23 +2,23 @@
   "candidate_passed": true,
   "detached_release_status": "PENDING_FULL_RELEASE_GATE",
   "experiment_chain": {
-    "chain_digest": "60e77344cade1730627a60931acd875161ca194292c21f7c0be8f8fe0fea5862",
+    "chain_digest": "e880327c3ad469a1757fa5dd83386f62e8e7d7d276dad72b22becc743df6c0c9",
     "completeness_verified": true,
     "count": 742,
     "errors": [],
     "integrity_valid": true,
-    "tail_hash": "7d887cf2ec4cfa0471de4516a5aac9ebbfa0615fe8296a2c188df35f31b45178",
+    "tail_hash": "f4ea6c5691a546def42eab8ea79e509190c96e61f9a82504c798a2582f8420f2",
     "valid": true
   },
   "fast_verification_without_detached_release": {
     "artifact_binding_valid": true,
     "chain": {
-      "chain_digest": "60e77344cade1730627a60931acd875161ca194292c21f7c0be8f8fe0fea5862",
+      "chain_digest": "e880327c3ad469a1757fa5dd83386f62e8e7d7d276dad72b22becc743df6c0c9",
       "completeness_verified": true,
       "count": 742,
       "errors": [],
       "integrity_valid": true,
-      "tail_hash": "7d887cf2ec4cfa0471de4516a5aac9ebbfa0615fe8296a2c188df35f31b45178",
+      "tail_hash": "f4ea6c5691a546def42eab8ea79e509190c96e61f9a82504c798a2582f8420f2",
       "valid": true
     },
     "errors": [],

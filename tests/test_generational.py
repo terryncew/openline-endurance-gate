@@ -7,6 +7,7 @@ from openline_endurance_gate.generational import (
     schedule_generational_events,
 )
 from openline_endurance_gate.util import read_csv
+from openline_endurance_gate.verification import _close
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -92,4 +93,8 @@ def test_saved_run_analysis_recomputes_summary():
                 row[field] = float(row[field])
     recomputed = analyze_generational_endurance(runs, experiment)
     saved = json.loads((ROOT / "results/generational_summary.json").read_text())
-    assert recomputed == saved
+    # Python 3.12+ uses higher-accuracy float summation than Python 3.11.
+    # Keep the test aligned with the semantic verifier: structure and exact
+    # non-numeric values must match, while regenerated floats use its declared
+    # cross-runtime relative tolerance.
+    assert _close(recomputed, saved, 1e-7)
