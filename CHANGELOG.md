@@ -2,6 +2,7 @@
 
 ## 0.10.0
 
+- Pins the complete release-evidence workflow to Python 3.12 so inherited floating-point fixtures are recomputed under the runtime family that sealed them; strict whole-object equality remains mandatory.
 - Adds a guided COLE Portable Core 2.1 measurement, labeling, calibration, and advisory-assessment workflow.
 - Pins the optional COLE implementation to commit `c7a2d63befa9105579ac28940f3de00cdc8d76cc` instead of copying its equations.
 - Binds each recomputed COLE receipt to signed `run_id` and `sequence` metadata.

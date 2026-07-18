@@ -3,23 +3,23 @@
     "candidate_passed": true,
     "detached_release_status": "PENDING_FULL_RELEASE_GATE",
     "experiment_chain": {
-      "chain_digest": "e880327c3ad469a1757fa5dd83386f62e8e7d7d276dad72b22becc743df6c0c9",
+      "chain_digest": "8f9ba143d04f528c70c8c549738b152a3131397d5e7eab1e365e2319ca9062ab",
       "completeness_verified": true,
       "count": 742,
       "errors": [],
       "integrity_valid": true,
-      "tail_hash": "f4ea6c5691a546def42eab8ea79e509190c96e61f9a82504c798a2582f8420f2",
+      "tail_hash": "ece6c55ad5d7a5522b3a6341569c0029c84ff6f4d6d6e1cec3030c0f90d502a2",
       "valid": true
     },
     "fast_verification_without_detached_release": {
       "artifact_binding_valid": true,
       "chain": {
-        "chain_digest": "e880327c3ad469a1757fa5dd83386f62e8e7d7d276dad72b22becc743df6c0c9",
+        "chain_digest": "8f9ba143d04f528c70c8c549738b152a3131397d5e7eab1e365e2319ca9062ab",
         "completeness_verified": true,
         "count": 742,
         "errors": [],
         "integrity_valid": true,
-        "tail_hash": "f4ea6c5691a546def42eab8ea79e509190c96e61f9a82504c798a2582f8420f2",
+        "tail_hash": "ece6c55ad5d7a5522b3a6341569c0029c84ff6f4d6d6e1cec3030c0f90d502a2",
         "valid": true
       },
       "errors": [],
@@ -71,12 +71,12 @@
   "semantic_verification": {
     "artifact_binding_valid": true,
     "chain": {
-      "chain_digest": "e880327c3ad469a1757fa5dd83386f62e8e7d7d276dad72b22becc743df6c0c9",
+      "chain_digest": "8f9ba143d04f528c70c8c549738b152a3131397d5e7eab1e365e2319ca9062ab",
       "completeness_verified": true,
       "count": 742,
       "errors": [],
       "integrity_valid": true,
-      "tail_hash": "f4ea6c5691a546def42eab8ea79e509190c96e61f9a82504c798a2582f8420f2",
+      "tail_hash": "ece6c55ad5d7a5522b3a6341569c0029c84ff6f4d6d6e1cec3030c0f90d502a2",
       "valid": true
     },
     "errors": [],
