@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import ast
 import hashlib
+import importlib.metadata
 import json
 import os
 import re
@@ -14,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-VERSION = "0.13.0rc2"
+VERSION = "0.13.0rc3"
 EXCLUDED_NAMES = {"RELEASE_MANIFEST.json", "RELEASE_VERIFICATION.json"}
 EXCLUDED_PARTS = {".git", ".pytest_cache", ".venv", "__pycache__", "build", "dist"}
 def run(command: list[str], cwd: Path, env: dict[str, str] | None = None) -> dict[str, object]:
@@ -41,6 +42,33 @@ def source_env(extra: str | None = None) -> dict[str, str]:
     env["PYTHONNOUSERSITE"] = "1"
     env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
     return env
+
+
+def build_env() -> dict[str, str]:
+    env = dict(os.environ)
+    env.pop("PYTHONPATH", None)
+    env["PYTHONNOUSERSITE"] = "1"
+    return env
+
+
+def build_backend_flags() -> list[str]:
+    """Use the ambient backend only when it satisfies pyproject.toml.
+
+    Fresh Python runners do not necessarily ship setuptools in the active
+    interpreter. In that case pip must use its normal isolated build env.
+    """
+    try:
+        version = importlib.metadata.version("setuptools")
+    except importlib.metadata.PackageNotFoundError:
+        return []
+    match = re.match(r"^(\d+)", version)
+    if match is None or int(match.group(1)) < 68:
+        return []
+    try:
+        __import__("setuptools.build_meta")
+    except Exception:
+        return []
+    return ["--no-build-isolation"]
 
 
 def release_files(root: Path) -> list[Path]:
@@ -141,12 +169,17 @@ def main() -> int:
     language_findings = check_public_language()
     report["plain_language_check"] = {"passed": not language_findings, "findings": language_findings}
     report["version_consistency"] = {"passed": check_versions()}
+    backend_flags = build_backend_flags()
+    report["build_backend"] = {
+        "mode": "ambient_declared_backend" if backend_flags else "pip_isolated_build",
+        "no_build_isolation": bool(backend_flags),
+    }
 
     with tempfile.TemporaryDirectory(prefix="agent-successor-release-") as temp:
         temp_root = Path(temp)
         site = temp_root / "site"
-        install = run([sys.executable, "-m", "pip", "install", ".", "--target", str(site), "--no-deps", "--no-build-isolation"], ROOT, source_env())
-        clean_env = dict(os.environ)
+        install = run([sys.executable, "-m", "pip", "install", ".", "--target", str(site), "--no-deps", "--disable-pip-version-check", *backend_flags], ROOT, build_env())
+        clean_env = build_env()
         clean_env["PYTHONPATH"] = str(site)
         clean_env["PYTHONNOUSERSITE"] = "1"
         version = run([sys.executable, "-m", "openline_endurance_gate", "--version"], temp_root, clean_env)
@@ -157,17 +190,18 @@ def main() -> int:
             "install_returncode": install["returncode"],
             "reported_version": version["stdout"].strip(),
             "commands_present": [command for command in expected_commands if command in help_run["stdout"]],
+            "install_stderr_tail": install["stderr"].strip().splitlines()[-8:],
         }
 
         wheel_dir = temp_root / "wheels"
         wheel_dir.mkdir()
-        wheel = run([sys.executable, "-m", "pip", "wheel", ".", "--wheel-dir", str(wheel_dir), "--no-deps", "--no-build-isolation"], ROOT, source_env())
+        wheel = run([sys.executable, "-m", "pip", "wheel", ".", "--wheel-dir", str(wheel_dir), "--no-deps", "--disable-pip-version-check", *backend_flags], ROOT, build_env())
         wheels = sorted(wheel_dir.glob("*.whl"))
         wheel_site = temp_root / "wheel-site"
         wheel_install = {"returncode": 1, "stdout": "", "stderr": "wheel not built"}
         wheel_import = {"returncode": 1, "stdout": "", "stderr": "wheel not installed"}
         if wheel["returncode"] == 0 and len(wheels) == 1:
-            wheel_install = run([sys.executable, "-m", "pip", "install", str(wheels[0]), "--target", str(wheel_site), "--no-deps"], temp_root, clean_env)
+            wheel_install = run([sys.executable, "-m", "pip", "install", str(wheels[0]), "--target", str(wheel_site), "--no-deps", "--disable-pip-version-check"], temp_root, build_env())
             wheel_env = dict(clean_env)
             wheel_env["PYTHONPATH"] = str(wheel_site)
             wheel_import = run([sys.executable, "-c", "import openline_endurance_gate as m; print(m.__version__)"], temp_root, wheel_env)
@@ -176,6 +210,8 @@ def main() -> int:
             "build_returncode": wheel["returncode"],
             "wheel_count": len(wheels),
             "imported_version": wheel_import["stdout"].strip(),
+            "build_stderr_tail": wheel["stderr"].strip().splitlines()[-8:],
+            "install_stderr_tail": wheel_install["stderr"].strip().splitlines()[-8:],
         }
 
     baseline = json.loads((ROOT / "BASELINE.json").read_text(encoding="utf-8"))
@@ -207,6 +243,7 @@ def main() -> int:
                 "the final recommendation explicitly grants no execution authority",
                 "the current source tree is a small benchmark package instead of a 48 MB research archive",
                 "CI normalizes overlayed checkouts to the sealed release manifest before test collection",
+                "release packaging uses the declared isolated build backend instead of assuming setuptools is installed in the runner",
                 "the retired succession workflow filename is retained as manual-only so old push triggers cannot execute",
             ],
             "unit_test_summary": report["tests"]["summary"],

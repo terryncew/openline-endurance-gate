@@ -21,9 +21,9 @@
       "sha256": "f18686e8886b990a2e36c4af7f43cc8df6b184a0b059023c115b4486667b107b"
     },
     {
-      "bytes": 1525,
+      "bytes": 2034,
       "path": "CHANGELOG.md",
-      "sha256": "06d2725597eef21f996beedb6cc9328ae0831796902c2b66d77aa0660ee3aaa3"
+      "sha256": "7776c57623323a2567095c00f8b169b062caafc8c8eec4f4180e7603a29577af"
     },
     {
       "bytes": 863,
@@ -46,9 +46,9 @@
       "sha256": "e2676c010907cae4aa7c51cbabc164e66ecfe59cdf1fd89563ea3221179626fa"
     },
     {
-      "bytes": 1881,
+      "bytes": 2007,
       "path": "RELEASE_COMPARISON.json",
-      "sha256": "4c0e542484161cc8289fc7d23821d36217815c91212e16d166105a9488191a0c"
+      "sha256": "ac640c4131ac323c403427d0797024c913f572017d41c27a5514fedff354ef75"
     },
     {
       "bytes": 153,
@@ -73,7 +73,7 @@
     {
       "bytes": 838,
       "path": "pyproject.toml",
-      "sha256": "a09c31833b39ce2d44261c277299e4bf9861ec12857a0d69c01b9f68afef803f"
+      "sha256": "120f254918ee247dfc7929d71c5e1cb0083b85a94ae15353431c65131c44fbba"
     },
     {
       "bytes": 2566,
@@ -86,9 +86,9 @@
       "sha256": "788f994af9815c34e496367c8bc369169c1b593b417e869e12d4ef99dea09644"
     },
     {
-      "bytes": 10734,
+      "bytes": 12218,
       "path": "scripts/release_check.py",
-      "sha256": "f797213f68ed9af7697a6be48cc666d34283e3974a719615343ec8a411ce875b"
+      "sha256": "d51a8eab9997eb15dd973c17f6c74872a4e3c22c080a5db0e7e5ed64761aa664"
     },
     {
       "bytes": 11801,
@@ -108,7 +108,7 @@
     {
       "bytes": 60,
       "path": "src/openline_endurance_gate/__init__.py",
-      "sha256": "f1ff7d5debd6009007a3bfb1e30958ef657c067670d3b8b40731380b5c1df8a3"
+      "sha256": "d1cc84102376b4acd524db05c8f66fef73031818ab2d2420a6fb7e691ce31f6f"
     },
     {
       "bytes": 48,
@@ -136,11 +136,11 @@
       "sha256": "d022d6826604af8bdd4c345a5d980e6e9be50f092ad1f49e25cf6bce5ede8596"
     },
     {
-      "bytes": 15766,
+      "bytes": 16917,
       "path": "tests/test_successor_benchmark.py",
-      "sha256": "b3842f5b8bb81aaac318b019e31105683a43443705072d8c43bdf6690dda172b"
+      "sha256": "e134505cf999310c8f8517349c4788a6eecdb7e7819f25f487836a7bfc22202e"
     }
   ],
   "schema": "agent.successor.release-manifest.v1",
-  "version": "0.13.0rc2"
+  "version": "0.13.0rc3"
 }

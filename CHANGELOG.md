@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.13.0rc3
+
+- Fixes the Python 3.12 release check so source installs and wheel builds use the isolated build backend declared in `pyproject.toml`.
+- Removes the incorrect assumption that `setuptools` is already installed in the active GitHub Actions interpreter.
+- Adds bounded stderr tails to release verification output so packaging failures are diagnosable from CI without rerunning locally.
+- Keeps the overlay-safe checkout normalization and the direct incumbent-versus-candidate benchmark unchanged.
+
 ## 0.13.0rc2
 
 - Makes the release safe to apply over an older checkout. CI removes files that are not present in the sealed release manifest before installation or test collection.

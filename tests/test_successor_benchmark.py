@@ -322,3 +322,33 @@ def test_release_checkout_normalizer_removes_unmanifested_files(tmp_path):
     parsed = json.loads(result.stdout)
     assert parsed["removed"] == 1
     assert parsed["remaining"] == []
+
+
+def test_release_check_falls_back_to_isolated_build_without_setuptools(monkeypatch):
+    import importlib.metadata
+    import importlib.util
+
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("release_check_under_test", root / "scripts" / "release_check.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    def missing(_name):
+        raise importlib.metadata.PackageNotFoundError
+
+    monkeypatch.setattr(module.importlib.metadata, "version", missing)
+    assert module.build_backend_flags() == []
+
+
+def test_release_check_rejects_too_old_ambient_setuptools(monkeypatch):
+    import importlib.util
+
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("release_check_under_test_old", root / "scripts" / "release_check.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    monkeypatch.setattr(module.importlib.metadata, "version", lambda _name: "67.9.0")
+    assert module.build_backend_flags() == []

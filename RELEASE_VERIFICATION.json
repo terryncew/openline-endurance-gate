@@ -10,6 +10,10 @@
     ],
     "version": "0.12.0rc2"
   },
+  "build_backend": {
+    "mode": "ambient_declared_backend",
+    "no_build_isolation": true
+  },
   "clean_install": {
     "commands_present": [
       "keygen",
@@ -20,8 +24,11 @@
       "verify"
     ],
     "install_returncode": 0,
+    "install_stderr_tail": [
+      "WARNING: The directory '/home/oai/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag."
+    ],
     "passed": true,
-    "reported_version": "agent-successor-benchmark 0.13.0rc2"
+    "reported_version": "agent-successor-benchmark 0.13.0rc3"
   },
   "comparison_crosscheck": {
     "iterations": 10000,
@@ -47,21 +54,27 @@
   },
   "release_manifest": {
     "entry_count": 28,
-    "sha256": "e1f6c33e912b6d372ce062efd8cdeeb2c419901ce02b95a8d4734c52e4c8cb21"
+    "sha256": "b3a641ba59ff71a788806c6d4f75df2ac1d89b8695b1ba98bb3a76e8edb10c7b"
   },
   "schema": "agent.successor.release-verification.v1",
   "tests": {
     "passed": true,
     "returncode": 0,
-    "summary": "........................                                                 [100%]"
+    "summary": "..........................                                               [100%]"
   },
-  "version": "0.13.0rc2",
+  "version": "0.13.0rc3",
   "version_consistency": {
     "passed": true
   },
   "wheel": {
     "build_returncode": 0,
-    "imported_version": "0.13.0rc2",
+    "build_stderr_tail": [
+      "WARNING: The directory '/home/oai/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag."
+    ],
+    "imported_version": "0.13.0rc3",
+    "install_stderr_tail": [
+      "WARNING: The directory '/home/oai/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag."
+    ],
     "passed": true,
     "wheel_count": 1
   }
