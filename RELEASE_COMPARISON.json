@@ -6,7 +6,9 @@
       "the maintained install has no dependency on the retired metric package",
       "checker packages remain lane-separated and omit incumbent/candidate role fields",
       "the final recommendation explicitly grants no execution authority",
-      "the current source tree is a small benchmark package instead of a 48 MB research archive"
+      "the current source tree is a small benchmark package instead of a 48 MB research archive",
+      "CI normalizes overlayed checkouts to the sealed release manifest before test collection",
+      "the retired succession workflow filename is retained as manual-only so old push triggers cannot execute"
     ],
     "preserved_capabilities": [
       "pre-arm case registration",
@@ -16,8 +18,8 @@
       "no automatic replacement authority"
     ],
     "randomized_comparison_checks": 10000,
-    "unit_test_summary": ".......................                                                  [100%]",
-    "version": "0.13.0rc1"
+    "unit_test_summary": "........................                                                 [100%]",
+    "version": "0.13.0rc2"
   },
   "incumbent": {
     "archive_file_count": 406,

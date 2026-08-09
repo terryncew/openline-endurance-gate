@@ -21,7 +21,7 @@
     ],
     "install_returncode": 0,
     "passed": true,
-    "reported_version": "agent-successor-benchmark 0.13.0rc1"
+    "reported_version": "agent-successor-benchmark 0.13.0rc2"
   },
   "comparison_crosscheck": {
     "iterations": 10000,
@@ -46,22 +46,22 @@
     "passed": true
   },
   "release_manifest": {
-    "entry_count": 26,
-    "sha256": "a28e11f8eb24541d0bc1b98aff0b13b305756db730d6f9bc735f7b094bd77d0e"
+    "entry_count": 28,
+    "sha256": "e1f6c33e912b6d372ce062efd8cdeeb2c419901ce02b95a8d4734c52e4c8cb21"
   },
   "schema": "agent.successor.release-verification.v1",
   "tests": {
     "passed": true,
     "returncode": 0,
-    "summary": ".......................                                                  [100%]"
+    "summary": "........................                                                 [100%]"
   },
-  "version": "0.13.0rc1",
+  "version": "0.13.0rc2",
   "version_consistency": {
     "passed": true
   },
   "wheel": {
     "build_returncode": 0,
-    "imported_version": "0.13.0rc1",
+    "imported_version": "0.13.0rc2",
     "passed": true,
     "wheel_count": 1
   }

@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-VERSION = "0.13.0rc1"
+VERSION = "0.13.0rc2"
 EXCLUDED_NAMES = {"RELEASE_MANIFEST.json", "RELEASE_VERIFICATION.json"}
 EXCLUDED_PARTS = {".git", ".pytest_cache", ".venv", "__pycache__", "build", "dist"}
 def run(command: list[str], cwd: Path, env: dict[str, str] | None = None) -> dict[str, object]:
@@ -206,6 +206,8 @@ def main() -> int:
                 "checker packages remain lane-separated and omit incumbent/candidate role fields",
                 "the final recommendation explicitly grants no execution authority",
                 "the current source tree is a small benchmark package instead of a 48 MB research archive",
+                "CI normalizes overlayed checkouts to the sealed release manifest before test collection",
+                "the retired succession workflow filename is retained as manual-only so old push triggers cannot execute",
             ],
             "unit_test_summary": report["tests"]["summary"],
             "hostile_selftest_checks": report["hostile_selftest"]["check_count"],

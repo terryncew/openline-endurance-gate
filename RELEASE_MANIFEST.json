@@ -1,9 +1,14 @@
 {
   "entries": [
     {
-      "bytes": 937,
+      "bytes": 1044,
       "path": ".github/workflows/ci.yml",
-      "sha256": "66b04d701dc6a615f330c2455811b97779b5ee95bd490e93fb82076b32388dc4"
+      "sha256": "1becd35f6d0e0fddefa83db87c56d4fe0167942eccd85dd5295c58f1b9126ce5"
+    },
+    {
+      "bytes": 399,
+      "path": ".github/workflows/succession.yml",
+      "sha256": "e8ceed96293beaf261fdb45b3f6cdfc3f07709163fb9698c96b1e4415d90a2e0"
     },
     {
       "bytes": 101,
@@ -16,9 +21,9 @@
       "sha256": "f18686e8886b990a2e36c4af7f43cc8df6b184a0b059023c115b4486667b107b"
     },
     {
-      "bytes": 964,
+      "bytes": 1525,
       "path": "CHANGELOG.md",
-      "sha256": "7718500004db283d21ffd304613e42b63fa23e2c1d736b48bfd53b3e9f6fd50b"
+      "sha256": "06d2725597eef21f996beedb6cc9328ae0831796902c2b66d77aa0660ee3aaa3"
     },
     {
       "bytes": 863,
@@ -41,9 +46,9 @@
       "sha256": "e2676c010907cae4aa7c51cbabc164e66ecfe59cdf1fd89563ea3221179626fa"
     },
     {
-      "bytes": 1671,
+      "bytes": 1881,
       "path": "RELEASE_COMPARISON.json",
-      "sha256": "5162ff096e55c84091be0d1940d0e3f219f360c32b6c84de7d00208400e2e9bf"
+      "sha256": "4c0e542484161cc8289fc7d23821d36217815c91212e16d166105a9488191a0c"
     },
     {
       "bytes": 153,
@@ -56,9 +61,9 @@
       "sha256": "909c9ecdd97c37c1edeb328d644c56d47087415099f5a260e85d15446f7bc6c3"
     },
     {
-      "bytes": 579,
+      "bytes": 582,
       "path": "docs/HISTORICAL_RESEARCH.md",
-      "sha256": "482d615aaa47344525846625866ea22e54f54425dc8b806757eb1938f378a7a1"
+      "sha256": "f71f14074503e320e9ef3a480225f53746f0529e42690bc06f75b5b9987459bd"
     },
     {
       "bytes": 1367,
@@ -66,9 +71,9 @@
       "sha256": "c782bf0ef43ccdb32e21777774d9f3d9ae47c26571b975cf9b24fc47efdf621f"
     },
     {
-      "bytes": 791,
+      "bytes": 838,
       "path": "pyproject.toml",
-      "sha256": "3cbf9982b6bc661da74a8105991a8232dfbda04cfe6d185ac7ea3d0fa4449806"
+      "sha256": "a09c31833b39ce2d44261c277299e4bf9861ec12857a0d69c01b9f68afef803f"
     },
     {
       "bytes": 2566,
@@ -76,9 +81,14 @@
       "sha256": "7f91e2dfd2f3eadc3351d0e9985898a910b42c6e6c6600487af80d7f70eba0e0"
     },
     {
-      "bytes": 10504,
+      "bytes": 3072,
+      "path": "scripts/prepare_release_checkout.py",
+      "sha256": "788f994af9815c34e496367c8bc369169c1b593b417e869e12d4ef99dea09644"
+    },
+    {
+      "bytes": 10734,
       "path": "scripts/release_check.py",
-      "sha256": "86538053603700cae88b0efede9b25a0e8228ae5a135d06a46b3cbf3a850620d"
+      "sha256": "f797213f68ed9af7697a6be48cc666d34283e3974a719615343ec8a411ce875b"
     },
     {
       "bytes": 11801,
@@ -98,7 +108,7 @@
     {
       "bytes": 60,
       "path": "src/openline_endurance_gate/__init__.py",
-      "sha256": "1485db02b7b3e22739ce9adb2f1854457e408c679dbf1aeecd9bc8fc5c6bf896"
+      "sha256": "f1ff7d5debd6009007a3bfb1e30958ef657c067670d3b8b40731380b5c1df8a3"
     },
     {
       "bytes": 48,
@@ -126,11 +136,11 @@
       "sha256": "d022d6826604af8bdd4c345a5d980e6e9be50f092ad1f49e25cf6bce5ede8596"
     },
     {
-      "bytes": 14102,
+      "bytes": 15766,
       "path": "tests/test_successor_benchmark.py",
-      "sha256": "fec70aa9605925051ab3e5f278e1fbc4f2fcb82745db38d37869f051e04c5bab"
+      "sha256": "b3842f5b8bb81aaac318b019e31105683a43443705072d8c43bdf6690dda172b"
     }
   ],
   "schema": "agent.successor.release-manifest.v1",
-  "version": "0.13.0rc1"
+  "version": "0.13.0rc2"
 }

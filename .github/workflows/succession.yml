@@ -1,25 +1,16 @@
-name: succession-calibrator
+name: retired-workflow-placeholder
 
+# This filename is retained only to neutralize the pre-0.13 workflow when a
+# release ZIP is applied over an older checkout. The maintained workflow is
+# ci.yml.
 on:
-  push:
-  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  verify-succession:
+  notice:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-      - name: Install exact development dependencies
-        run: python -m pip install -e '.[dev]'
-      - name: Run complete non-integration test suite
-        run: PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q
-      - name: Run deterministic synthetic hostile check
-        run: python scripts/succession_selftest.py
+      - run: echo "This workflow is retired. Use the agent-successor-benchmark workflow."

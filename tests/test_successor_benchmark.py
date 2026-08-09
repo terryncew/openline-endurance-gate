@@ -280,3 +280,45 @@ def _reseal(root: Path):
         if path.is_file() and path.relative_to(root).as_posix() not in {"case_manifest.json", "verification.json"}:
             entries.append({"path": path.relative_to(root).as_posix(), "sha256": file_hash(path), "bytes": path.stat().st_size})
     write_json(root / "case_manifest.json", {"schema": CASE_MANIFEST_SCHEMA, "entries": entries})
+
+
+def test_release_checkout_normalizer_removes_unmanifested_files(tmp_path):
+    import json
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    work = tmp_path / "checkout"
+    work.mkdir()
+    (work / "scripts").mkdir()
+    (work / "tests").mkdir()
+    script_source = root / "scripts" / "prepare_release_checkout.py"
+    script_target = work / "scripts" / "prepare_release_checkout.py"
+    script_target.write_bytes(script_source.read_bytes())
+    kept = work / "tests" / "test_successor_benchmark.py"
+    kept.write_text("# kept\n", encoding="utf-8")
+    stale = work / "tests" / "test_succession.py"
+    stale.write_text("raise RuntimeError('retired test executed')\n", encoding="utf-8")
+    (work / "RELEASE_VERIFICATION.json").write_text("{}\n", encoding="utf-8")
+    manifest = {
+        "schema": "agent.successor.release-manifest.v1",
+        "version": "test",
+        "entries": [
+            {"path": "scripts/prepare_release_checkout.py", "sha256": "unused", "bytes": script_target.stat().st_size},
+            {"path": "tests/test_successor_benchmark.py", "sha256": "unused", "bytes": kept.stat().st_size},
+        ],
+    }
+    (work / "RELEASE_MANIFEST.json").write_text(json.dumps(manifest), encoding="utf-8")
+    result = subprocess.run(
+        [sys.executable, str(script_target), "--apply", str(work)],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0
+    assert kept.exists()
+    assert not stale.exists()
+    parsed = json.loads(result.stdout)
+    assert parsed["removed"] == 1
+    assert parsed["remaining"] == []

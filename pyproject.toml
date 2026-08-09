@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openline-endurance-gate"
-version = "0.13.0rc1"
+version = "0.13.0rc2"
 description = "A receiver-side benchmark for comparing a current agent with a candidate under fixed tasks, constraints, budgets, and evidence rules."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -26,3 +26,4 @@ include = ["openline_endurance_gate*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+python_files = ["test_successor_benchmark.py"]

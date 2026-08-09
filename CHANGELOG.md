@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.13.0rc2
+
+- Makes the release safe to apply over an older checkout. CI removes files that are not present in the sealed release manifest before installation or test collection.
+- Retains the old `succession.yml` filename as a manual-only placeholder so the retired workflow cannot run on push.
+- Restricts pytest discovery to the maintained successor-benchmark test module, preventing retired tests from being collected in an overlayed checkout.
+- Keeps release verification strict after normalization: any remaining unmanifested file still fails closure.
+
 ## 0.13.0rc1
 
 - Replaces the metric-based succession path with a direct incumbent-versus-candidate benchmark.
