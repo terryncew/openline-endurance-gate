@@ -1,0 +1,23 @@
+{
+  "schema": "agent.successor.release-baseline.v1",
+  "incumbent": {
+    "version": "0.12.0rc2",
+    "archive_sha256": "9f4c15819fef6bef66e946bc0dd41b2d915d2999ed0960625cc70b28cc760664",
+    "archive_file_count": 406,
+    "verified_capabilities": [
+      "pre-arm case registration",
+      "checker key pinning",
+      "checker evidence closure",
+      "independent case verification",
+      "no automatic replacement authority"
+    ],
+    "verification_evidence": {
+      "prearm_case_unit_tests": "41/41 passed",
+      "prior_case_selftest": "24/24 passed",
+      "hostile_case_mutations": 18,
+      "repository_tamper_attacks": "19/19 detected",
+      "full_non_integration_tests": "passed"
+    }
+  },
+  "promotion_rule": "A replacement must preserve the incumbent's material comparison and verification boundaries and make a concrete improvement in clarity, directness, robustness, dependency surface, or operator effort."
+}

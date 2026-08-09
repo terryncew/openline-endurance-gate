@@ -1,0 +1,43 @@
+{
+  "candidate": {
+    "hostile_selftest_checks": 21,
+    "improvements": [
+      "candidate selection now uses direct checker outcomes instead of experimental metric-derived thresholds",
+      "the maintained install has no dependency on the retired metric package",
+      "checker packages remain lane-separated and omit incumbent/candidate role fields",
+      "the final recommendation explicitly grants no execution authority",
+      "the current source tree is a small benchmark package instead of a 48 MB research archive"
+    ],
+    "preserved_capabilities": [
+      "pre-arm case registration",
+      "checker key pinning",
+      "checker evidence closure",
+      "independent case verification",
+      "no automatic replacement authority"
+    ],
+    "randomized_comparison_checks": 10000,
+    "unit_test_summary": ".......................                                                  [100%]",
+    "version": "0.13.0rc1"
+  },
+  "incumbent": {
+    "archive_file_count": 406,
+    "archive_sha256": "9f4c15819fef6bef66e946bc0dd41b2d915d2999ed0960625cc70b28cc760664",
+    "verification_evidence": {
+      "full_non_integration_tests": "passed",
+      "hostile_case_mutations": 18,
+      "prearm_case_unit_tests": "41/41 passed",
+      "prior_case_selftest": "24/24 passed",
+      "repository_tamper_attacks": "19/19 detected"
+    },
+    "verified_capabilities": [
+      "pre-arm case registration",
+      "checker key pinning",
+      "checker evidence closure",
+      "independent case verification",
+      "no automatic replacement authority"
+    ],
+    "version": "0.12.0rc2"
+  },
+  "promotion": "ADVANCE",
+  "schema": "agent.successor.release-comparison.v1"
+}

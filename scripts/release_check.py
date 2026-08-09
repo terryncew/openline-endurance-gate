@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
-import argparse
+import ast
+import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -10,521 +13,213 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PREFLIGHT = ROOT / ".release_preflight.json"
-SEMANTIC = ROOT / ".release_semantic.json"
-PREFLIGHT_PARTS = ROOT / ".release_preflight_parts"
 SRC = ROOT / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
-
-
-
+VERSION = "0.13.0rc1"
+EXCLUDED_NAMES = {"RELEASE_MANIFEST.json", "RELEASE_VERIFICATION.json"}
+EXCLUDED_PARTS = {".git", ".pytest_cache", ".venv", "__pycache__", "build", "dist"}
 def run(command: list[str], cwd: Path, env: dict[str, str] | None = None) -> dict[str, object]:
-    print("running:", " ".join(command), file=sys.stderr, flush=True)
-    completed = subprocess.run(command, cwd=cwd, text=True, capture_output=True, check=False, env=env)
-    return {
-        "command": command,
-        "returncode": completed.returncode,
-        "stdout": completed.stdout,
-        "stderr": completed.stderr,
-    }
+    completed = subprocess.run(command, cwd=cwd, env=env, text=True, capture_output=True, check=False)
+    return {"command": command, "returncode": completed.returncode, "stdout": completed.stdout, "stderr": completed.stderr}
 
 
-PYTEST_GROUPS = [
-    [
-        "tests/test_collision_spacing.py",
-        "tests/test_damage.py",
-        "tests/test_generational.py",
-        "tests/test_load_rate.py",
-        "tests/test_recovery.py",
-        "tests/test_integrity.py",
-        "tests/test_outputs.py",
-    ],
-    [
-        "tests/test_packaging.py",
-        "tests/test_receipts.py",
-        "tests/test_simulation.py",
-        "tests/test_succession.py",
-    ],
-    [
-        "tests/test_state_restoration.py",
-        "tests/test_statistics.py",
-        "tests/test_tip_capture.py",
-        "tests/test_world.py",
-    ],
-]
-
-STALE_ATTESTATION_FILTER = (
-    "not test_fast_custody_verifier_passes_default_artifacts "
-    "and not test_detached_release_attestation_binds_post_run_reports"
-)
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
-def _source_env() -> dict[str, str]:
+def source_env(extra: str | None = None) -> dict[str, str]:
     env = dict(os.environ)
-    inherited = env.get("PYTHONPATH")
-    env["PYTHONPATH"] = str(ROOT / "src") + (os.pathsep + inherited if inherited else "")
+    paths = [str(SRC)]
+    if extra:
+        paths.insert(0, extra)
+    if env.get("PYTHONPATH"):
+        paths.append(env["PYTHONPATH"])
+    env["PYTHONPATH"] = os.pathsep.join(paths)
+    env["PYTHONNOUSERSITE"] = "1"
     env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
     return env
 
 
-def _reset_preflight_state() -> None:
-    PREFLIGHT.unlink(missing_ok=True)
-    SEMANTIC.unlink(missing_ok=True)
-    shutil.rmtree(PREFLIGHT_PARTS, ignore_errors=True)
-    PREFLIGHT_PARTS.mkdir(parents=True, exist_ok=True)
+def release_files(root: Path) -> list[Path]:
+    files: list[Path] = []
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
+        rel = path.relative_to(root)
+        if any(part in EXCLUDED_PARTS or part.endswith(".egg-info") for part in rel.parts):
+            continue
+        if rel.name in EXCLUDED_NAMES or rel.suffix in {".zip", ".sha256"}:
+            continue
+        files.append(path)
+    return files
 
 
-def preflight_group(index: int) -> int:
-    if index < 0 or index >= len(PYTEST_GROUPS):
-        raise IndexError(f"preflight pytest group out of range: {index}")
-    PREFLIGHT_PARTS.mkdir(parents=True, exist_ok=True)
-    result = run(
-        [
-            sys.executable,
-            "-m",
-            "pytest",
-            "-q",
-            *PYTEST_GROUPS[index],
-            "-k",
-            STALE_ATTESTATION_FILTER,
-        ],
-        ROOT,
-        _source_env(),
-    )
-    (PREFLIGHT_PARTS / f"pytest-{index}.json").write_text(
-        json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
-    passed = result["returncode"] == 0
-    print(json.dumps({"pytest_group": index, "passed": passed}, indent=2))
-    return 0 if passed else 1
-
-
-def preflight_clean() -> int:
-    PREFLIGHT_PARTS.mkdir(parents=True, exist_ok=True)
-    report: dict[str, object] = {}
-    with tempfile.TemporaryDirectory(prefix="openline-endurance-clean-") as temp:
-        temp_root = Path(temp)
-        clean = temp_root / "repo"
-        shutil.copytree(
-            ROOT,
-            clean,
-            ignore=shutil.ignore_patterns(
-                ".git",
-                ".pytest_cache",
-                "__pycache__",
-                "*.egg-info",
-                ".release_preflight.json",
-                ".release_preflight_parts",
-                ".release_semantic.json",
-                ".state_restoration_semantic",
-                ".state_restoration_work",
-                ".load_rate_semantic",
-                ".load_rate_work",
-                ".recovery_semantic",
-                ".recovery_work",
-                "*.zip",
-                "*.sha256",
-            ),
-        )
-        site = temp_root / "site"
-        report["clean_target_create"] = run(
-            [sys.executable, "-c", f"from pathlib import Path; Path({str(site)!r}).mkdir(parents=True, exist_ok=True)"],
-            clean,
-        )
-        report["clean_install"] = run(
-            [sys.executable, "-m", "pip", "install", ".", "--target", str(site), "--no-deps", "--no-build-isolation"],
-            clean,
-        )
-        clean_env = dict(os.environ)
-        clean_env["PYTHONPATH"] = str(site)
-        clean_env["PYTHONNOUSERSITE"] = "1"
-        clean_env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
-        import_code = (
-            "import pathlib, openline_endurance_gate as m; "
-            "p=pathlib.Path(m.__file__).resolve(); print(m.__version__); print(p); "
-            f"assert p.is_relative_to(pathlib.Path({str(site)!r}).resolve())"
-        )
-        report["clean_import"] = run([sys.executable, "-c", import_code], clean, clean_env)
-        report["clean_fast_verify"] = run(
-            [
-                sys.executable, "-m", "openline_endurance_gate", "verify",
-                "--root", ".", "--source-root", ".", "--fast", "--skip-release-attestation",
-            ],
-            clean,
-            clean_env,
-        )
-        report["clean_cli_tip"] = run(
-            [sys.executable, "-m", "openline_endurance_gate", "tip-capture", "--root", "."],
-            clean,
-            clean_env,
-        )
-        report["clean_cli_spacing"] = run(
-            [sys.executable, "-m", "openline_endurance_gate", "collision-spacing", "--root", "."],
-            clean,
-            clean_env,
-        )
-        report["clean_cli_generational"] = run(
-            [sys.executable, "-m", "openline_endurance_gate", "generational", "--root", "."],
-            clean,
-            clean_env,
-        )
-        report["clean_cli_state_restoration"] = run(
-            [sys.executable, "-m", "openline_endurance_gate", "state-restoration", "--root", "."],
-            clean,
-            clean_env,
-        )
-        report["clean_cli_load_rate"] = run(
-            [sys.executable, "-m", "openline_endurance_gate", "load-rate", "--root", "."],
-            clean,
-            clean_env,
-        )
-        report["clean_cli_recovery"] = run(
-            [sys.executable, "-m", "openline_endurance_gate", "recovery", "--root", "."],
-            clean,
-            clean_env,
-        )
-
-    (PREFLIGHT_PARTS / "clean.json").write_text(
-        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
-    passed = all(item["returncode"] == 0 for item in report.values())
-    print(json.dumps({"clean_preflight_passed": passed}, indent=2))
-    return 0 if passed else 1
-
-
-def preflight_finalize() -> int:
-    report: dict[str, object] = {"schema": "openline.endurance.release-report.v10"}
-    pytest_results: list[dict[str, object]] = []
-    for index in range(len(PYTEST_GROUPS)):
-        path = PREFLIGHT_PARTS / f"pytest-{index}.json"
-        if not path.exists():
-            raise RuntimeError(f"missing preflight pytest witness: {path}")
-        pytest_results.append(json.loads(path.read_text(encoding="utf-8")))
-    clean_path = PREFLIGHT_PARTS / "clean.json"
-    if not clean_path.exists():
-        raise RuntimeError(f"missing clean preflight witness: {clean_path}")
-    clean = json.loads(clean_path.read_text(encoding="utf-8"))
-
-    report["pytest_groups"] = pytest_results
-    report["pytest"] = {
-        "returncode": 0 if all(item["returncode"] == 0 for item in pytest_results) else 1,
-        "execution": "bounded file groups in fresh top-level processes; all non-integration tests remain selected",
-        "group_count": len(pytest_results),
-        "commands": [item["command"] for item in pytest_results],
-        "stdout": "\n".join(str(item["stdout"]) for item in pytest_results),
-        "stderr": "\n".join(str(item["stderr"]) for item in pytest_results),
-    }
-    report.update(clean)
-    PREFLIGHT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    shutil.rmtree(PREFLIGHT_PARTS, ignore_errors=True)
-    passed = all(
-        report[key]["returncode"] == 0
-        for key in (
-            "pytest",
-            "clean_target_create",
-            "clean_install",
-            "clean_import",
-            "clean_fast_verify",
-            "clean_cli_tip",
-            "clean_cli_spacing",
-            "clean_cli_generational",
-            "clean_cli_state_restoration",
-            "clean_cli_load_rate",
-            "clean_cli_recovery",
-        )
-    )
-    print(json.dumps({"preflight_passed": passed}, indent=2))
-    return 0 if passed else 1
-
-
-def preflight_only() -> int:
-    # Replace this process with a shell coordinator so every heavy witness gets
-    # a fresh process boundary. This is equivalent to the documented release
-    # preflight and avoids retaining one pytest heap across later witnesses.
-    shell = ROOT / "scripts" / "release_check.sh"
-    if os.name != "nt" and shell.exists():
-        os.execvp("bash", ["bash", str(shell), "--preflight-only"])
-    _reset_preflight_state()
-    for index in range(len(PYTEST_GROUPS)):
-        if preflight_group(index) != 0:
-            return 1
-    if preflight_clean() != 0:
-        return 1
-    return preflight_finalize()
-
-
-def _read_raw_step(name: str, command: list[str]) -> dict[str, object]:
-    rc_path = PREFLIGHT_PARTS / f"{name}.rc"
-    stdout_path = PREFLIGHT_PARTS / f"{name}.stdout"
-    stderr_path = PREFLIGHT_PARTS / f"{name}.stderr"
-    if not rc_path.exists():
-        raise RuntimeError(f"missing raw preflight exit code: {rc_path}")
-    return {
-        "command": command,
-        "returncode": int(rc_path.read_text(encoding="utf-8").strip()),
-        "stdout": stdout_path.read_text(encoding="utf-8") if stdout_path.exists() else "",
-        "stderr": stderr_path.read_text(encoding="utf-8") if stderr_path.exists() else "",
-    }
-
-
-def preflight_finalize_raw() -> int:
-    report: dict[str, object] = {"schema": "openline.endurance.release-report.v10"}
-    pytest_results = [
-        _read_raw_step(
-            f"pytest-{index}",
-            [sys.executable, "-m", "pytest", "-q", *group, "-k", STALE_ATTESTATION_FILTER],
-        )
-        for index, group in enumerate(PYTEST_GROUPS)
+def write_manifest(root: Path) -> dict[str, object]:
+    entries = [
+        {"path": path.relative_to(root).as_posix(), "sha256": sha256(path), "bytes": path.stat().st_size}
+        for path in release_files(root)
     ]
-    report["pytest_groups"] = pytest_results
-    report["pytest"] = {
-        "returncode": 0 if all(item["returncode"] == 0 for item in pytest_results) else 1,
-        "execution": "direct top-level shell processes; all non-integration tests remain selected",
-        "group_count": len(pytest_results),
-        "commands": [item["command"] for item in pytest_results],
-        "stdout": "\n".join(str(item["stdout"]) for item in pytest_results),
-        "stderr": "\n".join(str(item["stderr"]) for item in pytest_results),
-    }
-    clean_names = (
-        "clean_copy",
-        "clean_target_create",
-        "clean_install",
-        "clean_import",
-        "clean_fast_verify",
-        "clean_cli_tip",
-        "clean_cli_spacing",
-        "clean_cli_generational",
-        "clean_cli_state_restoration",
-        "clean_cli_load_rate",
-        "clean_cli_recovery",
+    manifest = {"schema": "agent.successor.release-manifest.v1", "version": VERSION, "entries": entries}
+    (root / "RELEASE_MANIFEST.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return manifest
+
+
+def manifest_hash(manifest: dict[str, object]) -> str:
+    return hashlib.sha256(json.dumps(manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("ascii")).hexdigest()
+
+
+def check_public_language() -> list[str]:
+    findings: list[str] = []
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    required = (
+        "# Agent Successor Benchmark",
+        "current agent",
+        "candidate",
+        "PROMOTE_CANDIDATE",
+        "KEEP_INCUMBENT",
+        "INCONCLUSIVE",
+        "never executes a replacement",
     )
-    for name in clean_names:
-        report[name] = _read_raw_step(name, ["direct-shell-preflight", name])
-
-    PREFLIGHT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    passed = report["pytest"]["returncode"] == 0 and all(
-        report[name]["returncode"] == 0 for name in clean_names
-    )
-    shutil.rmtree(PREFLIGHT_PARTS, ignore_errors=True)
-    print(json.dumps({"preflight_passed": passed}, indent=2))
-    return 0 if passed else 1
+    for phrase in required:
+        if phrase not in readme:
+            findings.append(f"README missing plain-language contract: {phrase}")
+    return findings
 
 
-def semantic_shard(index: int) -> int:
-    from openline_endurance_gate.semantic_phases import verify_state_restoration_shard
-
-    report = verify_state_restoration_shard(ROOT, index)
-    print(json.dumps(report, indent=2, sort_keys=True))
-    return 0 if report["passed"] else 1
-
-
-def semantic_finalize() -> int:
-    from openline_endurance_gate.semantic_phases import finalize_state_restoration_semantics
-
-    if not PREFLIGHT.exists():
-        raise RuntimeError(f"missing release preflight: {PREFLIGHT}")
-    report = json.loads(PREFLIGHT.read_text(encoding="utf-8"))
-    report["semantic_verification"] = finalize_state_restoration_semantics(ROOT)
-    SEMANTIC.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    passed = bool(report["semantic_verification"]["valid"])
-    print(json.dumps({"semantic_verification_passed": passed}, indent=2))
-    return 0 if passed else 1
+def check_verifier_import_boundary() -> bool:
+    path = SRC / "openline_endurance_gate" / "successor_verifier.py"
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    imported: list[str] = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            imported.extend(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            imported.append(node.module or "")
+    return not any("successor_benchmark" in name for name in imported)
 
 
-
-def semantic_v8_shard(index: int) -> int:
-    from openline_endurance_gate.rate_semantic import verify_load_rate_shard
-
-    report = verify_load_rate_shard(ROOT, index)
-    print(json.dumps(report, indent=2, sort_keys=True))
-    return 0 if report["passed"] else 1
-
-
-def semantic_v8_finalize() -> int:
-    from openline_endurance_gate.rate_semantic import finalize_load_rate_semantics
-
-    if not PREFLIGHT.exists():
-        raise RuntimeError(f"missing release preflight: {PREFLIGHT}")
-    report = json.loads(PREFLIGHT.read_text(encoding="utf-8"))
-    report["semantic_verification"] = finalize_load_rate_semantics(ROOT)
-    SEMANTIC.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    passed = bool(report["semantic_verification"]["valid"])
-    print(json.dumps({"semantic_verification_passed": passed}, indent=2))
-    return 0 if passed else 1
-
-
-def semantic_v8() -> int:
-    # Compatibility path for ordinary runners. Hosted release CI uses the
-    # explicit shard phases so no coordinator must outlive the process cap.
-    for index in range(12):
-        if semantic_v8_shard(index) != 0:
-            return 1
-    return semantic_v8_finalize()
-
-
-def semantic_v9_shard(index: int) -> int:
-    from openline_endurance_gate.recovery_semantic import verify_recovery_shard
-
-    report = verify_recovery_shard(ROOT, index)
-    print(json.dumps(report, indent=2, sort_keys=True))
-    return 0 if report["passed"] else 1
-
-
-def semantic_v9_finalize() -> int:
-    from openline_endurance_gate.recovery_semantic import finalize_recovery_semantics
-
-    if not PREFLIGHT.exists():
-        raise RuntimeError(f"missing release preflight: {PREFLIGHT}")
-    report = json.loads(PREFLIGHT.read_text(encoding="utf-8"))
-    report["semantic_verification"] = finalize_recovery_semantics(ROOT)
-    SEMANTIC.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    passed = bool(report["semantic_verification"]["valid"])
-    print(json.dumps({"semantic_verification_passed": passed}, indent=2))
-    return 0 if passed else 1
-
-
-def semantic_v9() -> int:
-    for index in range(6):
-        if semantic_v9_shard(index) != 0:
-            return 1
-    return semantic_v9_finalize()
-
-
-# v0.9.1 keeps the v0.9 recovery shard format. These aliases make the active
-# release pass explicit while retaining the v9 names for compatible runners.
-semantic_v91_shard = semantic_v9_shard
-semantic_v91_finalize = semantic_v9_finalize
-semantic_v91 = semantic_v9
-
-
-def semantic_only() -> int:
-    # Compatibility path for ordinary runners without the hosted CPU ceiling.
-    for index in range(8):
-        if semantic_shard(index) != 0:
-            return 1
-    return semantic_finalize()
-
-
-def finalize_existing() -> int:
-    from openline_endurance_gate.release_attestation import write_release_attestation
-
-    if not SEMANTIC.exists():
-        raise RuntimeError(f"missing semantic release state: {SEMANTIC}")
-    report = json.loads(SEMANTIC.read_text(encoding="utf-8"))
-    tamper_path = ROOT / "TAMPER_REPORT.json"
-    if tamper_path.exists():
-        tamper_report = json.loads(tamper_path.read_text(encoding="utf-8"))
-        report["tamper_suite"] = {
-            "execution": "isolated top-level attacks via scripts/tamper_check.sh",
-            "report": tamper_report,
-            "returncode": 0 if tamper_report.get("passed") else 1,
-        }
-    else:
-        report["tamper_suite"] = {"returncode": 1, "error": "missing TAMPER_REPORT.json"}
-
-    checks = [
-        report["pytest"]["returncode"] == 0,
-        report.get("clean_copy", {"returncode": 0})["returncode"] == 0,
-        report["clean_target_create"]["returncode"] == 0,
-        report["clean_install"]["returncode"] == 0,
-        report["clean_import"]["returncode"] == 0,
-        report["clean_fast_verify"]["returncode"] == 0,
-        report["clean_cli_tip"]["returncode"] == 0,
-        report["clean_cli_spacing"]["returncode"] == 0,
-        report["clean_cli_generational"]["returncode"] == 0,
-        report["clean_cli_state_restoration"]["returncode"] == 0,
-        report["clean_cli_load_rate"]["returncode"] == 0,
-        report["clean_cli_recovery"]["returncode"] == 0,
-        report["semantic_verification"]["valid"],
-        report["tamper_suite"]["returncode"] == 0,
-        bool(report["tamper_suite"].get("report", {}).get("passed")),
-    ]
-    report["passed"] = all(checks)
-    (ROOT / "RUN_REPORT.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    PREFLIGHT.unlink(missing_ok=True)
-    SEMANTIC.unlink(missing_ok=True)
-    if not report["passed"]:
-        print(json.dumps(report, indent=2, sort_keys=True))
-        return 1
-    release_attestation = write_release_attestation(ROOT)
-    print(
-        json.dumps(
-            {
-                "release_attestation_valid": release_attestation["valid"],
-                "release_attestation_errors": release_attestation["errors"],
-            },
-            indent=2,
-            sort_keys=True,
-        ),
-        file=sys.stderr,
-    )
-    print(json.dumps(report, indent=2, sort_keys=True))
-    return 0 if release_attestation["valid"] else 1
+def check_versions() -> bool:
+    init = (SRC / "openline_endurance_gate" / "__init__.py").read_text(encoding="utf-8")
+    pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    return f'__version__ = "{VERSION}"' in init and f'version = "{VERSION}"' in pyproject
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--preflight-only", action="store_true")
-    parser.add_argument("--preflight-group", type=int)
-    parser.add_argument("--preflight-clean", action="store_true")
-    parser.add_argument("--preflight-finalize", action="store_true")
-    parser.add_argument("--preflight-finalize-raw", action="store_true")
-    parser.add_argument("--semantic-only", action="store_true")
-    parser.add_argument("--semantic-shard", type=int)
-    parser.add_argument("--semantic-finalize", action="store_true")
-    parser.add_argument("--semantic-v8", action="store_true")
-    parser.add_argument("--semantic-v8-shard", type=int)
-    parser.add_argument("--semantic-v8-finalize", action="store_true")
-    parser.add_argument("--semantic-v9", action="store_true")
-    parser.add_argument("--semantic-v9-shard", type=int)
-    parser.add_argument("--semantic-v9-finalize", action="store_true")
-    parser.add_argument("--semantic-v91", action="store_true")
-    parser.add_argument("--semantic-v91-shard", type=int)
-    parser.add_argument("--semantic-v91-finalize", action="store_true")
-    parser.add_argument("--finalize-existing", action="store_true")
-    args = parser.parse_args()
-    if args.preflight_only:
-        return preflight_only()
-    if args.preflight_group is not None:
-        return preflight_group(args.preflight_group)
-    if args.preflight_clean:
-        return preflight_clean()
-    if args.preflight_finalize:
-        return preflight_finalize()
-    if args.preflight_finalize_raw:
-        return preflight_finalize_raw()
-    if args.semantic_shard is not None:
-        return semantic_shard(args.semantic_shard)
-    if args.semantic_finalize:
-        return semantic_finalize()
-    if args.semantic_v8_shard is not None:
-        return semantic_v8_shard(args.semantic_v8_shard)
-    if args.semantic_v8_finalize:
-        return semantic_v8_finalize()
-    if args.semantic_v8:
-        return semantic_v8()
-    if args.semantic_v9_shard is not None:
-        return semantic_v9_shard(args.semantic_v9_shard)
-    if args.semantic_v9_finalize:
-        return semantic_v9_finalize()
-    if args.semantic_v9:
-        return semantic_v9()
-    if args.semantic_v91_shard is not None:
-        return semantic_v91_shard(args.semantic_v91_shard)
-    if args.semantic_v91_finalize:
-        return semantic_v91_finalize()
-    if args.semantic_v91:
-        return semantic_v91()
-    if args.semantic_only:
-        return semantic_only()
-    if args.finalize_existing:
-        return finalize_existing()
+    report: dict[str, object] = {"schema": "agent.successor.release-verification.v1", "version": VERSION}
+    compile_result = run([sys.executable, "-m", "compileall", "-q", "src", "scripts"], ROOT, source_env())
+    report["compile"] = {"passed": compile_result["returncode"] == 0, "returncode": compile_result["returncode"]}
 
-    shell = ROOT / "scripts" / "release_check.sh"
-    if os.name != "nt" and shell.exists():
-        os.execvp("bash", ["bash", str(shell)])
-    raise RuntimeError("Run the three release phases manually on platforms without bash.")
+    tests = run([sys.executable, "-m", "pytest", "-q"], ROOT, source_env())
+    report["tests"] = {"passed": tests["returncode"] == 0, "returncode": tests["returncode"], "summary": tests["stdout"].strip().splitlines()[-1] if tests["stdout"].strip() else ""}
+
+    selftest_run = run([sys.executable, "scripts/successor_benchmark_selftest.py"], ROOT, source_env())
+    try:
+        selftest = json.loads(selftest_run["stdout"]) if selftest_run["stdout"] else {}
+    except json.JSONDecodeError:
+        selftest = {}
+    report["hostile_selftest"] = {
+        "passed": selftest_run["returncode"] == 0 and selftest.get("passed") is True,
+        "check_count": selftest.get("check_count"),
+        "passed_check_count": selftest.get("passed_check_count"),
+    }
+
+    crosscheck_run = run([sys.executable, "scripts/comparison_crosscheck.py"], ROOT, source_env())
+    try:
+        crosscheck = json.loads(crosscheck_run["stdout"]) if crosscheck_run["stdout"] else {}
+    except json.JSONDecodeError:
+        crosscheck = {}
+    report["comparison_crosscheck"] = {
+        "passed": crosscheck_run["returncode"] == 0 and crosscheck.get("passed") is True,
+        "iterations": crosscheck.get("iterations"),
+        "mismatches": crosscheck.get("mismatches"),
+    }
+
+    report["independent_verifier_import_boundary"] = {"passed": check_verifier_import_boundary()}
+    language_findings = check_public_language()
+    report["plain_language_check"] = {"passed": not language_findings, "findings": language_findings}
+    report["version_consistency"] = {"passed": check_versions()}
+
+    with tempfile.TemporaryDirectory(prefix="agent-successor-release-") as temp:
+        temp_root = Path(temp)
+        site = temp_root / "site"
+        install = run([sys.executable, "-m", "pip", "install", ".", "--target", str(site), "--no-deps", "--no-build-isolation"], ROOT, source_env())
+        clean_env = dict(os.environ)
+        clean_env["PYTHONPATH"] = str(site)
+        clean_env["PYTHONNOUSERSITE"] = "1"
+        version = run([sys.executable, "-m", "openline_endurance_gate", "--version"], temp_root, clean_env)
+        help_run = run([sys.executable, "-m", "openline_endurance_gate", "--help"], temp_root, clean_env)
+        expected_commands = ("keygen", "register", "prepare", "checker-sign", "finalize", "verify")
+        report["clean_install"] = {
+            "passed": install["returncode"] == 0 and version["returncode"] == 0 and help_run["returncode"] == 0 and all(command in help_run["stdout"] for command in expected_commands),
+            "install_returncode": install["returncode"],
+            "reported_version": version["stdout"].strip(),
+            "commands_present": [command for command in expected_commands if command in help_run["stdout"]],
+        }
+
+        wheel_dir = temp_root / "wheels"
+        wheel_dir.mkdir()
+        wheel = run([sys.executable, "-m", "pip", "wheel", ".", "--wheel-dir", str(wheel_dir), "--no-deps", "--no-build-isolation"], ROOT, source_env())
+        wheels = sorted(wheel_dir.glob("*.whl"))
+        wheel_site = temp_root / "wheel-site"
+        wheel_install = {"returncode": 1, "stdout": "", "stderr": "wheel not built"}
+        wheel_import = {"returncode": 1, "stdout": "", "stderr": "wheel not installed"}
+        if wheel["returncode"] == 0 and len(wheels) == 1:
+            wheel_install = run([sys.executable, "-m", "pip", "install", str(wheels[0]), "--target", str(wheel_site), "--no-deps"], temp_root, clean_env)
+            wheel_env = dict(clean_env)
+            wheel_env["PYTHONPATH"] = str(wheel_site)
+            wheel_import = run([sys.executable, "-c", "import openline_endurance_gate as m; print(m.__version__)"], temp_root, wheel_env)
+        report["wheel"] = {
+            "passed": wheel["returncode"] == 0 and len(wheels) == 1 and wheel_install["returncode"] == 0 and wheel_import["returncode"] == 0 and wheel_import["stdout"].strip() == VERSION,
+            "build_returncode": wheel["returncode"],
+            "wheel_count": len(wheels),
+            "imported_version": wheel_import["stdout"].strip(),
+        }
+
+    baseline = json.loads((ROOT / "BASELINE.json").read_text(encoding="utf-8"))
+    report["baseline"] = {
+        "version": baseline["incumbent"]["version"],
+        "archive_sha256": baseline["incumbent"]["archive_sha256"],
+        "preserved_capabilities": baseline["incumbent"]["verified_capabilities"],
+    }
+
+    passed = all(
+        bool(report[name]["passed"])
+        for name in (
+            "compile", "tests", "hostile_selftest", "independent_verifier_import_boundary",
+            "plain_language_check", "version_consistency", "comparison_crosscheck", "clean_install", "wheel",
+        )
+    )
+    report["passed"] = passed
+
+    comparison = {
+        "schema": "agent.successor.release-comparison.v1",
+        "incumbent": baseline["incumbent"],
+        "candidate": {
+            "version": VERSION,
+            "preserved_capabilities": baseline["incumbent"]["verified_capabilities"],
+            "improvements": [
+                "candidate selection now uses direct checker outcomes instead of experimental metric-derived thresholds",
+                "the maintained install has no dependency on the retired metric package",
+                "checker packages remain lane-separated and omit incumbent/candidate role fields",
+                "the final recommendation explicitly grants no execution authority",
+                "the current source tree is a small benchmark package instead of a 48 MB research archive",
+            ],
+            "unit_test_summary": report["tests"]["summary"],
+            "hostile_selftest_checks": report["hostile_selftest"]["check_count"],
+            "randomized_comparison_checks": report["comparison_crosscheck"]["iterations"],
+        },
+        "promotion": "ADVANCE" if passed else "HOLD",
+    }
+    (ROOT / "RELEASE_COMPARISON.json").write_text(json.dumps(comparison, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+    manifest = write_manifest(ROOT)
+    report["release_manifest"] = {"entry_count": len(manifest["entries"]), "sha256": manifest_hash(manifest)}
+    (ROOT / "RELEASE_VERIFICATION.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":

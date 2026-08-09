@@ -1,0 +1,136 @@
+{
+  "entries": [
+    {
+      "bytes": 937,
+      "path": ".github/workflows/ci.yml",
+      "sha256": "66b04d701dc6a615f330c2455811b97779b5ee95bd490e93fb82076b32388dc4"
+    },
+    {
+      "bytes": 101,
+      "path": ".gitignore",
+      "sha256": "1e97e92ac4bd5c1feed812c5c5ec16e54a9bc57ff59211a0c68c00799e64dc6a"
+    },
+    {
+      "bytes": 930,
+      "path": "BASELINE.json",
+      "sha256": "f18686e8886b990a2e36c4af7f43cc8df6b184a0b059023c115b4486667b107b"
+    },
+    {
+      "bytes": 964,
+      "path": "CHANGELOG.md",
+      "sha256": "7718500004db283d21ffd304613e42b63fa23e2c1d736b48bfd53b3e9f6fd50b"
+    },
+    {
+      "bytes": 863,
+      "path": "CLAIM_BOUNDARY.md",
+      "sha256": "ae2d2a48716893f0c471c5d787000476bc61f67d5af1064fbc652c3063fcead2"
+    },
+    {
+      "bytes": 1071,
+      "path": "LICENSE",
+      "sha256": "07674dfa9960dff5128d0cdcce58fee7543c26ff47e58e07ae6ac0254a0f58b1"
+    },
+    {
+      "bytes": 1011,
+      "path": "METHODOLOGY.md",
+      "sha256": "2ca87dd0a4daf7fc87f83138e5dcff1c88fbf7c35f52f7fc31486b896ffe836c"
+    },
+    {
+      "bytes": 6225,
+      "path": "README.md",
+      "sha256": "e2676c010907cae4aa7c51cbabc164e66ecfe59cdf1fd89563ea3221179626fa"
+    },
+    {
+      "bytes": 1671,
+      "path": "RELEASE_COMPARISON.json",
+      "sha256": "5162ff096e55c84091be0d1940d0e3f219f360c32b6c84de7d00208400e2e9bf"
+    },
+    {
+      "bytes": 153,
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "d7a5e44038044d92c2d3be1a2152038fb6477cc6d3594e3f7558fbfc6a2eacd1"
+    },
+    {
+      "bytes": 829,
+      "path": "docs/DESIGN.md",
+      "sha256": "909c9ecdd97c37c1edeb328d644c56d47087415099f5a260e85d15446f7bc6c3"
+    },
+    {
+      "bytes": 579,
+      "path": "docs/HISTORICAL_RESEARCH.md",
+      "sha256": "482d615aaa47344525846625866ea22e54f54425dc8b806757eb1938f378a7a1"
+    },
+    {
+      "bytes": 1367,
+      "path": "docs/SECURITY.md",
+      "sha256": "c782bf0ef43ccdb32e21777774d9f3d9ae47c26571b975cf9b24fc47efdf621f"
+    },
+    {
+      "bytes": 791,
+      "path": "pyproject.toml",
+      "sha256": "3cbf9982b6bc661da74a8105991a8232dfbda04cfe6d185ac7ea3d0fa4449806"
+    },
+    {
+      "bytes": 2566,
+      "path": "scripts/comparison_crosscheck.py",
+      "sha256": "7f91e2dfd2f3eadc3351d0e9985898a910b42c6e6c6600487af80d7f70eba0e0"
+    },
+    {
+      "bytes": 10504,
+      "path": "scripts/release_check.py",
+      "sha256": "86538053603700cae88b0efede9b25a0e8228ae5a135d06a46b3cbf3a850620d"
+    },
+    {
+      "bytes": 11801,
+      "path": "scripts/successor_benchmark_selftest.py",
+      "sha256": "abb71a2b26bd0ce33ad0b92eb5d0116184f3ee19a0e72afbdc52867da6c2361e"
+    },
+    {
+      "bytes": 3818,
+      "path": "scripts/verify_release.py",
+      "sha256": "0ad98610ba702bc877c1ce613c7262f81282c53df243403474d7ab392b3db9f8"
+    },
+    {
+      "bytes": 740,
+      "path": "scripts/verify_successor_benchmark.py",
+      "sha256": "ad9dd0c5fa1f454d9488a8397892e2ccc726ffb07c9bd7296c363b917182cbaa"
+    },
+    {
+      "bytes": 60,
+      "path": "src/openline_endurance_gate/__init__.py",
+      "sha256": "1485db02b7b3e22739ce9adb2f1854457e408c679dbf1aeecd9bc8fc5c6bf896"
+    },
+    {
+      "bytes": 48,
+      "path": "src/openline_endurance_gate/__main__.py",
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "bytes": 8082,
+      "path": "src/openline_endurance_gate/cli.py",
+      "sha256": "3eef8c11cfaa8807389a51a5afcb5e563fa31b7e400c28d3454076e17ffecd5d"
+    },
+    {
+      "bytes": 45876,
+      "path": "src/openline_endurance_gate/successor_benchmark.py",
+      "sha256": "651d55f32d828b62313b0050b954a565b18c12bef10aefae5b35df2af5d1b313"
+    },
+    {
+      "bytes": 29170,
+      "path": "src/openline_endurance_gate/successor_verifier.py",
+      "sha256": "80fe4fb0d6df7c3496450758ef67601897992b36921b8f22ef2dd6f8163f2138"
+    },
+    {
+      "bytes": 4966,
+      "path": "tests/helpers.py",
+      "sha256": "d022d6826604af8bdd4c345a5d980e6e9be50f092ad1f49e25cf6bce5ede8596"
+    },
+    {
+      "bytes": 14102,
+      "path": "tests/test_successor_benchmark.py",
+      "sha256": "fec70aa9605925051ab3e5f278e1fbc4f2fcb82745db38d37869f051e04c5bab"
+    }
+  ],
+  "schema": "agent.successor.release-manifest.v1",
+  "version": "0.13.0rc1"
+}

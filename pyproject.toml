@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openline-endurance-gate"
-version = "0.10.0"
-description = "A falsifiable harness for endurance, verified recovery, and calibrated agent succession."
+version = "0.13.0rc1"
+description = "A receiver-side benchmark for comparing a current agent with a candidate under fixed tasks, constraints, budgets, and evidence rules."
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -13,16 +13,11 @@ authors = [{name = "Terrynce White"}]
 dependencies = ["cryptography>=42"]
 
 [project.optional-dependencies]
-succession = [
-  "cole-portable-core @ git+https://github.com/terryncew/cole-portable-core.git@c7a2d63befa9105579ac28940f3de00cdc8d76cc",
-]
-dev = [
-  "pytest>=8",
-  "cole-portable-core @ git+https://github.com/terryncew/cole-portable-core.git@c7a2d63befa9105579ac28940f3de00cdc8d76cc",
-]
+dev = ["pytest>=8"]
 
 [project.scripts]
 openline-endurance = "openline_endurance_gate.cli:main"
+agent-successor-benchmark = "openline_endurance_gate.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -30,5 +25,4 @@ include = ["openline_endurance_gate*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q -m 'not integration'"
-markers = ["integration: heavyweight full semantic and tamper verification"]
+addopts = "-q"

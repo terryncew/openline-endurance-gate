@@ -1,0 +1,68 @@
+{
+  "baseline": {
+    "archive_sha256": "9f4c15819fef6bef66e946bc0dd41b2d915d2999ed0960625cc70b28cc760664",
+    "preserved_capabilities": [
+      "pre-arm case registration",
+      "checker key pinning",
+      "checker evidence closure",
+      "independent case verification",
+      "no automatic replacement authority"
+    ],
+    "version": "0.12.0rc2"
+  },
+  "clean_install": {
+    "commands_present": [
+      "keygen",
+      "register",
+      "prepare",
+      "checker-sign",
+      "finalize",
+      "verify"
+    ],
+    "install_returncode": 0,
+    "passed": true,
+    "reported_version": "agent-successor-benchmark 0.13.0rc1"
+  },
+  "comparison_crosscheck": {
+    "iterations": 10000,
+    "mismatches": 0,
+    "passed": true
+  },
+  "compile": {
+    "passed": true,
+    "returncode": 0
+  },
+  "hostile_selftest": {
+    "check_count": 21,
+    "passed": true,
+    "passed_check_count": 21
+  },
+  "independent_verifier_import_boundary": {
+    "passed": true
+  },
+  "passed": true,
+  "plain_language_check": {
+    "findings": [],
+    "passed": true
+  },
+  "release_manifest": {
+    "entry_count": 26,
+    "sha256": "a28e11f8eb24541d0bc1b98aff0b13b305756db730d6f9bc735f7b094bd77d0e"
+  },
+  "schema": "agent.successor.release-verification.v1",
+  "tests": {
+    "passed": true,
+    "returncode": 0,
+    "summary": ".......................                                                  [100%]"
+  },
+  "version": "0.13.0rc1",
+  "version_consistency": {
+    "passed": true
+  },
+  "wheel": {
+    "build_returncode": 0,
+    "imported_version": "0.13.0rc1",
+    "passed": true,
+    "wheel_count": 1
+  }
+}
